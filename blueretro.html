@@ -1,0 +1,42 @@
+---
+feature_name: BlueRetro Advance config
+icon_url: icon.png
+index: index.html
+---
+
+{% include_relative _includes/intro.html %}
+
+<div id="divBtConn">
+    <button id="btConn">Connect BlueRetro</button>
+</div>
+<div id="divBtDisconn" style="display:none;margin-bottom:1em;">
+    <button id="btDisconn">Disconnect BlueRetro</button>
+</div>
+<div id="divGlobalCfg" style="display:none;margin-bottom:1em;">
+    <h2 style="margin:0;">Global Config</h2>
+</div>
+<div id="divOutputCfg" style="display:none;margin-bottom:1em;">
+    <h2 style="margin:0;">Output Config</h2>
+</div>
+<div id="divInputCfg" style="display:none;margin-bottom:1em;">
+    <h2 style="margin:0;">Mapping Config</h2>
+    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRln_dhkahEIhq4FQY_p461r5qvLn-Hkl89ZtfyIOGAqdnPtQZ5Ihfsjvd94fRbaHX8wU3F-r2ODYbM/pubhtml">BlueRetro mapping reference</a>
+</div>
+
+{% include output_helper.html %}
+
+<script src="blueretro.js" type="text/javascript"></script>
+
+<script>
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+  document.getElementById("btDisconn").addEventListener('click', function() {
+    btDisconn();
+  });
+</script>
+
+{% include_relative _includes/utils.html %}

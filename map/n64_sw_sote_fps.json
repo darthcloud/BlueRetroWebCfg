@@ -1,0 +1,27 @@
+{
+    "name":"N64 Star Wars: SOTE FPS",
+    "desc":"Expect Strafe in-game config. Left stick move, right stick look.",
+    "map":[
+        ["PAD_LX_LEFT",  "PAD_LM",       0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LX_RIGHT", "PAD_RS",       0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LY_DOWN",  "PAD_LY_DOWN",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LY_UP",    "PAD_LY_UP",    0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RX_LEFT",  "PAD_LX_LEFT",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RX_RIGHT", "PAD_LX_RIGHT", 0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RY_DOWN",  "PAD_LY_DOWN",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RY_UP",    "PAD_LY_UP",    0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LD_LEFT",  "PAD_LD_LEFT",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LD_RIGHT", "PAD_LD_RIGHT", 0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LD_DOWN",  "PAD_LD_DOWN",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LD_UP",    "PAD_LD_UP",    0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RB_LEFT",  "PAD_RY_UP",    0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RB_RIGHT", "PAD_RX_LEFT",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RB_DOWN",  "PAD_RB_LEFT",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RB_UP",    "PAD_LS",       0, 100, 50, 135, 0, 0, 0],
+        ["PAD_MM",       "PAD_MM",       0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LM",       "PAD_RX_RIGHT", 0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LS",       "PAD_RY_DOWN",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RM",       "PAD_RB_DOWN",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RS",       "PAD_RY_DOWN",  0, 100, 50, 135, 0, 0, 0]
+    ]
+}

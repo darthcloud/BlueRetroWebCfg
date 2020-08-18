@@ -1,0 +1,30 @@
+---
+feature_name: BlueRetro Presets config
+icon_url: icon.png
+index: index.html
+---
+
+{% include_relative _includes/intro.html %}
+
+<div id="divBtConn">
+    <button id="btConn">Connect BlueRetro</button>
+</div>
+<div id="divInputCfg" style="display:none;margin-bottom:1em;">
+    <h2 style="margin:0;">Mapping Config</h2>
+    <p id="desc"></p>
+</div>
+
+{% include output_helper.html %}
+
+<script src="blueretro_presets.js" type="text/javascript"></script>
+
+<script>
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+</script>
+
+{% include_relative _includes/utils.html %}
