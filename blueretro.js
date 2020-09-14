@@ -127,18 +127,26 @@ var btnList = [
 
 var systemCfg = [
     'Auto',
+    'Parallel_1P',
+    'Parallel_2P',
     'NES',
-    'SMS',
     'PCE',
-    'GENESIS',
+    'MD-Genesis',
     'SNES',
-    'SATURN',
+    'CD-i',
+    'CD32',
+    '3DO',
+    'Jaguar'
     'PSX',
+    'Saturn',
+    'PC-FX',
+    'JVS',
     'N64',
     'DC',
     'PS2',
     'GC',
-    'WII_EXT',
+    'Wii-EXT',
+    'Exp Board',
 ];
 
 var multitapCfg = [
