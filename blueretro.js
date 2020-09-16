@@ -136,7 +136,7 @@ var systemCfg = [
     'CD-i',
     'CD32',
     '3DO',
-    'Jaguar'
+    'Jaguar',
     'PSX',
     'Saturn',
     'PC-FX',
