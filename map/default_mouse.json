@@ -1,0 +1,22 @@
+{
+    "name":"Default Mouse",
+    "desc":"This mapping expect that the Output Config mode is set to Mouse. For games compatible with Mouse/Trackball accessory.",
+    "map":[
+        ["PAD_RX_LEFT",  "PAD_RX_LEFT",  0, 100, 50, 0, 0, 5, 0],
+        ["PAD_RX_RIGHT", "PAD_RX_RIGHT", 0, 100, 50, 0, 0, 5, 0],
+        ["PAD_RY_DOWN",  "PAD_RY_DOWN",  0, 100, 50, 0, 0, 5, 0],
+        ["PAD_RY_UP",    "PAD_RY_UP",    0, 100, 50, 0, 0, 5, 0],
+        ["PAD_RD_LEFT",  "PAD_RD_LEFT",  0, 100, 50, 0, 0, 5, 0],
+        ["PAD_RD_RIGHT", "PAD_RD_RIGHT", 0, 100, 50, 0, 0, 5, 0],
+        ["PAD_RD_DOWN",  "PAD_RD_DOWN",  0, 100, 50, 0, 0, 5, 0],
+        ["PAD_RD_UP",    "PAD_RD_UP",    0, 100, 50, 0, 0, 5, 0],
+        ["PAD_RB_LEFT",  "PAD_RB_LEFT",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RB_RIGHT", "PAD_RB_RIGHT", 0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RB_DOWN",  "PAD_RB_DOWN",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RB_UP",    "PAD_RB_UP",    0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LM",       "PAD_LM",       0, 100, 50, 135, 0, 0, 0],
+        ["PAD_LJ",       "PAD_LJ",       0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RM",       "PAD_RM",       0, 100, 50, 135, 0, 0, 0],
+        ["PAD_RS",       "PAD_RS",       0, 100, 50, 135, 0, 0, 0]
+    ]
+}
