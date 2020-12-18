@@ -1,6 +1,6 @@
 {
     "name":"Latency Test",
-    "desc":"For use with Parallel mode 1P output all on GPIO26 (A).",
+    "desc":"For use with Parallel mode 1P output all on GPIO26",
     "map":[
         ["PAD_LX_LEFT",  "PAD_RB_DOWN",  0, 100, 50, 135, 0, 0, 0],
         ["PAD_LX_RIGHT", "PAD_RB_DOWN",  0, 100, 50, 135, 0, 0, 0],
