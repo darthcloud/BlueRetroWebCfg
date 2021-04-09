@@ -201,6 +201,7 @@ var nbMapping = 1;
 let brService = null;
 var mappingElement = null;
 let inputChrc = null;
+var pageInit = 0;
 
 function initGlobalCfg() {
     var div = document.createElement("div");
@@ -725,6 +726,7 @@ function initBlueRetroCfg() {
     //initInputAssign();
     initFirstOutputMapping();
     initOutputMapping();
+    pageInit = 1;
 }
 
 function loadGlobalCfg() {
@@ -1063,7 +1065,9 @@ function btConn() {
     .then(service => {
         log('Init Cfg DOM...');
         brService = service;
-        initBlueRetroCfg();
+        if (!pageInit) {
+            initBlueRetroCfg();
+        }
         return loadGlobalCfg();
     })
     .then(() => {
