@@ -176,6 +176,7 @@ var nbMapping = 1;
 let brService = null;
 var mappingElement = null;
 let inputChrc = null;
+var pageInit = 0;
 
 function initInputSelect() {
     document.getElementById("desc").textContent = presets[0].desc;
@@ -268,6 +269,7 @@ function initBlueRetroCfg() {
     .then(_ => {
         initInputSelect();
         initOutputMapping();
+        pageInit = 1;
     })
     .catch(error => {
         log('Argh! ' + error);
@@ -364,6 +366,12 @@ function saveInput() {
     });
 }
 
+function onDisconnected() {
+    log('> Bluetooth Device disconnected');
+    document.getElementById("divBtConn").style.display = 'block';
+    document.getElementById("divInputCfg").style.display = 'none';
+}
+
 function btConn() {
     log('Requesting Bluetooth Device...');
     navigator.bluetooth.requestDevice(
@@ -372,6 +380,7 @@ function btConn() {
     .then(device => {
         log('Connecting to GATT Server...');
         bluetoothDevice = device;
+        bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
         return bluetoothDevice.gatt.connect();
     })
     .then(server => {
@@ -381,7 +390,9 @@ function btConn() {
     .then(service => {
         log('Init Cfg DOM...');
         brService = service;
-        initBlueRetroCfg();
+        if (!pageInit) {
+            initBlueRetroCfg();
+        }
         document.getElementById("divBtConn").style.display = 'none';
         document.getElementById("divInputCfg").style.display = 'block';
     })
