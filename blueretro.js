@@ -5,6 +5,7 @@ var brUuid = [
     '56830f56-5180-fab0-314b-2fa176799a03',
     '56830f56-5180-fab0-314b-2fa176799a04',
     '56830f56-5180-fab0-314b-2fa176799a05',
+    '56830f56-5180-fab0-314b-2fa176799a06',
 ];
 
 var btnList = [
@@ -157,6 +158,11 @@ var multitapCfg = [
     'Alt',
 ];
 
+var inquiryMode = [
+    'Auto',
+    'Manual',
+];
+
 var devCfg = [
     'GamePad',
     'GamePadAlt',
@@ -195,6 +201,7 @@ const maxMax = 255;
 const maxThres = 100;
 const maxTurbo = 16;
 
+var apiVersion = 0;
 var bluetoothDevice;
 var maxMapping = 255;
 var nbMapping = 1;
@@ -244,6 +251,28 @@ function initGlobalCfg() {
     div.appendChild(sel);
 
     divGlobalCfg.appendChild(div);
+
+    if (apiVersion > 0) {
+        div = document.createElement("div");
+
+        /* Inquiry mode */
+        label = document.createElement("label");
+        label.innerText = 'Inquiry mode: ';
+        label.setAttribute("for", "inquiryMode");
+
+        sel = document.createElement("select");
+        for (var i = 0; i < inquiryMode.length; i++) {
+            var option  = document.createElement("option");
+            option.value = i;
+            option.text = inquiryMode[i];
+            sel.add(option);
+        }
+        sel.id = "inquiryMode";
+        div.appendChild(label);
+        div.appendChild(sel);
+
+        divGlobalCfg.appendChild(div);
+    }
 
     div = document.createElement("div");
 
@@ -729,6 +758,25 @@ function initBlueRetroCfg() {
     pageInit = 1;
 }
 
+function getApiVersion() {
+    return new Promise(function(resolve, reject) {
+        log('Get Api version CHRC...');
+        brService.getCharacteristic(brUuid[6])
+        .then(chrc => {
+            log('Reading Api version...');
+            return chrc.readValue();
+        })
+        .then(value => {
+            log('Api version size: ' + value.byteLength);
+            apiVersion = value.getUint8(0);
+            resolve();
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
+}
+
 function loadGlobalCfg() {
     return new Promise(function(resolve, reject) {
         log('Get Global Config CHRC...');
@@ -741,6 +789,9 @@ function loadGlobalCfg() {
             log('Global Config size: ' + value.byteLength);
             document.getElementById("systemCfg").value = value.getUint8(0);
             document.getElementById("multitapCfg").value = value.getUint8(1);
+            if (apiVersion > 0) {
+                document.getElementById("inquiryMode").value = value.getUint8(2);
+            }
             resolve();
         })
         .catch(error => {
@@ -889,9 +940,17 @@ function loadInputCfg(cfgId) {
 }
 
 function saveGlobal() {
-    var data = new Uint8Array(2);
+    if (apiVersion > 0) {
+        var data = new Uint8Array(3);
+    }
+    else {
+        var data = new Uint8Array(2);
+    }
     data[0] = document.getElementById("systemCfg").value;
     data[1] = document.getElementById("multitapCfg").value;
+    if (apiVersion > 0) {
+        data[2] = document.getElementById("inquiryMode").value;
+    }
     return new Promise(function(resolve, reject) {
         log('Get Global Config CHRC...');
         brService.getCharacteristic(brUuid[1])
@@ -1063,9 +1122,18 @@ function btConn() {
         return server.getPrimaryService(brUuid[0]);
     })
     .then(service => {
-        log('Init Cfg DOM...');
         brService = service;
+        return getApiVersion();
+    })
+    .catch(error => {
+        if (error.name == 'NotFoundError') {
+            return;
+        }
+        throw error;
+    })
+    .then(() => {
         if (!pageInit) {
+            log('Init Cfg DOM...');
             initBlueRetroCfg();
         }
         return loadGlobalCfg();
