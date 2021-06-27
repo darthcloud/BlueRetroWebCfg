@@ -1,0 +1,38 @@
+---
+feature_name: BlueRetro OTA FW update
+icon_url: icon.png
+index: index.html
+---
+
+{% include_relative _includes/intro.html %}
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn">Connect BlueRetro</button>
+</div>
+<div id="divFwSelect" style="display:none;margin-bottom:1em;">
+    Select firmware:
+    <input type="file" id="fwFile" name="fw.bin"/><br>
+    <button id="btnFwUpdate">Update Firmware</button>
+</div>
+<div id="divFwUpdate" style="display:none;margin-bottom:1em;">
+    <div id="progress_bar"><div class="percent"></div></div>
+    <button id="btnFwUpdateCancel">Cancel</button>
+</div>
+
+{% include output_helper.html %}
+
+<script src="ota.js" type="text/javascript"></script>
+
+<script>
+  document.getElementById("btnFwUpdate").addEventListener('click', firmwareUpdate);
+  document.getElementById("btnFwUpdateCancel").addEventListener('click', abortFwUpdate);
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+</script>
+
+{% include_relative _includes/utils.html %}
