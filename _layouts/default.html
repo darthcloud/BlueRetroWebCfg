@@ -47,6 +47,9 @@ limitations under the License.
     <link rel="stylesheet" href="{{ relative_path_to_root }}styles/main.css">
     {% for local_css_file in page.local_css_files %}<link rel="stylesheet" href="{{ local_css_file }}">{% endfor %}
     {% if page.additional_head_content %}{{ page.additional_head_content }}{% endif %}
+    {% if site.google_analytics and jekyll.environment == 'production' %}
+    {% include analytics.html %}
+    {% endif %}
   </head>
 
   <body>

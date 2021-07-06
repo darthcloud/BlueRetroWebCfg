@@ -2,6 +2,7 @@ encoding: utf-8
 exclude: [vendor]
 gh_pages_url_prefix: https://darthcloud.github.io/BlueRetroWebCfg
 gh_url_prefix: https://github.com/darthcloud/BlueRetroWebCfg/blob/master
+google_analytics: G-N87L56T313
 gems:
   - jekyll-sitemap
 defaults:
