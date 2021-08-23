@@ -10,6 +10,7 @@ var brUuid = [
     '56830f56-5180-fab0-314b-2fa176799a06',
     '56830f56-5180-fab0-314b-2fa176799a07',
     '56830f56-5180-fab0-314b-2fa176799a08',
+    '56830f56-5180-fab0-314b-2fa176799a09',
 ];
 
 const mtu = 244;
@@ -24,6 +25,25 @@ var progress = document.querySelector('.percent');
 var start;
 var end;
 var cancel = 0;
+
+function getAppVersion() {
+    return new Promise(function(resolve, reject) {
+        log('Get Api version CHRC...');
+        brService.getCharacteristic(brUuid[9])
+        .then(chrc => {
+            log('Reading App version...');
+            return chrc.readValue();
+        })
+        .then(value => {
+            var enc = new TextDecoder("utf-8");
+            log('App version: ' + enc.decode(value));
+            resolve();
+        })
+        .catch(error => {
+            resolve();
+        });
+    });
+}
 
 function abortFwUpdate() {
     cancel = 1;
@@ -161,8 +181,11 @@ function btConn() {
         return server.getPrimaryService(brUuid[0]);
     })
     .then(service => {
-        log('Init Cfg DOM...');
         brService = service;
+        return getAppVersion();
+    })
+    .then(_ => {
+        log('Init Cfg DOM...');
         document.getElementById("divBtConn").style.display = 'none';
         document.getElementById("divFwSelect").style.display = 'block';
         document.getElementById("divFwUpdate").style.display = 'none';
