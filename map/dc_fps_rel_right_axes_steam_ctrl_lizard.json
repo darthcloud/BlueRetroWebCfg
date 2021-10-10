@@ -1,0 +1,23 @@
+{
+    "name":"DC GP-Alt FPS RX/RY rel for Steam ctrl lizard",
+    "desc":"Dreamcast Gamepad-Alt FPS right axes relative for Steam controller in lizard mode.",
+    "map":[
+        ["MOUSE_X_LEFT",  "MOUSE_X_LEFT",  0, 100, 50, 0, 0, 5, 0],
+        ["MOUSE_X_RIGHT", "MOUSE_X_RIGHT", 0, 100, 50, 0, 0, 5, 0],
+        ["MOUSE_Y_DOWN",  "MOUSE_Y_DOWN",  0, 100, 50, 0, 0, 5, 0],
+        ["MOUSE_Y_UP",    "MOUSE_Y_UP",    0, 100, 50, 0, 0, 5, 0],
+        ["KB_LEFT",       "PAD_RB_LEFT",   0, 100, 50, 135, 0, 0, 0],
+        ["KB_RIGHT",      "PAD_RB_RIGHT",  0, 100, 50, 135, 0, 0, 0],
+        ["KB_DOWN",       "PAD_RB_DOWN",   0, 100, 50, 135, 0, 0, 0],
+        ["KB_UP",         "PAD_RB_UP",     0, 100, 50, 135, 0, 0, 0],
+        ["KB_ESC",        "PAD_RB_RIGHT",  0, 100, 50, 135, 0, 0, 0],
+        ["KB_ENTER",      "PAD_RB_DOWN",   0, 100, 50, 135, 0, 0, 0],
+        ["MOUSE_RIGHT",   "MOUSE_RIGHT",   0, 100, 50, 135, 0, 0, 0],
+        ["MOUSE_LEFT",    "MOUSE_LEFT",    0, 100, 50, 135, 0, 0, 0],
+        ["KB_SPACE",      "PAD_LD_DOWN",   0, 100, 50, 135, 0, 0, 0],
+        ["KB_TAB",        "PAD_MM",        0, 100, 50, 135, 0, 0, 0],
+        ["KB_F4",         "PAD_LD_RIGHT",  0, 100, 50, 135, 0, 0, 0],
+        ["KB_F7",         "PAD_LD_LEFT",   0, 100, 50, 135, 0, 0, 0],
+        ["KB_F9",         "PAD_LD_UP",     0, 100, 50, 135, 0, 0, 0]
+    ]
+}
