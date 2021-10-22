@@ -8,122 +8,154 @@ var brUuid = [
     '56830f56-5180-fab0-314b-2fa176799a06',
 ];
 
+var labelName = [
+    'Default',
+    'Keyboard',
+    'Mouse',
+    'PS3',
+    'PS4 / PS5',
+    'Wiimote',
+    'Wiimote + Classic',
+    'Wiimote + Nunchuck',
+    'WiiU / Switch Pro',
+    'Switch Joycon',
+    'Xbox One S / X|S',
+    'Steam',
+    'NeoGeo (Paraller 1P)',
+    'PCE',
+    'NES',
+    'SNES',
+    'CD-i',
+    'JVS',
+    '3DO',
+    'Jaguar',
+    'PC-FX',
+    'N64',
+    'GameCube',
+    'Atari / SMS',
+    'MD / Genesis',
+    'Saturn',
+    'Dreamcast',
+    'PSX / PS2',
+];
+
 var btnList = [
-    'GP: LX Left;  KB: A',
-    'GP: LX Right; KB: D',
-    'GP: LY Down;  KB: S',
-    'GP: LY Up;    KB: W',
-    'GP: RX Left;  M: X Left',
-    'GP: RX Right; M: X Right',
-    'GP: RY Down;  M: Y Down',
-    'GP: RY Up;    M: Y Up',
-    'GP: LD Left;  KB: Left',
-    'GP: LD Right; KB: Right',
-    'GP: LD Down;  KB: Down',
-    'GP: LD Up;    KB: Up',
-    'GP: RD Left;  M: WX Left',
-    'GP: RD Right; M: WX Right',
-    'GP: RD Down;  M: WY Down',
-    'GP: RD Up;    M: WY Up',
-    'GP: RB Left;  KB: Q; M: 4',
-    'GP: RB Right; KB: R; M: 5',
-    'GP: RB Down;  KB: E; M: 6',
-    'GP: RB Up;    KB: F; M: 7',
-    'GP: MM; KB: Esc',
-    'GP: MS; KB: Enter',
-    'GP: MT; KB: L Win',
-    'GP: MQ; KB: Hash',
-    'GP: LM; M: Right',
-    'GP: LS; KB: Z',
-    'GP: LT; KB: L CTRL',
-    'GP: LJ; M: Middle',
-    'GP: RM; M: Left',
-    'GP: RS; KB: X; M: 8',
-    'GP: RT; KB: L Shift',
-    'GP: RJ; KB: Space',
-    'KB: B',
-    'KB: C',
-    'KB: G',
-    'KB: H',
-    'KB: I',
-    'KB: J',
-    'KB: K',
-    'KB: L',
-    'KB: M',
-    'KB: N',
-    'KB: O',
-    'KB: P',
-    'KB: T',
-    'KB: U',
-    'KB: V',
-    'KB: Y',
-    'KB: 1',
-    'KB: 2',
-    'KB: 3',
-    'KB: 4',
-    'KB: 5',
-    'KB: 6',
-    'KB: 7',
-    'KB: 8',
-    'KB: 9',
-    'KB: 0',
-    'KB: Backspace',
-    'KB: Tab',
-    'KB: Minus',
-    'KB: Equal',
-    'KB: L Brace',
-    'KB: R Brace',
-    'KB: Backslash',
-    'KB: Semicolon',
-    'KB: Apostrophe',
-    'KB: Grave',
-    'KB: Comma',
-    'KB: Dot',
-    'KB: Slash',
-    'KB: Capslock',
-    'KB: F1',
-    'KB: F2',
-    'KB: F3',
-    'KB: F4',
-    'KB: F5',
-    'KB: F6',
-    'KB: F7',
-    'KB: F8',
-    'KB: F9',
-    'KB: F10',
-    'KB: F11',
-    'KB: F12',
-    'KB: Print Screen',
-    'KB: Scroll',
-    'KB: Pause',
-    'KB: Insert',
-    'KB: Home',
-    'KB: Page Up',
-    'KB: Delete',
-    'KB: End',
-    'KB: Page Down',
-    'KB: Numlock',
-    'KB: KP Div',
-    'KB: KP Multi',
-    'KB: KP Minus',
-    'KB: KP Plus',
-    'KB: KP Enter',
-    'KB: KP 1',
-    'KB: KP 2',
-    'KB: KP 3',
-    'KB: KP 4',
-    'KB: KP 5',
-    'KB: KP 6',
-    'KB: KP 7',
-    'KB: KP 8',
-    'KB: KP 9',
-    'KB: KP 0',
-    'KB: KP Dot',
-    'KB: L Alt',
-    'KB: R Ctrl',
-    'KB: R Shift',
-    'KB: R Alt',
-    'KB: R Win',
+/*    Default                      Keyboard             Mouse                PS3                  PS4 / PS5            Wiimote              Wiimote + Classic    Wiimote + Nunchuck   WiiU / Switch Pro    Switch Joycon        Xbox One S / X|S     Steam                NeoGeo (Paraller 1P) PCE                  NES                  SNES                 CD-i                 JVS                  3DO                  Jaguar               PC-FX                N64                  GameCube             Atari / SMS          MD / Genesis         Saturn               Dreamcast            PSX / PS2           */
+    ['GP: LX Left;  KB: A',       'KB: A',             '',                  'Left stick left',   'Left stick left',   '',                '[C] Left stick left',  '[N] Stick left',   'Left stick left',   'Stick left (H)',    'Left stick left',   'Left pad left',     '',                  '',                  '',                  '',                  'Stick left',        'Stick left',        '*Stick left',   '*Left stick left (X)',   '',                 'Stick left',        'Left stick left',   '',                  '',                  '*Stick left',       'Left stick left',   'Left stick left',  ],
+    ['GP: LX Right; KB: D',       'KB: D',             '',                  'Left stick right',  'Left stick right',  '',                '[C] Left stick right', '[N] Stick right',  'Left stick right',  'Stick right (H)',   'Left stick right',  'Left pad right',    '',                  '',                  '',                  '',                  'Stick right',       'Stick right',       '*Stick right',  '*Left stick right (X)',  '',                 'Stick right',       'Left stick right',  '',                  '',                  '*Stick right',      'Left stick right',  'Left stick right', ],
+    ['GP: LY Down;  KB: S',       'KB: S',             '',                  'Left stick down',   'Left stick down',   '',                '[C] Left stick down',  '[N] Stick down',   'Left stick down',   'Stick down (H)',    'Left stick down',   'Left pad down',     '',                  '',                  '',                  '',                  'Stick down',        'Stick down',        '*Stick down',   '*Left stick down (Y)',   '',                 'Stick down',        'Left stick down',   '',                  '',                  '*Stick down',       'Left stick down',   'Left stick down',  ],
+    ['GP: LY Up;    KB: W',       'KB: W',             '',                  'Left stick up',     'Left stick up',     '',                '[C] Left stick up',    '[N] Stick up',     'Left stick up',     'Stick up (H)',      'Left stick up',     'Left pad up',       '',                  '',                  '',                  '',                  'Stick up',          'Stick up',          '*Stick up',     '*Left stick up (Y)',     '',                 'Stick up',          'Left stick up',     '',                  '',                  '*Stick up',         'Left stick up',     'Left stick up',    ],
+    ['GP: RX Left;  M: X Left',   '',                  'M: X Left',         'Right stick left',  'Right stick left',  '',                '[C] Right stick left', '',                 'Right stick left',  '',                  'Right stick left',  'Right pad left',    '',                  '',                  '',                  '',                  '',                  '',                  '',              '*Right stick left (TX)', '',                 'C-Left',            'Right stick left',  '',                  '',                  '',                  '*Right stick left', 'Right stick left', ],
+    ['GP: RX Right; M: X Right',  '',                  'M: X Right',        'Right stick right', 'Right stick right', '',                '[C] Right stick right','',                 'Right stick right', '',                  'Right stick right', 'Right pad right',   '',                  '',                  '',                  '',                  '',                  '',                  '',              '*Right stick right (TX)','',                 'C-Right',           'Right stick right', '',                  '',                  '',                  '*Right stick right','Right stick right',],
+    ['GP: RY Down;  M: Y Down',   '',                  'M: Y Down',         'Right stick down',  'Right stick down',  '',                '[C] Right stick down', '',                 'Right stick down',  '',                  'Right stick down',  'Right pad down',    '',                  '',                  '',                  '',                  '',                  '',                  '*Throttle down','*Right stick down (TY)', '',                 'C-Down',            'Right stick down',  '',                  '',                  '',                  '*Right stick down', 'Right stick down', ],
+    ['GP: RY Up;    M: Y Up',     '',                  'M: Y Up',           'Right stick up',    'Right stick up',    '',                '[C] Right stick up',   '',                 'Right stick up',    '',                  'Right stick up',    'Right pad up',      '',                  '',                  '',                  '',                  '',                  '',                  '*Throttle up',  '*Right stick up (TY)',   '',                 'C-Up',              'Right stick up',    '',                  '',                  '',                  '*Right stick up',   'Right stick up',   ],
+    ['GP: LD Left;  KB: Left',    'KB: Left',          '',                  'D-pad left',        'D-pad left',        'D-pad left (H)',  '[C] D-pad left',     '[W] D-pad left (V)', 'D-pad left',        '',                  'D-pad left',        'Stick left',        'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        '',                  'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        'Left D-pad left',   'D-pad left',       ],
+    ['GP: LD Right; KB: Right',   'KB: Right',         '',                  'D-pad right',       'D-pad right',       'D-pad right (H)', '[C] D-pad right',    '[W] D-pad right (V)','D-pad right',       '',                  'D-pad right',       'Stick right',       'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       '',                  'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       'Left D-pad right',  'D-pad right',      ],
+    ['GP: LD Down;  KB: Down',    'KB: Down',          '',                  'D-pad down',        'D-pad down',        'D-pad down (H)',  '[C] D-pad down',     '[W] D-pad down (V)', 'D-pad down',        '',                  'D-pad down',        'Stick down',        'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        '',                  'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        'Left D-pad down',   'D-pad down',       ],
+    ['GP: LD Up;    KB: Up',      'KB: Up',            '',                  'D-pad up',          'D-pad up',          'D-pad up (H)',    '[C] D-pad up',       '[W] D-pad up (V)',   'D-pad up',          '',                  'D-pad up',          'Stick up',          'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          '',                  'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          'Left D-pad up',     'D-pad up',         ],
+    ['GP: RD Left;  M: WX Left',  '',                  'M: WX Left',        '',                  'Mute',              '',                '[W] D-pad left (H)',  '',                  '',                  '',                  '',                  'L pad click',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '*',                 '',                  '',                  '',                  '',                  '',                  '',                  '*Right D-pad left', '',                 ],
+    ['GP: RD Right; M: WX Right', '',                  'M: WX Right',       '',                  '',                  '',                '[W] D-pad right (H)', '',                  '',                  '',                  '',                  'R pad click',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '0',                 '',                  '',                  '',                  '',                  '',                  '',                  '*Right D-pad right','',                 ],
+    ['GP: RD Down;  M: WY Down',  '',                  'M: WY Down',        '',                  '',                  '',                '[W] D-pad down (H)',  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '#',                 '',                  '',                  '',                  '',                  '',                  '',                  '*Right D-pad down', '',                 ],
+    ['GP: RD Up;    M: WY Up',    '',                  'M: WY Up',          '',                  '',                  '',                '[W] D-pad up (H)',    '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '*Right D-pad up',   '',                 ],
+    ['GP: RB Left;  KB: Q; M: 4', 'KB: Q',             'M: 4',              'Circle',            'Circle',            'B',                 '[C] Y',             '[W] A',             'Y',                 'B | D-pad up',      'X',                 'X',                 'C',                 '*IV',               'B',                 'Y',                 '',                  '3',                 'A',                 'Z (1)',             'IV',                'B',                 'B',                 '1',                 '*X',                'X',                 'X',                 'Circle',           ],
+    ['GP: RB Right; KB: R; M: 5', 'KB: R',             'M: 5',              'Square',            'Square',            '2',                 '[C] A',             '[W] 2',             'A',                 'X | D-pad down',    'B',                 'B',                 'B',                 'II',                '',                  'A',                 '2',                 '2',                 'C',                 'B',                 'II',                'C-Down',            'X',                 '',                  'B',                 'B',                 'B',                 'Square',           ],
+    ['GP: RB Down;  KB: E; M: 6', 'KB: E',             'M: 6',              'X',                 'X',                 '1',                 '[C] B',             '[W] 1',             'B',                 'A | D-pad left',    'A',                 'A',                 'A',                 '*III',              'A',                 'B',                 '1',                 '1',                 'B',                 'C',                 'III',               'A',                 'A',                 '2',                 'A',                 'A',                 'A',                 'X',                ],
+    ['GP: RB Up;    KB: F; M: 7', 'KB: F',             'M: 7',              'Triangle',          'Triangle',          'A',                 '[C] X',             '',                  'X',                 'Y | D-pad right',   'Y',                 'Y',                 'D',                 '*V',                '',                  'X',                 '',                  '4',                 '*Trigger',          'Y (2)',             'V',                 'C-Left',            'Y',                 '',                  '*Y',                'Y',                 'Y',                 'Triangle',         ],
+    ['GP: MM; KB: Esc',           'KB: Esc',           '',                  'Start',             'OPTIONS',           '+',                 '[C] +',             '',                  '+',                 '+ | Capture',       'Menu',              'Start',             'Start',             'Run',               'Start',             'Start',             '',                  'Start',             'P',                 'Option',            'Run',               'Start',             'Start',             '',                  'Start',             'Start',             'Start',             'Start',            ],
+    ['GP: MS; KB: Enter',         'KB: Enter',         '',                  'Select',            'SHARE',             '-',                 '[C] -',             '',                  '-',                 '- | Home',          'View',              'Back',              'Select',            'Select',            'Select',            'Select',            '',                  'Coin',              'X',                 'Pause',             'Select',            '',                  '',                  '',                  '',                  '',                  '*D',                'Select',           ],
+    ['GP: MT; KB: L Win',         'KB: L Win',         '',                  'PS',                'PS',                'Home',              '[C] Home',          '',                  'Home',              '',                  'Xbox',              'Steam',             'Credit',            '',                  '',                  '',                  '',                  'Service',           'PS',                '5',                 '',                  '',                  '',                  '',                  '',                  '',                  '',                  'Analog',           ],
+    ['GP: MQ; KB: Hash',          'KB: Hash',          '',                  '',                  'TouchPad',          '',                  '[W] B',             '',                  'Capture',           '',                  'Share',             'Stick click',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '8',                 '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['GP: LM; M: Right',          '',                  'M: Right',          'L2',                'L2',                '',                  '[C] Analog L',      '[N] Z',             'ZL',                'SL',                'LT',                'Analog LT',         '6',                 '*VI',               '',                  'L',                 '',                  '5',                 'L',                 '*Z Axis',           'VI',                'Z',                 'Analog L',          '',                  '*Z',                '*Analog L',         'L',                 'L2',               ],
+    ['GP: LS; KB: Z',             'KB: Z',             '',                  'L1',                'L1',                '',                  '[C] ZL',            '[N] C',             'L',                 'L | R',             'LB',                'LB',                '',                  '',                  '',                  '',                  '',                  '7',                 '',                  'X (3)',             'Mode 1',            'L',                 'Z',                 '',                  '*Mode',             'Z',                 '*Z',                'L1',               ],
+    ['GP: LT; KB: L CTRL',        'KB: L CTRL',        '',                  '',                  '',                  '',                  '[C] Digital L',     '',                  '',                  '',                  '',                  'Digital LT',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '7',                 '',                  '',                  'Digital L',         '',                  '',                  'Digital L',         '',                  '',                 ],
+    ['GP: LJ; M: Middle',         '',                  'M: Middle',         'L3',                'L3',                '',                  '[W] 1',             '',                  'L Stick',           'Stick click',       'L Stick',           'L grip',            '',                  '',                  '',                  '',                  '',                  '9',                 '',                  'L (4)',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  'L3',               ],
+    ['GP: RM; M: Left',           '',                  'M: Left',           'R2',                'R2',                '',                  '[C] Analog R',      '[W] B',             'ZR',                'SR',                'RT',                'Analog RT',         '6',                 'I',                 '',                  'R',                 '',                  '6',                 'R',                 '*TZ Axis',          'I',                 'Z',                 'Analog R',          '',                  '',                  '*Analog R',         'R',                 'R2',               ],
+    ['GP: RS; KB: X; M: 8',       'KB: X',             '',                  'R1',                'R1',                '',                  '[C] ZR',            '',                  'R',                 'ZL | ZR',           'RB',                'RB',                '',                  '',                  '',                  '',                  '',                  '8',                 '',                  'A',                 'Mode 2',            'R',                 'Z',                 '',                  'C',                 'C',                 '*C',                'R1',               ],
+    ['GP: RT; KB: L Shift',       'KB: L Shift',       '',                  '',                  '',                  '',                  '[C] Digital R',     '',                  '',                  '',                  '',                  'Digital RT',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '9',                 '',                  '',                  'Digital R',         '',                  '',                  'Digital R',         '',                  '',                 ],
+    ['GP: RJ; KB: Space',         'KB: Space',         '',                  'R3',                'R3',                '',                  '[W] 2',             '',                  'R Stick',           '',                  'R Stick',           'R grip',            '',                  '',                  '',                  '',                  '',                  '10',                '',                  'R (6)',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  'R3',               ],
+    ['KB: B',                     'KB: B',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: C',                     'KB: C',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: G',                     'KB: G',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: H',                     'KB: H',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: I',                     'KB: I',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: J',                     'KB: J',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: K',                     'KB: K',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: L',                     'KB: L',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: M',                     'KB: M',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: N',                     'KB: N',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: O',                     'KB: O',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: P',                     'KB: P',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: T',                     'KB: T',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: U',                     'KB: U',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: V',                     'KB: V',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Y',                     'KB: Y',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 1',                     'KB: 1',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 2',                     'KB: 2',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 3',                     'KB: 3',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 4',                     'KB: 4',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 5',                     'KB: 5',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 6',                     'KB: 6',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 7',                     'KB: 7',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 8',                     'KB: 8',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 9',                     'KB: 9',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: 0',                     'KB: 0',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Backspace',             'KB: Backspace',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Tab',                   'KB: Tab',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Minus',                 'KB: Minus',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Equal',                 'KB: Equal',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: L Brace',               'KB: L Brace',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: R Brace',               'KB: R Brace',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Backslash',             'KB: Backslash',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Semicolon',             'KB: Semicolon',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Apostrophe',            'KB: Apostrophe',    '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Grave',                 'KB: Grave',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Comma',                 'KB: Comma',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Dot',                   'KB: Dot',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Slash',                 'KB: Slash',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Capslock',              'KB: Capslock',      '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F1',                    'KB: F1',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F2',                    'KB: F2',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F3',                    'KB: F3',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F4',                    'KB: F4',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F5',                    'KB: F5',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F6',                    'KB: F6',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F7',                    'KB: F7',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F8',                    'KB: F8',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F9',                    'KB: F9',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F10',                   'KB: F10',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F11',                   'KB: F11',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: F12',                   'KB: F12',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Print Screen',          'KB: Print Screen',  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Scroll',                'KB: Scroll',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Pause',                 'KB: Pause',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Insert',                'KB: Insert',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Home',                  'KB: Home',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Page Up',               'KB: Page Up',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Delete',                'KB: Delete',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: End',                   'KB: End',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Page Down',             'KB: Page Down',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: Numlock',               'KB: Numlock',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP Div',                'KB: KP Div',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP Multi',              'KB: KP Multi',      '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP Minus',              'KB: KP Minus',      '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP Plus',               'KB: KP Plus',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP Enter',              'KB: KP Enter',      '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 1',                  'KB: KP 1',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 2',                  'KB: KP 2',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 3',                  'KB: KP 3',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 4',                  'KB: KP 4',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 5',                  'KB: KP 5',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 6',                  'KB: KP 6',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 7',                  'KB: KP 7',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 8',                  'KB: KP 8',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 9',                  'KB: KP 9',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP 0',                  'KB: KP 0',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: KP Dot',                'KB: KP Dot',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: L Alt',                 'KB: L Alt',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: R Ctrl',                'KB: R Ctrl',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: R Shift',               'KB: R Shift',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: R Alt',                 'KB: R Alt',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
+    ['KB: R Win',                 'KB: R Win',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                 ],
 ];
 
 var systemCfg = [
@@ -209,6 +241,8 @@ let brService = null;
 var mappingElement = null;
 let inputChrc = null;
 var pageInit = 0;
+var srcLabel = 0;
+var destLabel = 0;
 
 function initGlobalCfg() {
     var div = document.createElement("div");
@@ -394,6 +428,50 @@ function initInputSelect() {
     divInputCfg.appendChild(div);
 }
 
+function initLabelSelect() {
+    var div = document.createElement("div");
+
+    var label = document.createElement("label");
+    label.innerText = 'Src label: ';
+    label.setAttribute("for", "srcLabel");
+
+    var main = document.createElement("select");
+    for (var i = 0; i < labelName.length; i++) {
+        var option  = document.createElement("option");
+        option.value = i;
+        option.text = labelName[i];
+        main.add(option);
+    }
+    main.id = "srcLabel";
+    main.addEventListener("change", changeSrcLabel);
+    div.appendChild(label);
+    div.appendChild(main);
+
+    var divInputCfg = document.getElementById("divInputCfg");
+    divInputCfg.appendChild(div);
+
+    var div = document.createElement("div");
+    div.setAttribute("style", "margin-bottom:1em;");
+
+    label = document.createElement("label");
+    label.innerText = 'Dst label: ';
+    label.setAttribute("for", "dstLabel");
+
+    main = document.createElement("select");
+    for (var i = 0; i < labelName.length; i++) {
+        var option  = document.createElement("option");
+        option.value = i;
+        option.text = labelName[i];
+        main.add(option);
+    }
+    main.id = "dstLabel";
+    main.addEventListener("change", changeDstLabel);
+    div.appendChild(label);
+    div.appendChild(main);
+
+    divInputCfg.appendChild(div);
+}
+
 function initInputAssign() {
     var div = document.createElement("div");
 
@@ -444,7 +522,7 @@ function initFirstOutputMapping() {
     for (var i = 0; i < btnList.length; i++) {
         var option  = document.createElement("option");
         option.value = i;
-        option.text = btnList[i];
+        option.text = btnList[i][srcLabel];
         src.add(option);
     }
     src.setAttribute("class", "src");
@@ -643,7 +721,7 @@ function initOutputMapping() {
     for (var i = 0; i < btnList.length; i++) {
         var option  = document.createElement("option");
         option.value = i;
-        option.text = btnList[i];
+        option.text = btnList[i][srcLabel];
         src.add(option);
     }
     src.setAttribute("class", "src");
@@ -752,6 +830,7 @@ function initBlueRetroCfg() {
     initOutputSelect();
     initOutputMode();
     initInputSelect();
+    initLabelSelect();
     //initInputAssign();
     initFirstOutputMapping();
     initOutputMapping();
@@ -1196,4 +1275,40 @@ function selectOutput() {
 
 function selectInput() {
     loadInputCfg(this.value);
+}
+
+function changeSrcLabel() {
+    var select = document.getElementsByClassName("src");
+    var str = ""
+    var tmp;
+
+    srcLabel = this.value;
+
+    for (var i = 0; i < btnList.length; i++) {
+        str += "<option value=\"" + i + "\">" + btnList[i][srcLabel] + "</option>";
+    }
+    for (var i = 0; i < select.length; i++) {
+        tmp = select[i].value;
+        select[i].innerHTML = str;
+        select[i].value = tmp;
+    }
+    mappingElement.querySelector('.src').innerHTML = str;
+}
+
+function changeDstLabel() {
+    var select = document.getElementsByClassName("dest");
+    var str = ""
+    var tmp;
+
+    destLabel = this.value;
+
+    for (var i = 0; i < btnList.length; i++) {
+        str += "<option value=\"" + i + "\">" + btnList[i][destLabel] + "</option>";
+    }
+    for (var i = 0; i < select.length; i++) {
+        tmp = select[i].value;
+        select[i].innerHTML = str;
+        select[i].value = tmp;
+    }
+    mappingElement.querySelector('.dest').innerHTML = str;
 }
