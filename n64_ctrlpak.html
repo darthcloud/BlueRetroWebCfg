@@ -1,0 +1,50 @@
+---
+feature_name: BlueRetro N64 controller pak manager
+icon_url: icon.png
+index: index.html
+---
+
+{% include_relative _includes/intro.html %}
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn">Connect BlueRetro</button>
+</div>
+<div id="divFileSelect" style="display:none;margin-bottom:1em;">
+    Select BlueRetro controller pak bank:
+    <select id="pakSelect">
+        <option value="0">Pak 1</option>
+        <option value="1">Pak 2</option>
+        <option value="2">Pak 3</option>
+        <option value="3">Pak 4</option>
+    </select><br><br>
+    <button id="btnPakRead">Read</button><br><br>
+    <button id="btnPakFormat">Format</button><br><br>
+    <button id="btnPakWrite">Write</button>
+    Select .MPK file to write:
+    <input type="file" id="pakFile"/><br><br>
+    Use <a href=https://bryc.github.io/mempak>https://bryc.github.io/mempak</a> (by <a href=https://github.com/bryc>bryc</a>) to manage content of .MPK files.
+</div>
+<div id="divFileTransfer" style="display:none;margin-bottom:1em;">
+    <div id="progress_bar"><div class="percent"></div></div>
+    <button id="btnFileTransferCancel">Cancel</button>
+</div>
+
+{% include output_helper.html %}
+
+<script src="n64_ctrlpak.js" type="text/javascript"></script>
+
+<script>
+  document.getElementById("btnPakRead").addEventListener('click', pakRead);
+  document.getElementById("btnPakWrite").addEventListener('click', pakWrite);
+  document.getElementById("btnPakFormat").addEventListener('click', pakFormat);
+  document.getElementById("btnFileTransferCancel").addEventListener('click', abortFileTransfer);
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+</script>
+
+{% include_relative _includes/utils.html %}
