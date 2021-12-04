@@ -308,6 +308,28 @@ function initGlobalCfg() {
         divGlobalCfg.appendChild(div);
     }
 
+    if (apiVersion > 1) {
+        div = document.createElement("div");
+
+        /* Banksel */
+        label = document.createElement("label");
+        label.innerText = 'Memory Card Bank: ';
+        label.setAttribute("for", "banksel");
+
+        sel = document.createElement("select");
+        for (var i = 0; i < inquiryMode.length; i++) {
+            var option  = document.createElement("option");
+            option.value = i;
+            option.text = 'Bank ' + i;
+            sel.add(option);
+        }
+        sel.id = "banksel";
+        div.appendChild(label);
+        div.appendChild(sel);
+
+        divGlobalCfg.appendChild(div);
+    }
+
     div = document.createElement("div");
 
     var btn = document.createElement("button");
@@ -871,6 +893,9 @@ function loadGlobalCfg() {
             if (apiVersion > 0) {
                 document.getElementById("inquiryMode").value = value.getUint8(2);
             }
+            if (apiVersion > 1) {
+                document.getElementById("banksel").value = value.getUint8(3);
+            }
             resolve();
         })
         .catch(error => {
@@ -1019,7 +1044,10 @@ function loadInputCfg(cfgId) {
 }
 
 function saveGlobal() {
-    if (apiVersion > 0) {
+    if (apiVersion > 1) {
+        var data = new Uint8Array(4);
+    }
+    else if (apiVersion > 0) {
         var data = new Uint8Array(3);
     }
     else {
@@ -1029,6 +1057,9 @@ function saveGlobal() {
     data[1] = document.getElementById("multitapCfg").value;
     if (apiVersion > 0) {
         data[2] = document.getElementById("inquiryMode").value;
+    }
+    if (apiVersion > 1) {
+        data[3] = document.getElementById("banksel").value;
     }
     return new Promise(function(resolve, reject) {
         log('Get Global Config CHRC...');
