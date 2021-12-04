@@ -317,10 +317,10 @@ function initGlobalCfg() {
         label.setAttribute("for", "banksel");
 
         sel = document.createElement("select");
-        for (var i = 0; i < inquiryMode.length; i++) {
+        for (var i = 0; i < 4; i++) {
             var option  = document.createElement("option");
             option.value = i;
-            option.text = 'Bank ' + i;
+            option.text = 'Bank ' + eval(i + 1);
             sel.add(option);
         }
         sel.id = "banksel";
@@ -339,6 +339,16 @@ function initGlobalCfg() {
     div.appendChild(btn);
     div.setAttribute("style", "margin-top:1em;");
 
+    divGlobalCfg.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "globalSaveText";
+    div.setAttribute("style", "display:none;margin-top:1em;");
+    var p = document.createElement("p");
+    p.setAttribute("style", "font-style:italic;font-size:small;color:red;");
+    p.innerText = "Power cycle BlueRetro adapter for change to take effect.";
+
+    div.appendChild(p);
     divGlobalCfg.appendChild(div);
 }
 
@@ -870,6 +880,7 @@ function getApiVersion() {
         .then(value => {
             log('Api version size: ' + value.byteLength);
             apiVersion = value.getUint8(0);
+            log('Api version: ' + apiVersion);
             resolve();
         })
         .catch(error => {
@@ -1044,6 +1055,7 @@ function loadInputCfg(cfgId) {
 }
 
 function saveGlobal() {
+    document.getElementById("globalSaveText").style.display = 'none';
     if (apiVersion > 1) {
         var data = new Uint8Array(4);
     }
@@ -1069,6 +1081,7 @@ function saveGlobal() {
             return chrc.writeValue(data);
         })
         .then(_ => {
+            document.getElementById("globalSaveText").style.display = 'block';
             log('Global Config saved');
             resolve();
         })
