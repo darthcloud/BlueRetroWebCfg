@@ -346,7 +346,7 @@ function initGlobalCfg() {
     div.setAttribute("style", "display:none;margin-top:1em;");
     var p = document.createElement("p");
     p.setAttribute("style", "font-style:italic;font-size:small;color:red;");
-    p.innerText = "Power cycle BlueRetro adapter for change to take effect.";
+    p.innerText = "Config saved, power cycle BlueRetro adapter for change to take effect.";
 
     div.appendChild(p);
     divGlobalCfg.appendChild(div);
@@ -432,6 +432,26 @@ function initOutputMode() {
     div.appendChild(btn);
     div.setAttribute("style", "margin-top:1em;");
 
+    divOutputCfg.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "outputSaveText";
+    div.setAttribute("style", "display:none;margin-top:1em;");
+    var p = document.createElement("p");
+    p.setAttribute("style", "font-style:italic;font-size:small;color:red;");
+    p.innerText = "Config saved, power cycle BlueRetro adapter for Mode change to take effect.";
+
+    div.appendChild(p);
+    divOutputCfg.appendChild(div);
+
+    div = document.createElement("div");
+    div.id = "outputSaveMouse";
+    div.setAttribute("style", "display:none;margin-top:1em;");
+    var p = document.createElement("p");
+    p.setAttribute("style", "font-style:italic;font-size:small;color:orange;");
+    p.innerText = "Mouse mode require setting <Default Mouse> preset.";
+
+    div.appendChild(p);
     divOutputCfg.appendChild(div);
 }
 
@@ -731,6 +751,16 @@ function initFirstOutputMapping() {
     btn.addEventListener("click", saveInput);
     divSave.appendChild(btn);
     divSave.setAttribute("style", "margin-top:1em;");
+
+    var div = document.createElement("div");
+    div.id = "inputSaveText";
+    div.setAttribute("style", "display:none;margin-top:1em;");
+    var p = document.createElement("p");
+    p.setAttribute("style", "font-style:italic;font-size:small;color:green;");
+    p.innerText = "Config saved, mapping changes take effect immediately.";
+
+    div.appendChild(p);
+    divSave.appendChild(div);
 
     /* Append first cfg */
     divMappingGrp = document.createElement("div");
@@ -1092,6 +1122,8 @@ function saveGlobal() {
 }
 
 function saveOutput() {
+    document.getElementById("outputSaveText").style.display = 'none';
+    document.getElementById("outputSaveMouse").style.display = 'none';
     var data = new Uint8Array(2);
     data[0] = document.getElementById("outputMode").value;
     data[1] = document.getElementById("outputAcc").value;
@@ -1114,6 +1146,10 @@ function saveOutput() {
             return chrc.writeValue(data);
         })
         .then(_ => {
+            document.getElementById("outputSaveText").style.display = 'block';
+            if (data[0] == 3) {
+                document.getElementById("outputSaveMouse").style.display = 'block';
+            }
             log('Output ' + cfgId + ' Config saved');
             resolve();
         })
@@ -1178,6 +1214,7 @@ function writeInputCfg(cfgId, cfg) {
 }
 
 function saveInput() {
+    document.getElementById("inputSaveText").style.display = 'none';
     var cfgSize = nbMapping*8 + 3;
     var cfg = new Uint8Array(cfgSize);
     cfgId = document.getElementById("inputSelect").value;
@@ -1211,6 +1248,7 @@ function saveInput() {
     return new Promise(function(resolve, reject) {
         writeInputCfg(cfgId, cfg)
         .then(_ => {
+            document.getElementById("inputSaveText").style.display = 'block';
             log('Input ' + cfgId + ' Config saved');
             resolve();
         })
