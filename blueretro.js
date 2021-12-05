@@ -566,6 +566,7 @@ function initFirstOutputMapping() {
     /* Src */
     var span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
+    span.title = "This is the source button/axis on the Bluetooth controller";
     var label = document.createElement("label");
     label.innerText = 'Src';
     label.setAttribute("style", "display:block;");
@@ -585,6 +586,7 @@ function initFirstOutputMapping() {
     /* Dest */
     span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
+    span.title = "This is the destination button/axis on the wired interface.";
     label = document.createElement("label");
     label.innerText = 'Dest';
     label.setAttribute("style", "display:block;");
@@ -598,6 +600,7 @@ function initFirstOutputMapping() {
     /* Dest ID */
     span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
+    span.title = "This is the ID of the wired interface.";
     label = document.createElement("label");
     label.innerText = 'Dest ID';
     label.setAttribute("style", "display:block;");
@@ -617,6 +620,7 @@ function initFirstOutputMapping() {
     /* Max */
     span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
+    span.title = "If source & destination is an axis then this is the scaling factor base on the destination maximum. If source is a button & destination is an axis then this is the value base on destination maximum that the axis will be set.";
     label = document.createElement("label");
     label.innerText = 'Max';
     label.setAttribute("style", "display:block;");
@@ -637,6 +641,7 @@ function initFirstOutputMapping() {
     /* Threshold */
     span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
+    span.title = "If source is an axis and destination is a button, this is the threshold requires on the source axis before the button is pressed.";
     label = document.createElement("label");
     label.innerText = 'Thres';
     label.setAttribute("style", "display:block;");
@@ -657,6 +662,7 @@ function initFirstOutputMapping() {
     /* Deadone */
     span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
+    span.title = "This is the axis dead zone around reset value.";
     label = document.createElement("label");
     label.innerText = 'Deadzone';
     label.setAttribute("style", "display:block;");
@@ -677,6 +683,7 @@ function initFirstOutputMapping() {
     /* Turbo */
     span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
+    span.title = "Turbo function base on the system frame rate. (TBD Not implemented yet)";
     label = document.createElement("label");
     label.innerText = 'Turbo';
     label.setAttribute("style", "display:block;");
@@ -701,6 +708,7 @@ function initFirstOutputMapping() {
     /* Scaling */
     span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
+    span.title = "Various response curve for scaling. (Only Passthrough and Linear, others TBD)";
     label = document.createElement("label");
     label.innerText = 'Scaling';
     label.setAttribute("style", "display:block;");
@@ -720,6 +728,7 @@ function initFirstOutputMapping() {
     /* Scaling diag */
     span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
+    span.title = "Diagonal scaling options between joystick type. (TBD Not implemented yet)";
     label = document.createElement("label");
     label.innerText = 'Diagonal';
     label.setAttribute("style", "display:block;");
@@ -780,6 +789,7 @@ function initOutputMapping() {
     /* Src */
     var src = document.createElement("select");
     src.setAttribute("style", "max-width:10%;");
+    src.title = "This is the source button/axis on the Bluetooth controller";
     for (var i = 0; i < btnList.length; i++) {
         var option  = document.createElement("option");
         option.value = i;
@@ -792,11 +802,13 @@ function initOutputMapping() {
     /* Dest */
     var dest = src.cloneNode(true);
     dest.setAttribute("class", "dest");
+    dest.title = "This is the destination button/axis on the wired interface.";
     mappingElement.appendChild(dest);
 
     /* Dest ID */
     var destId = document.createElement("select");
     destId.setAttribute("style", "max-width:10%;");
+    destId.title = "This is the ID of the wired interface.";
     for (var i = 0; i < maxOutput; i++) {
         var option  = document.createElement("option");
         option.value = i;
@@ -809,6 +821,7 @@ function initOutputMapping() {
     /* Max */
     var max = document.createElement("select");
     max.setAttribute("style", "max-width:10%;");
+    max.title = "If source & destination is an axis then this is the scaling factor base on the destination maximum. If source is a button & destination is an axis then this is the value base on destination maximum that the axis will be set.";
     for (var i = 0; i <= maxMax; i += 5) {
         var option  = document.createElement("option");
         option.value = i;
@@ -822,6 +835,7 @@ function initOutputMapping() {
     /* Threshold */
     var thres = document.createElement("select");
     thres.setAttribute("style", "thres-width:10%;");
+    thres.title = "If source is an axis and destination is a button, this is the threshold requires on the source axis before the button is pressed.";
     for (var i = 0; i <= maxThres; i += 5) {
         var option  = document.createElement("option");
         option.value = i;
@@ -835,6 +849,7 @@ function initOutputMapping() {
     /* Deadone */
     var dz = document.createElement("select");
     dz.setAttribute("style", "dz-width:10%;");
+    dz.title = "This is the axis dead zone around reset value.";
     for (var i = 0; i <= maxMax; i += 5) {
         var option  = document.createElement("option");
         option.value = i;
@@ -848,6 +863,7 @@ function initOutputMapping() {
     /* Turbo */
     var turbo = document.createElement("select");
     turbo.setAttribute("style", "max-width:10%;");
+    turbo.title = "Turbo function base on the system frame rate. (TBD Not implemented yet)";
     for (var i = 0; i < maxTurbo; i++) {
         var option  = document.createElement("option");
         option.value = i;
@@ -865,6 +881,7 @@ function initOutputMapping() {
     /* Scaling */
     var sca = document.createElement("select");
     sca.setAttribute("style", "max-width:10%;");
+    sca.title = "Various response curve for scaling. (Only Passthrough and Linear, others TBD)";
     for (var i = 0; i < scaling.length; i++) {
         var option  = document.createElement("option");
         option.value = i;
@@ -877,6 +894,7 @@ function initOutputMapping() {
     /* Scaling diag */
     var diag = document.createElement("select");
     diag.setAttribute("style", "max-width:10%;");
+    diag.title = "Diagonal scaling options between joystick type. (TBD Not implemented yet)";
     for (var i = 0; i < diagScaling.length; i++) {
         var option  = document.createElement("option");
         option.value = i;
