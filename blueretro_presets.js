@@ -218,6 +218,16 @@ function initOutputMapping() {
     divSave.appendChild(btn);
     divSave.setAttribute("style", "margin-top:1em;");
 
+    var div = document.createElement("div");
+    div.id = "inputSaveText";
+    div.setAttribute("style", "display:none;margin-top:1em;");
+    var p = document.createElement("p");
+    p.setAttribute("style", "font-style:italic;font-size:small;color:green;");
+    p.innerText = "Config saved, mapping changes take effect immediately.";
+
+    div.appendChild(p);
+    divSave.appendChild(div);
+
     /* Append first cfg */
     divMappingGrp = document.createElement("div");
     var divInputCfg = document.getElementById("divInputCfg");
@@ -331,6 +341,7 @@ function writeInputCfg(cfgId, cfg) {
 }
 
 function saveInput() {
+    document.getElementById("inputSaveText").style.display = 'none';
     var preset = Number(document.getElementById("presetsName").value);
     var nbMapping = presets[preset].map.length;
     var cfgSize = nbMapping*8 + 3;
@@ -357,6 +368,7 @@ function saveInput() {
     return new Promise(function(resolve, reject) {
         writeInputCfg(cfgId, cfg)
         .then(_ => {
+            document.getElementById("inputSaveText").style.display = 'block';
             log('Input ' + cfgId + ' Config saved');
             resolve();
         })
