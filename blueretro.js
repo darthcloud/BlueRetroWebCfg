@@ -160,8 +160,8 @@ var btnList = [
 
 var systemCfg = [
     'Auto',
-    'Parallel_1P',
-    'Parallel_2P',
+    'Parallel_1P_PP',
+    'Parallel_2P_PP',
     'NES',
     'PCE',
     'MD-Genesis',
