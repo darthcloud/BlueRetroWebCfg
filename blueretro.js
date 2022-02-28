@@ -179,8 +179,11 @@ var systemCfg = [
     'DC',
     'PS2',
     'GC',
-    'Wii-EXT',
-    'Exp Board',
+    'Wii-Ext',
+    "VB",
+    "Parallel_1P_OD",
+    "Parallel_2P_OD",
+    "SEA Board",
 ];
 
 var multitapCfg = [
