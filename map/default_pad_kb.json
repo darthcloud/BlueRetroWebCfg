@@ -1,6 +1,7 @@
 {
     "name":"Default Gamepad/Keyboard",
     "desc":"Generic preset that should be good for most games. This include Keyboard mapping.",
+    "console":"Default",
     "map":[
         ["KB_A",          "KB_A",          0, 100, 50, 135, 0, 0, 0],
         ["KB_D",          "KB_D",          0, 100, 50, 135, 0, 0, 0],

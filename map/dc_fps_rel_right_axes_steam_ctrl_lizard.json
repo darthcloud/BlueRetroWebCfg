@@ -1,6 +1,7 @@
 {
     "name":"DC GP-Alt FPS RX/RY rel for Steam ctrl lizard",
     "desc":"Dreamcast Gamepad-Alt FPS right axes relative for Steam controller in lizard mode.",
+    "console":"DC",
     "map":[
         ["MOUSE_X_LEFT",  "MOUSE_X_LEFT",  0, 100, 50, 0, 0, 5, 0],
         ["MOUSE_X_RIGHT", "MOUSE_X_RIGHT", 0, 100, 50, 0, 0, 5, 0],

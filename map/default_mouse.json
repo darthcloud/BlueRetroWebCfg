@@ -1,6 +1,7 @@
 {
     "name":"Default Mouse",
     "desc":"This mapping expect that the Output Config mode is set to Mouse. For games compatible with Mouse/Trackball accessory.",
+    "console":"Default",
     "map":[
         ["PAD_RX_LEFT",  "PAD_RX_LEFT",  0, 100, 50, 0, 0, 5, 0],
         ["PAD_RX_RIGHT", "PAD_RX_RIGHT", 0, 100, 50, 0, 0, 5, 0],

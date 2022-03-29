@@ -1,6 +1,7 @@
 {
     "name":"N64 Jet Force Gemini",
-    "desc":"Secondary left trigger is A, Secondary right trigger is B, Face Up/Down is C-Up, Face Left/Right is C-Down, Main left trigger is R, Main right trigger is Z",
+    "desc":"Secondary left trigger is B, Secondary right trigger is A, Face Up/Down is C-Up, Face Left/Right is C-Down, Main left trigger is R, Main right trigger is Z",
+    "console":"N64",
     "map":[
         ["PAD_LX_LEFT",  "PAD_LX_LEFT",  0, 100, 50, 135, 0, 0, 0],
         ["PAD_LX_RIGHT", "PAD_LX_RIGHT", 0, 100, 50, 135, 0, 0, 0],

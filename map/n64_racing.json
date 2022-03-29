@@ -1,6 +1,7 @@
 {
     "name":"N64 Generic racing",
     "desc":"For use with source controller with analog main triggers. Map joystick Y axis to L & R main triggers for brake and acceleration respectively. Require use of the following in-game config: [Automobili Lamborghini: Steering Wheel], [Beetle Adventure Racing: Wheel], [California Speed: Custom], [Cruis'n USA: Joystick preset], [F1 Pole Position: Steering Wheel], [Hot Wheel Turbo Racing: Custom], [Indy Racing 2000: Wheel], [MRC: Multi Control], [NASCAR 99: Config #6], [NASCAR 2000: Config #6], [Rush 2: Custom], [San Francisco Rush: Custom], [Top Gear Rally: Type D].",
+    "console":"N64",
     "map":[
         ["PAD_LX_LEFT",  "PAD_LX_LEFT",  0, 100, 50, 135, 0, 0, 0],
         ["PAD_LX_RIGHT", "PAD_LX_RIGHT", 0, 100, 50, 135, 0, 0, 0],

@@ -1,6 +1,7 @@
 {
     "name":"N64 Tony Hawk 1, 2 & 3",
     "desc":"A & C-Down and B & C-Left share the same source.",
+    "console":"N64",
     "map":[
         ["PAD_LX_LEFT",  "PAD_LX_LEFT",  0, 100, 50, 135, 0, 0, 0],
         ["PAD_LX_RIGHT", "PAD_LX_RIGHT", 0, 100, 50, 135, 0, 0, 0],

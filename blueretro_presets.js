@@ -177,12 +177,20 @@ let brService = null;
 var mappingElement = null;
 let inputChrc = null;
 var pageInit = 0;
+var consoles = []
 
 function initInputSelect() {
-    document.getElementById("desc").textContent = presets[0].desc;
-    var div = document.createElement("div");
-
+    //push all console names from JSON files
+    for (var i = 0; i < presets.length; i++) {
+        consoles.push(presets[i].console)
+    }
+    //filter out non-unique items
+    consoles = consoles.filter(onlyUnique)
+    //set placeholder description
+    document.getElementById("desc").textContent = "Select a system and then preset";
+    var div = document.createElement("outputandconsole");
     var main = document.createElement("select");
+
     for (var i = 0; i < maxMainInput; i++) {
         var option  = document.createElement("option");
         option.value = i;
@@ -193,23 +201,36 @@ function initInputSelect() {
     div.appendChild(main);
 
     var main = document.createElement("select");
-    for (var i = 0; i < presets.length; i++) {
+    //add placeholder option
+    var option  = document.createElement("option");
+        option.value = -1;
+        option.text = "All";
+        main.add(option);
+    //add console filter options    
+    for (var i = 0; i < consoles.length; i++) {
         var option  = document.createElement("option");
         option.value = i;
-        option.text = presets[i].name;
+        option.text = consoles[i];
         main.add(option);
     }
+    main.id = "consoleName";
+    main.addEventListener("change", chooseConsole);
+    div.appendChild(main);
+    //add preset drop down menu
+    var main = document.createElement("select");
     main.id = "presetsName";
     main.addEventListener("change", selectInput);
     div.appendChild(main);
 
     var divInputCfg = document.getElementById("divInputCfg");
     divInputCfg.appendChild(div);
+    //populate preset list with all options by default
+    populateConsolePresets(undefined);
 }
 
 function initOutputMapping() {
     /* Save */
-    divSave = document.createElement("div");
+    divSave = document.createElement("saveButton");
 
     var btn = document.createElement("button");
     btn.id = "inputSave";
@@ -229,7 +250,7 @@ function initOutputMapping() {
     divSave.appendChild(div);
 
     /* Append first cfg */
-    divMappingGrp = document.createElement("div");
+    divMappingGrp = document.createElement("save");
     var divInputCfg = document.getElementById("divInputCfg");
     divMappingGrp.appendChild(divSave);
     divInputCfg.appendChild(divMappingGrp);
@@ -269,6 +290,11 @@ function getMapList(url) {
             reject(error);
         });
     });
+}
+
+//standard function to filter out non-unique items from an array
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
 }
 
 function initBlueRetroCfg() {
@@ -341,41 +367,46 @@ function writeInputCfg(cfgId, cfg) {
 }
 
 function saveInput() {
-    document.getElementById("inputSaveText").style.display = 'none';
+    //get consoleName and preset name
     var preset = Number(document.getElementById("presetsName").value);
-    var nbMapping = presets[preset].map.length;
-    var cfgSize = nbMapping*8 + 3;
-    var cfg = new Uint8Array(cfgSize);
-    var cfgId = Number(document.getElementById("inputSelect").value);
+    var consoleName = Number(document.getElementById("consoleName").value);
+    //make sure preset is not placeholder before we do anything
+    if (preset != -1) {
 
-    var j = 0;
-    cfg[j++] = 0;
-    cfg[j++] = 0;
-    cfg[j++] = nbMapping;
+        document.getElementById("inputSaveText").style.display = 'none';
+        var nbMapping = presets[preset].map.length;
+        var cfgSize = nbMapping*8 + 3;
+        var cfg = new Uint8Array(cfgSize);
+        var cfgId = Number(document.getElementById("inputSelect").value);
+        var j = 0;
+        cfg[j++] = 0;
+        cfg[j++] = 0;
+        cfg[j++] = nbMapping;
 
-    log('Input: '+ cfgId + 'Preset: ' + preset);
-    for (var i = 0; i < nbMapping; i++) {
-        cfg[j++] = btn[presets[preset].map[i][0]];
-        cfg[j++] = btn[presets[preset].map[i][1]];
-        cfg[j++] = presets[preset].map[i][2] + cfgId;
-        cfg[j++] = presets[preset].map[i][3];
-        cfg[j++] = presets[preset].map[i][4];
-        cfg[j++] = presets[preset].map[i][5];
-        cfg[j++] = presets[preset].map[i][6];
-        cfg[j++] = Number(presets[preset].map[i][7]) | (Number(presets[preset].map[i][8]) << 4);
-    }
+        log('Input: '+ cfgId + "\n" + 'Preset: ' + preset);
+        for (var i = 0; i < nbMapping; i++) {
+            cfg[j++] = btn[presets[preset].map[i][0]];
+            cfg[j++] = btn[presets[preset].map[i][1]];
+            cfg[j++] = presets[preset].map[i][2] + cfgId;
+            cfg[j++] = presets[preset].map[i][3];
+            cfg[j++] = presets[preset].map[i][4];
+            cfg[j++] = presets[preset].map[i][5];
+            cfg[j++] = presets[preset].map[i][6];
+            cfg[j++] = Number(presets[preset].map[i][7]) | (Number(presets[preset].map[i][8]) << 4);
+        }
 
-    return new Promise(function(resolve, reject) {
-        writeInputCfg(cfgId, cfg)
-        .then(_ => {
-            document.getElementById("inputSaveText").style.display = 'block';
-            log('Input ' + cfgId + ' Config saved');
-            resolve();
-        })
-        .catch(error => {
-            reject(error);
+        return new Promise(function(resolve, reject) {
+            writeInputCfg(cfgId, cfg)
+            .then(_ => {
+                document.getElementById("inputSaveText").style.display = 'block';
+                log('Input ' + cfgId + ' Config saved');
+                resolve();
+            })
+            .catch(error => {
+                reject(error);
+            });
         });
-    });
+    }
 }
 
 function onDisconnected() {
@@ -414,5 +445,47 @@ function btConn() {
 }
 
 function selectInput() {
-    document.getElementById("desc").textContent = presets[Number(this.value)].desc;
+    //only change the description if selected input is not the placeholder
+    if (Number(document.getElementById("presetsName").value) == -1) {
+        document.getElementById("desc").textContent = "Select a console and preset!";
+    }
+    else {
+        document.getElementById("desc").textContent = presets[Number(this.value)].desc;
+    }
+}
+
+function clearConsolePresets() {
+    //clear the presets list then change the description to "select a console and preset!"
+    var presetsList = document.getElementById("presetsName");
+    var presetsListLength = presetsList.length;
+    for (i = 0; i < presetsListLength; i++) {
+        presetsList.remove(0);
+    }
+    document.getElementById("desc").textContent = "Select a console and preset!";
+}
+
+function populateConsolePresets(selectedConsole) {
+    //add "select preset first as -1 to prevent trying to save the placeholder"
+    var list = document.getElementById("presetsName")
+    list.add(new Option("Select preset", -1));
+    //add presets to the list that match the selected console type
+    if (selectedConsole != undefined) {
+        for (i = 0; i < presets.length; i++) {
+            if (presets[i].console === selectedConsole) {
+                list.add(new Option(presets[i].name, i));
+            }
+        }
+    }
+    //no filter selected, show whole preset list
+    else {
+        for (i = 0; i < presets.length; i++) {
+            list.add(new Option(presets[i].name, i));
+        }
+    }
+}
+
+function chooseConsole(e) {
+    //when changing consoles we clear the presets list and populate it with presets from the newly selected system
+    clearConsolePresets()
+    populateConsolePresets(consoles[e.target.value])
 }

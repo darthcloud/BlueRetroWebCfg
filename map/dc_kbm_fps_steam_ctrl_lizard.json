@@ -1,6 +1,7 @@
 {
     "name":"DC FPS for Steam ctrl lizard",
     "desc":"Dreamcast Gamepad & Mouse FPS for Steam controller in lizard mode. Set P1 to Gamepad & P2 to mouse",
+    "console":"DC",
     "map":[
         ["MOUSE_X_LEFT",  "MOUSE_X_LEFT",  1, 100, 50, 0, 0, 5, 0],
         ["MOUSE_X_RIGHT", "MOUSE_X_RIGHT", 1, 100, 50, 0, 0, 5, 0],

@@ -1,6 +1,7 @@
 {
     "name":"Default Mouse/Keyboard",
     "desc":"Generic preset for Mouse/Keyboard combo device.",
+    "console":"Default",
     "map":[
         ["KB_A",          "KB_A",          0, 100, 50, 135, 0, 0, 0],
         ["KB_D",          "KB_D",          0, 100, 50, 135, 0, 0, 0],
