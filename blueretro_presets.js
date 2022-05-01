@@ -418,7 +418,7 @@ function onDisconnected() {
 function btConn() {
     log('Requesting Bluetooth Device...');
     navigator.bluetooth.requestDevice(
-        {filters: [{name: 'BlueRetro'}],
+        {filters: [{namePrefix: 'BlueRetro'}],
         optionalServices: [brUuid[0]]})
     .then(device => {
         log('Connecting to GATT Server...');
