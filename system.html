@@ -1,0 +1,38 @@
+---
+feature_name: BlueRetro System Manager
+icon_url: icon.png
+index: index.html
+---
+
+{% include_relative _includes/intro.html %}
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn">Connect BlueRetro</button><br>
+    <small><i>Disconnect all controllers from BlueRetro before connecting for update.</i></small>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divSleep" style="display:none;margin-bottom:1em;">
+    <button id="btnSleep">Put in Deep Sleep</button>
+</div>
+<div id="divReset" style="display:none;margin-bottom:1em;">
+    <button id="btnReset">Reset</button>
+</div>
+
+
+{% include output_helper.html %}
+
+<script src="system.js" type="text/javascript"></script>
+
+<script>
+  document.getElementById("btnSleep").addEventListener('click', setDeepSleep);
+  document.getElementById("btnReset").addEventListener('click', setReset);
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+</script>
+
+{% include_relative _includes/utils.html %}
