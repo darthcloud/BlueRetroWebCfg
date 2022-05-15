@@ -5,6 +5,13 @@ var brUuid = [
     '56830f56-5180-fab0-314b-2fa176799a03',
     '56830f56-5180-fab0-314b-2fa176799a04',
     '56830f56-5180-fab0-314b-2fa176799a05',
+    '56830f56-5180-fab0-314b-2fa176799a06',
+    '56830f56-5180-fab0-314b-2fa176799a07',
+    '56830f56-5180-fab0-314b-2fa176799a08',
+    '56830f56-5180-fab0-314b-2fa176799a09',
+    '56830f56-5180-fab0-314b-2fa176799a0a',
+    '56830f56-5180-fab0-314b-2fa176799a0b',
+    '56830f56-5180-fab0-314b-2fa176799a0c',
 ];
 
 const btn = {
@@ -178,6 +185,53 @@ var mappingElement = null;
 let inputChrc = null;
 var pageInit = 0;
 var consoles = []
+var bdaddr;
+var app_ver;
+var name;
+
+function getAppVersion() {
+    return new Promise(function(resolve, reject) {
+        log('Get Api version CHRC...');
+        brService.getCharacteristic(brUuid[9])
+        .then(chrc => {
+            log('Reading App version...');
+            return chrc.readValue();
+        })
+        .then(value => {
+            var enc = new TextDecoder("utf-8");
+            app_ver = enc.decode(value);
+            log('App version: ' + app_ver);
+            resolve();
+        })
+        .catch(error => {
+            resolve();
+        });
+    });
+}
+
+function getBdAddr() {
+    return new Promise(function(resolve, reject) {
+        log('Get BD_ADDR CHRC...');
+        brService.getCharacteristic(brUuid[12])
+        .then(chrc => {
+            log('Reading BD_ADDR...');
+            return chrc.readValue();
+        })
+        .then(value => {
+            bdaddr = value.getUint8(5).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(4).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(3).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(2).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(1).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(0).toString(16).padStart(2, '0');
+            log('BD_ADDR: ' + bdaddr);
+            resolve();
+        })
+        .catch(error => {
+            resolve();
+        });
+    });
+}
 
 function initInputSelect() {
     //push all console names from JSON files
@@ -412,6 +466,7 @@ function saveInput() {
 function onDisconnected() {
     log('> Bluetooth Device disconnected');
     document.getElementById("divBtConn").style.display = 'block';
+    document.getElementById("divInfo").style.display = 'none';
     document.getElementById("divInputCfg").style.display = 'none';
 }
 
@@ -422,6 +477,7 @@ function btConn() {
         optionalServices: [brUuid[0]]})
     .then(device => {
         log('Connecting to GATT Server...');
+        name = device.name;
         bluetoothDevice = device;
         bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
         return bluetoothDevice.gatt.connect();
@@ -436,7 +492,15 @@ function btConn() {
         if (!pageInit) {
             initBlueRetroCfg();
         }
+        return getBdAddr();
+    })
+    .then(_ => {
+        return getAppVersion();
+    })
+    .then(_ => {
+        document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
         document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divInputCfg").style.display = 'block';
     })
     .catch(error => {

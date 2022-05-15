@@ -11,12 +11,16 @@ var brUuid = [
     '56830f56-5180-fab0-314b-2fa176799a07',
     '56830f56-5180-fab0-314b-2fa176799a08',
     '56830f56-5180-fab0-314b-2fa176799a09',
+    '56830f56-5180-fab0-314b-2fa176799a0a',
+    '56830f56-5180-fab0-314b-2fa176799a0b',
+    '56830f56-5180-fab0-314b-2fa176799a0c',
 ];
 
 const mtu = 244;
 const ota_start = 0xA5;
 const ota_abort = 0xDE;
 const ota_end = 0x5A;
+const sys_deep_sleep = 0x37;
 
 var bluetoothDevice;
 let brService = null;
@@ -25,6 +29,9 @@ var progress = document.querySelector('.percent');
 var start;
 var end;
 var cancel = 0;
+var bdaddr;
+var app_ver;
+var name;
 
 function getAppVersion() {
     return new Promise(function(resolve, reject) {
@@ -36,7 +43,33 @@ function getAppVersion() {
         })
         .then(value => {
             var enc = new TextDecoder("utf-8");
-            log('App version: ' + enc.decode(value));
+            app_ver = enc.decode(value);
+            log('App version: ' + app_ver);
+
+            resolve();
+        })
+        .catch(error => {
+            resolve();
+        });
+    });
+}
+
+function getBdAddr() {
+    return new Promise(function(resolve, reject) {
+        log('Get BD_ADDR CHRC...');
+        brService.getCharacteristic(brUuid[12])
+        .then(chrc => {
+            log('Reading BD_ADDR...');
+            return chrc.readValue();
+        })
+        .then(value => {
+            bdaddr = value.getUint8(5).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(4).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(3).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(2).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(1).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(0).toString(16).padStart(2, '0');
+            log('BD_ADDR: ' + bdaddr);
             resolve();
         })
         .catch(error => {
@@ -127,6 +160,7 @@ function writeFirmware(data) {
     let ctrl_chrc = null;
     document.getElementById('progress_bar').className = 'loading';
     document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
     document.getElementById("divFwSelect").style.display = 'none';
     document.getElementById("divFwUpdate").style.display = 'block';
     brService.getCharacteristic(brUuid[7])
@@ -149,6 +183,7 @@ function writeFirmware(data) {
     .catch(error => {
         log('Argh! ' + error);
         document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFwSelect").style.display = 'block';
         document.getElementById("divFwUpdate").style.display = 'none';
         cancel = 0;
@@ -157,10 +192,26 @@ function writeFirmware(data) {
     });
 }
 
+function setDeepSleep() {
+    var cmd = new Uint8Array(1);
+    let ctrl_chrc = null;
+    brService.getCharacteristic(brUuid[7])
+    .then(chrc => {
+        ctrl_chrc = chrc;
+        cmd[0] = sys_deep_sleep;
+        return ctrl_chrc.writeValue(cmd)
+    })
+    .catch(error => {
+        log('Argh! ' + error);
+        return ctrl_chrc.writeValue(cmd)
+    });
+}
+
 function onDisconnected() {
     log('> Bluetooth Device disconnected');
     cancel = 0;
     document.getElementById("divBtConn").style.display = 'block';
+    document.getElementById("divInfo").style.display = 'none';
     document.getElementById("divFwSelect").style.display = 'none';
     document.getElementById("divFwUpdate").style.display = 'none';
 }
@@ -172,6 +223,7 @@ function btConn() {
         optionalServices: [brUuid[0]]})
     .then(device => {
         log('Connecting to GATT Server...');
+        name = device.name;
         bluetoothDevice = device;
         bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
         return bluetoothDevice.gatt.connect();
@@ -182,11 +234,16 @@ function btConn() {
     })
     .then(service => {
         brService = service;
+        return getBdAddr();
+    })
+    .then(_ => {
         return getAppVersion();
     })
     .then(_ => {
+        document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
         log('Init Cfg DOM...');
         document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFwSelect").style.display = 'block';
         document.getElementById("divFwUpdate").style.display = 'none';
     })

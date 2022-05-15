@@ -16,7 +16,6 @@ var brUuid = [
     '56830f56-5180-fab0-314b-2fa176799a0c',
 ];
 
-
 const mtu = 244;
 const sys_deep_sleep = 0x37;
 const sys_reset = 0x38;
@@ -130,7 +129,9 @@ function btConn() {
     })
     .then(service => {
         brService = service;
-        getBdAddr();
+        return getBdAddr();
+    })
+    .then(_ => {
         return getAppVersion();
     })
     .then(_ => {

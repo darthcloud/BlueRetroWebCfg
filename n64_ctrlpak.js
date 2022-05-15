@@ -13,6 +13,7 @@ var brUuid = [
     '56830f56-5180-fab0-314b-2fa176799a09',
     '56830f56-5180-fab0-314b-2fa176799a0a',
     '56830f56-5180-fab0-314b-2fa176799a0b',
+    '56830f56-5180-fab0-314b-2fa176799a0c',
 ];
 
 const mtu = 244;
@@ -27,6 +28,9 @@ var start;
 var end;
 var cancel = 0;
 var tmpViewSize = 0;
+var bdaddr;
+var app_ver;
+var name;
 
 // Source: https://newbedev.com/saving-binary-data-as-file-using-javascript-from-a-browser
 function downloadFile(blob, filename) {
@@ -59,7 +63,32 @@ function getAppVersion() {
         })
         .then(value => {
             var enc = new TextDecoder("utf-8");
-            log('App version: ' + enc.decode(value));
+            app_ver = enc.decode(value);
+            log('App version: ' + app_ver);
+            resolve();
+        })
+        .catch(error => {
+            resolve();
+        });
+    });
+}
+
+function getBdAddr() {
+    return new Promise(function(resolve, reject) {
+        log('Get BD_ADDR CHRC...');
+        brService.getCharacteristic(brUuid[12])
+        .then(chrc => {
+            log('Reading BD_ADDR...');
+            return chrc.readValue();
+        })
+        .then(value => {
+            bdaddr = value.getUint8(5).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(4).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(3).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(2).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(1).toString(16).padStart(2, '0') + ':'
+                    + value.getUint8(0).toString(16).padStart(2, '0');
+            log('BD_ADDR: ' + bdaddr);
             resolve();
         })
         .catch(error => {
@@ -107,12 +136,14 @@ function pakRead(evt) {
         downloadFile(new Blob([value.buffer], {type: "application/mpk"}),
             'ctrl_pak' + eval(Number(document.getElementById("pakSelect").value) + 1) + '.mpk');
         document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFileSelect").style.display = 'block';
         document.getElementById("divFileTransfer").style.display = 'none';
     })
     .catch(error => {
         log('Argh! ' + error);
         document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFileSelect").style.display = 'block';
         document.getElementById("divFileTransfer").style.display = 'none';
         cancel = 0;
@@ -253,6 +284,7 @@ function readFile(data) {
         let ctrl_chrc = null;
         document.getElementById('progress_bar').className = 'loading';
         document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFileSelect").style.display = 'none';
         document.getElementById("divFileTransfer").style.display = 'block';
         brService.getCharacteristic(brUuid[10])
@@ -286,6 +318,7 @@ function writeFile(data) {
     let ctrl_chrc = null;
     document.getElementById('progress_bar').className = 'loading';
     document.getElementById("divBtConn").style.display = 'none';
+    document.getElementById("divInfo").style.display = 'block';
     document.getElementById("divFileSelect").style.display = 'none';
     document.getElementById("divFileTransfer").style.display = 'block';
     brService.getCharacteristic(brUuid[10])
@@ -307,12 +340,14 @@ function writeFile(data) {
     })
     .then(_ => {
         document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFileSelect").style.display = 'block';
         document.getElementById("divFileTransfer").style.display = 'none';
     })
     .catch(error => {
         log('Argh! ' + error);
         document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFileSelect").style.display = 'block';
         document.getElementById("divFileTransfer").style.display = 'none';
         cancel = 0;
@@ -323,6 +358,7 @@ function onDisconnected() {
     log('> Bluetooth Device disconnected');
     cancel = 0;
     document.getElementById("divBtConn").style.display = 'block';
+    document.getElementById("divInfo").style.display = 'none';
     document.getElementById("divFileSelect").style.display = 'none';
     document.getElementById("divFileTransfer").style.display = 'none';
 }
@@ -334,6 +370,7 @@ function btConn() {
         optionalServices: [brUuid[0]]})
     .then(device => {
         log('Connecting to GATT Server...');
+        name = device.name;
         bluetoothDevice = device;
         bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
         return bluetoothDevice.gatt.connect();
@@ -344,11 +381,16 @@ function btConn() {
     })
     .then(service => {
         brService = service;
+        return getBdAddr();
+    })
+    .then(_ => {
         return getAppVersion();
     })
     .then(_ => {
+        document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
         log('Init Cfg DOM...');
         document.getElementById("divBtConn").style.display = 'none';
+        document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFileSelect").style.display = 'block';
         document.getElementById("divFileTransfer").style.display = 'none';
     })
