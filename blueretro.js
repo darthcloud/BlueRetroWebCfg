@@ -225,6 +225,59 @@ var accCfg = [
     'Both',
 ];
 
+var turboMask = {
+    'Disable': 0,
+    '1/2 frames': (1 << 1) | 0,
+    '1/4 frames': (3 << 1) | 0,
+    '2/4 frames': (2 << 1) | 0,
+    '3/4 frames': (3 << 1) | 1,
+    '1/8 frames': (7 << 1) | 0,
+    '2/8 frames': (6 << 1) | 0,
+    '4/8 frames': (4 << 1) | 0,
+    '6/8 frames': (6 << 1) | 1,
+    '7/8 frames': (7 << 1) | 1,
+    '1/16 frames': (15 << 1) | 0,
+    '2/16 frames': (14 << 1) | 0,
+    '4/16 frames': (12 << 1) | 0,
+    '8/16 frames': (8 << 1) | 0,
+    '12/16 frames': (12 << 1) | 1,
+    '14/16 frames': (14 << 1) | 1,
+    '15/16 frames': (15 << 1) | 1,
+    '1/32 frames': (31 << 1) | 0,
+    '2/32 frames': (30 << 1) | 0,
+    '4/32 frames': (28 << 1) | 0,
+    '8/32 frames': (24 << 1) | 0,
+    '16/32 frames': (16 << 1) | 0,
+    '24/32 frames': (24 << 1) | 1,
+    '28/32 frames': (28 << 1) | 1,
+    '30/32 frames': (30 << 1) | 1,
+    '31/32 frames': (31 << 1) | 1,
+    '1/64 frames': (63 << 1) | 0,
+    '2/64 frames': (62 << 1) | 0,
+    '4/64 frames': (60 << 1) | 0,
+    '8/64 frames': (56 << 1) | 0,
+    '16/64 frames': (48 << 1) | 0,
+    '32/64 frames': (32 << 1) | 0,
+    '48/64 frames': (48 << 1) | 1,
+    '56/64 frames': (56 << 1) | 1,
+    '60/64 frames': (60 << 1) | 1,
+    '62/64 frames': (62 << 1) | 1,
+    '63/64 frames': (63 << 1) | 1,
+    '1/128 frames': (127 << 1) | 0,
+    '2/128 frames': (126 << 1) | 0,
+    '4/128 frames': (124 << 1) | 0,
+    '8/128 frames': (120 << 1) | 0,
+    '16/128 frames': (112 << 1) | 0,
+    '32/128 frames': (96 << 1) | 0,
+    '64/128 frames': (64 << 1) | 0,
+    '96/128 frames': (96 << 1) | 1,
+    '112/128 frames': (112 << 1) | 1,
+    '120/128 frames': (120 << 1) | 1,
+    '124/128 frames': (124 << 1) | 1,
+    '126/128 frames': (126 << 1) | 1,
+    '127/128 frames': (127 << 1) | 1,
+};
+
 var scaling = [
     'Linear',
     'Aggressive',
@@ -247,7 +300,6 @@ const maxSubInput = 4;
 const maxOutput = 12;
 const maxMax = 255;
 const maxThres = 100;
-const maxTurbo = 16;
 
 var apiVersion = 0;
 var bluetoothDevice;
@@ -746,21 +798,16 @@ function initFirstOutputMapping() {
     /* Turbo */
     span = document.createElement("span");
     span.setAttribute("style", "max-width:10%;display:inline-block;");
-    span.title = "Turbo function base on the system frame rate. (TBD Not implemented yet)";
+    span.title = "Turbo function base on the system frame rate.";
     label = document.createElement("label");
     label.innerText = 'Turbo';
     label.setAttribute("style", "display:block;");
 
     var turbo = document.createElement("select");
-    for (var i = 0; i < maxTurbo; i++) {
+    for (var key in turboMask) {
         var option  = document.createElement("option");
-        option.value = i;
-        if (i) {
-            option.text = "Framerate/" + i;
-        }
-        else {
-            option.text = "Disable";
-        }
+        option.value = turboMask[key];
+        option.text = key;
         turbo.add(option);
     }
     turbo.setAttribute("class", "turbo");
@@ -926,16 +973,11 @@ function initOutputMapping() {
     /* Turbo */
     var turbo = document.createElement("select");
     turbo.setAttribute("style", "max-width:10%;");
-    turbo.title = "Turbo function base on the system frame rate. (TBD Not implemented yet)";
-    for (var i = 0; i < maxTurbo; i++) {
+    turbo.title = "Turbo function base on the system frame rate.";
+    for (var key in turboMask) {
         var option  = document.createElement("option");
-        option.value = i;
-        if (i) {
-            option.text = "Framerate/" + i;
-        }
-        else {
-            option.text = "Disable";
-        }
+        option.value = turboMask[key];
+        option.text = key;
         turbo.add(option);
     }
     turbo.setAttribute("class", "turbo");
