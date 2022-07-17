@@ -175,6 +175,7 @@ const maxOutput = 12;
 const maxMax = 255;
 const maxThres = 100;
 const maxTurbo = 16;
+const urlLatestRelease = 'https://api.github.com/repos/darthcloud/BlueRetro/releases/latest'
 
 var presets = new Array();
 var bluetoothDevice;
@@ -187,7 +188,24 @@ var pageInit = 0;
 var consoles = []
 var bdaddr;
 var app_ver;
+var latest_ver;
 var name;
+
+function getLatestRelease() {
+    return new Promise(function(resolve, reject) {
+        fetch(urlLatestRelease)
+        .then(rsp => {
+            return rsp.json();
+        })
+        .then(data => {
+            latest_ver = data['tag_name'];
+            resolve();
+        })
+        .catch(error => {
+            resolve();
+        });
+    });
+}
 
 function getAppVersion() {
     return new Promise(function(resolve, reject) {
@@ -495,10 +513,16 @@ function btConn() {
         return getBdAddr();
     })
     .then(_ => {
+        return getLatestRelease();
+    })
+    .then(_ => {
         return getAppVersion();
     })
     .then(_ => {
         document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
+        if (app_ver.indexOf(latest_ver) == -1) {
+            document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
+        }
         document.getElementById("divBtConn").style.display = 'none';
         document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divInputCfg").style.display = 'block';

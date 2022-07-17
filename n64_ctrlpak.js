@@ -19,6 +19,7 @@ var brUuid = [
 const mtu = 244;
 const block = 4096;
 const pak_size = 32 * 1024;
+const urlLatestRelease = 'https://api.github.com/repos/darthcloud/BlueRetro/releases/latest'
 
 var bluetoothDevice;
 let brService = null;
@@ -30,6 +31,7 @@ var cancel = 0;
 var tmpViewSize = 0;
 var bdaddr;
 var app_ver;
+var latest_ver;
 var name;
 
 // Source: https://newbedev.com/saving-binary-data-as-file-using-javascript-from-a-browser
@@ -51,6 +53,22 @@ function downloadFile(blob, filename) {
     setTimeout(function() {
         window.URL.revokeObjectURL(url);
     }, 1000);
+}
+
+function getLatestRelease() {
+    return new Promise(function(resolve, reject) {
+        fetch(urlLatestRelease)
+        .then(rsp => {
+            return rsp.json();
+        })
+        .then(data => {
+            latest_ver = data['tag_name'];
+            resolve();
+        })
+        .catch(error => {
+            resolve();
+        });
+    });
 }
 
 function getAppVersion() {
@@ -384,10 +402,16 @@ function btConn() {
         return getBdAddr();
     })
     .then(_ => {
+        return getLatestRelease();
+    })
+    .then(_ => {
         return getAppVersion();
     })
     .then(_ => {
         document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
+        if (app_ver.indexOf(latest_ver) == -1) {
+            document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
+        }
         log('Init Cfg DOM...');
         document.getElementById("divBtConn").style.display = 'none';
         document.getElementById("divInfo").style.display = 'block';
