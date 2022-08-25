@@ -1,5 +1,5 @@
-import { brUuid, sys_reset } from "../utils/constants";
-import ChromeSamples from "./ChromeSamples"
+import { brUuid, sys_reset } from "../utils/constants.js";
+import ChromeSamples from "../utils/ChromeSamples.js";
 
 export function setReset(brService) {
     var cmd = new Uint8Array(1);

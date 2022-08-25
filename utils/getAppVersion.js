@@ -1,5 +1,5 @@
-import ChromeSamples from "./ChromeSamples";
-import { brUuid } from "../utils/constants";
+import ChromeSamples from "./ChromeSamples.js";
+import { brUuid } from "../utils/constants.js";
 
 export const getAppVersion = (service) => {
   return new Promise((resolve, reject) => {
@@ -10,7 +10,9 @@ export const getAppVersion = (service) => {
         return chrc.readValue();
       })
       .then((value) => {
-        resolve(value);
+        let enc = new TextDecoder("utf-8");
+        let app_ver = enc.decode(value);
+        resolve(app_ver);
       })
       .catch((error) => {
         reject(error);

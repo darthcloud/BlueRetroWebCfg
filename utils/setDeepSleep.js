@@ -1,5 +1,5 @@
-import { brUuid, sys_deep_sleep } from "../utils/constants";
-import ChromeSamples from "./ChromeSamples"
+import { brUuid, sys_deep_sleep } from "../utils/constants.js";
+import ChromeSamples from "../utils/ChromeSamples.js";
 
 export function setDeepSleep(brService) {
     var cmd = new Uint8Array(1);
