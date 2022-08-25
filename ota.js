@@ -1,27 +1,9 @@
 // Base on https://www.html5rocks.com/en/tutorials/file/dndfiles//
 
-var brUuid = [
-    '56830f56-5180-fab0-314b-2fa176799a00',
-    '56830f56-5180-fab0-314b-2fa176799a01',
-    '56830f56-5180-fab0-314b-2fa176799a02',
-    '56830f56-5180-fab0-314b-2fa176799a03',
-    '56830f56-5180-fab0-314b-2fa176799a04',
-    '56830f56-5180-fab0-314b-2fa176799a05',
-    '56830f56-5180-fab0-314b-2fa176799a06',
-    '56830f56-5180-fab0-314b-2fa176799a07',
-    '56830f56-5180-fab0-314b-2fa176799a08',
-    '56830f56-5180-fab0-314b-2fa176799a09',
-    '56830f56-5180-fab0-314b-2fa176799a0a',
-    '56830f56-5180-fab0-314b-2fa176799a0b',
-    '56830f56-5180-fab0-314b-2fa176799a0c',
-];
-
-const mtu = 244;
-const ota_start = 0xA5;
-const ota_abort = 0xDE;
-const ota_end = 0x5A;
-const sys_deep_sleep = 0x37;
-const urlLatestRelease = 'https://api.github.com/repos/darthcloud/BlueRetro/releases/latest'
+import { brUuid, mtu, ota_start, ota_abort, ota_end } from './utils/constants.js';
+import { getLatestRelease } from './utils/getLatestRelease.js';
+import { getAppVersion } from './utils/getAppVersion.js';
+import { getBdAddr } from './utils/getBdAddr.js';
 
 var bluetoothDevice;
 let brService = null;
@@ -36,68 +18,7 @@ var latest_ver;
 var name;
 var cur_fw_hw2 = 0;
 
-function getLatestRelease() {
-    return new Promise(function(resolve, reject) {
-        fetch(urlLatestRelease)
-        .then(rsp => {
-            return rsp.json();
-        })
-        .then(data => {
-            latest_ver = data['tag_name'];
-            resolve();
-        })
-        .catch(error => {
-            resolve();
-        });
-    });
-}
-
-function getAppVersion() {
-    return new Promise(function(resolve, reject) {
-        log('Get Api version CHRC...');
-        brService.getCharacteristic(brUuid[9])
-        .then(chrc => {
-            log('Reading App version...');
-            return chrc.readValue();
-        })
-        .then(value => {
-            var enc = new TextDecoder("utf-8");
-            app_ver = enc.decode(value);
-            log('App version: ' + app_ver);
-
-            resolve();
-        })
-        .catch(error => {
-            resolve();
-        });
-    });
-}
-
-function getBdAddr() {
-    return new Promise(function(resolve, reject) {
-        log('Get BD_ADDR CHRC...');
-        brService.getCharacteristic(brUuid[12])
-        .then(chrc => {
-            log('Reading BD_ADDR...');
-            return chrc.readValue();
-        })
-        .then(value => {
-            bdaddr = value.getUint8(5).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(4).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(3).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(2).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(1).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(0).toString(16).padStart(2, '0');
-            log('BD_ADDR: ' + bdaddr);
-            resolve();
-        })
-        .catch(error => {
-            resolve();
-        });
-    });
-}
-
-function abortFwUpdate() {
+export function abortFwUpdate() {
     cancel = 1;
 }
 
@@ -125,7 +46,7 @@ function updateProgress(total, loaded) {
     }
 }
 
-function firmwareUpdate(evt) {
+export function firmwareUpdate(evt) {
     // Reset progress indicator on new file selection.
     progress.style.width = '0%';
     progress.textContent = '0%';
@@ -224,21 +145,6 @@ function writeFirmware(data) {
     });
 }
 
-function setDeepSleep() {
-    var cmd = new Uint8Array(1);
-    let ctrl_chrc = null;
-    brService.getCharacteristic(brUuid[7])
-    .then(chrc => {
-        ctrl_chrc = chrc;
-        cmd[0] = sys_deep_sleep;
-        return ctrl_chrc.writeValue(cmd)
-    })
-    .catch(error => {
-        log('Argh! ' + error);
-        return ctrl_chrc.writeValue(cmd)
-    });
-}
-
 function onDisconnected() {
     log('> Bluetooth Device disconnected');
     cancel = 0;
@@ -248,7 +154,7 @@ function onDisconnected() {
     document.getElementById("divFwUpdate").style.display = 'none';
 }
 
-function btConn() {
+export function btConn() {
     log('Requesting Bluetooth Device...');
     navigator.bluetooth.requestDevice(
         {filters: [{namePrefix: 'BlueRetro'}],
@@ -266,15 +172,18 @@ function btConn() {
     })
     .then(service => {
         brService = service;
-        return getBdAddr();
+        return getBdAddr(brService);
     })
-    .then(_ => {
+    .then(value => {
+        bdaddr = value;
         return getLatestRelease();
     })
-    .then(_ => {
-        return getAppVersion();
+    .then(value => {
+        latest_ver = value;
+        return getAppVersion(brService);
     })
-    .then(_ => {
+    .then(value => {
+        app_ver = value;
         document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
         if (app_ver.indexOf(latest_ver) == -1) {
             document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
