@@ -1,8 +1,8 @@
-import { brUuid } from "./constants";
-import presetWriteRecursive from "./presetWriteRecursive";
+import { brUuid } from "./constants.js";
+import presetWriteRecursive from "./presetWriteRecursive.js";
 
-export function writeInputCfg(cfgId, cfg, brService) {
-    return new Promise(function (resolve, reject) {
+export const writeInputCfg = (cfgId, cfg, brService) => {
+    return new Promise((resolve, reject) => {
       let ctrl_chrc = null;
       let data_chrc = null;
       brService

@@ -1,7 +1,7 @@
-import ChromeSamples from "./ChromeSamples";
+import ChromeSamples from "./ChromeSamples.js";
 
 export function presetWriteRecursive(cfg, inputCtrl, ctrl_chrc, data_chrc) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       ChromeSamples.log("Set Input Ctrl CHRC... " + inputCtrl[1]);
       ctrl_chrc
         .writeValue(inputCtrl)
