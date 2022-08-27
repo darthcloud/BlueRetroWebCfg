@@ -1,5 +1,5 @@
-import { brUuid, pakSize } from "../utils/constants";
-import n64WriteRecursive from "../utils/n64WriteRecursive";
+import { brUuid, pakSize } from "../utils/constants.js";
+import n64WriteRecursive from "../utils/n64WriteRecursive.js";
 
 export const n64WriteFile = (brService, data, pak, setProgress, cancel) => {
   var offset = new Uint32Array(1);

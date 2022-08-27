@@ -1,121 +1,24 @@
 // Base on https://www.html5rocks.com/en/tutorials/file/dndfiles//
 
-var brUuid = [
-    '56830f56-5180-fab0-314b-2fa176799a00',
-    '56830f56-5180-fab0-314b-2fa176799a01',
-    '56830f56-5180-fab0-314b-2fa176799a02',
-    '56830f56-5180-fab0-314b-2fa176799a03',
-    '56830f56-5180-fab0-314b-2fa176799a04',
-    '56830f56-5180-fab0-314b-2fa176799a05',
-    '56830f56-5180-fab0-314b-2fa176799a06',
-    '56830f56-5180-fab0-314b-2fa176799a07',
-    '56830f56-5180-fab0-314b-2fa176799a08',
-    '56830f56-5180-fab0-314b-2fa176799a09',
-    '56830f56-5180-fab0-314b-2fa176799a0a',
-    '56830f56-5180-fab0-314b-2fa176799a0b',
-    '56830f56-5180-fab0-314b-2fa176799a0c',
-];
-
-const mtu = 244;
-const block = 4096;
-const pak_size = 32 * 1024;
-const urlLatestRelease = 'https://api.github.com/repos/darthcloud/BlueRetro/releases/latest'
+import { brUuid, pakSize } from './utils/constants.js';
+import { downloadFile } from './utils/downloadFile.js';
+import { getLatestRelease } from './utils/getLatestRelease.js';
+import { getAppVersion } from './utils/getAppVersion.js';
+import { getBdAddr } from './utils/getBdAddr.js';
+import { n64WriteFile } from './utils/n64WriteFile.js';
+import { n64ReadFile } from './utils/n64ReadFile.js';
 
 var bluetoothDevice;
 let brService = null;
 var reader;
 var progress = document.querySelector('.percent');
-var start;
-var end;
 var cancel = 0;
-var tmpViewSize = 0;
 var bdaddr;
 var app_ver;
 var latest_ver;
 var name;
 
-// Source: https://newbedev.com/saving-binary-data-as-file-using-javascript-from-a-browser
-function downloadFile(blob, filename) {
-    var url = window.URL.createObjectURL(blob);
-
-    var a = document.createElement("a");
-    a.style = "display: none";
-    a.href = url;
-    a.download = filename;
-
-    document.body.appendChild(a);
-    a.click();
-
-    document.body.removeChild(a);
-
-    // On Edge, revokeObjectURL should be called only after
-    // a.click() has completed, atleast on EdgeHTML 15.15048
-    setTimeout(function() {
-        window.URL.revokeObjectURL(url);
-    }, 1000);
-}
-
-function getLatestRelease() {
-    return new Promise(function(resolve, reject) {
-        fetch(urlLatestRelease)
-        .then(rsp => {
-            return rsp.json();
-        })
-        .then(data => {
-            latest_ver = data['tag_name'];
-            resolve();
-        })
-        .catch(error => {
-            resolve();
-        });
-    });
-}
-
-function getAppVersion() {
-    return new Promise(function(resolve, reject) {
-        log('Get Api version CHRC...');
-        brService.getCharacteristic(brUuid[9])
-        .then(chrc => {
-            log('Reading App version...');
-            return chrc.readValue();
-        })
-        .then(value => {
-            var enc = new TextDecoder("utf-8");
-            app_ver = enc.decode(value);
-            log('App version: ' + app_ver);
-            resolve();
-        })
-        .catch(error => {
-            resolve();
-        });
-    });
-}
-
-function getBdAddr() {
-    return new Promise(function(resolve, reject) {
-        log('Get BD_ADDR CHRC...');
-        brService.getCharacteristic(brUuid[12])
-        .then(chrc => {
-            log('Reading BD_ADDR...');
-            return chrc.readValue();
-        })
-        .then(value => {
-            bdaddr = value.getUint8(5).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(4).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(3).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(2).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(1).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(0).toString(16).padStart(2, '0');
-            log('BD_ADDR: ' + bdaddr);
-            resolve();
-        })
-        .catch(error => {
-            resolve();
-        });
-    });
-}
-
-function abortFileTransfer() {
+export function abortFileTransfer() {
     cancel = 1;
 }
 
@@ -134,22 +37,17 @@ function errorHandler(evt) {
     };
 }
 
-function transferProgress(total, loaded) {
-    var percentLoaded = Math.round((loaded / total) * 100);
-    // Increase the progress bar length.
-    if (percentLoaded < 100) {
-        progress.style.width = percentLoaded + '%';
-        progress.textContent = percentLoaded + '%';
-    }
+function setProgress(percent) {
+    progress.style.width = percent + '%';
+    progress.textContent = percent + '%';
 }
 
-function pakRead(evt) {
+export function pakRead(evt) {
     // Reset progress indicator on new file selection.
     progress.style.width = '0%';
     progress.textContent = '0%';
 
-    var data = new Uint8Array(pak_size);
-    readFile(data)
+    readFile()
     .then(value => {
         downloadFile(new Blob([value.buffer], {type: "application/mpk"}),
             'ctrl_pak' + eval(Number(document.getElementById("pakSelect").value) + 1) + '.mpk');
@@ -168,7 +66,7 @@ function pakRead(evt) {
     });
 }
 
-function pakWrite(evt) {
+export function pakWrite(evt) {
     // Reset progress indicator on new file selection.
     progress.style.width = '0%';
     progress.textContent = '0%';
@@ -179,7 +77,7 @@ function pakWrite(evt) {
         log('File read cancelled');
     };
     reader.onload = function(e) {
-        writeFile(reader.result.slice(0, pak_size));
+        writeFile(reader.result.slice(0, pakSize));
     }
 
     // Read in the image file as a binary string.
@@ -188,7 +86,7 @@ function pakWrite(evt) {
 
 // Init function taken from MPKEdit by bryc:
 // https://github.com/bryc/mempak/blob/dbd78db6ac55575838c6e107e5ea1e568981edc4/js/state.js#L8
-function pakFormat(evt) {
+export function pakFormat(evt) {
         function writeAt(ofs) {for(let i = 0; i < 32; i++) data[ofs + i] = block[i];}
 
         const data = new Uint8Array(32768), block = new Uint8Array(32);
@@ -236,93 +134,16 @@ function pakFormat(evt) {
         writeFile(data.buffer);
 }
 
-function readRecursive(chrc, data, offset) {
+function readFile() {
     return new Promise(function(resolve, reject) {
-        if (cancel == 1) {
-            throw 'Cancelled';
-        }
-        transferProgress(pak_size, offset);
-        chrc.readValue()
-        .then(value => {
-            var tmp = new Uint8Array(value.buffer);
-            data.set(tmp, offset);
-            offset += value.byteLength;
-            if (offset < (pak_size)) {
-                resolve(readRecursive(chrc, data, offset));
-            }
-            else {
-                end = performance.now();
-                progress.style.width = '100%';
-                progress.textContent = '100%';
-                log('File download done. Took: '  + (end - start)/1000 + ' sec');
-                resolve(data);
-            }
-        })
-        .catch(error => {
-            reject(error);
-        });
-    });
-}
-
-function writeRecursive(chrc, data, offset) {
-    return new Promise(function(resolve, reject) {
-        var curBlock = ~~(offset / block) + 1;
-        if (cancel == 1) {
-            throw 'Cancelled';
-        }
-        transferProgress(data.byteLength, offset);
-        tmpViewSize = (curBlock * block) - offset;
-        if (tmpViewSize > mtu) {
-            tmpViewSize = mtu;
-        }
-        var tmpView = new DataView(data, offset, tmpViewSize);
-        chrc.writeValue(tmpView)
-        .then(_ => {
-            offset += tmpViewSize;
-            if (offset < data.byteLength) {
-                resolve(writeRecursive(chrc, data, offset));
-            }
-            else {
-                end = performance.now();
-                progress.style.width = '100%';
-                progress.textContent = '100%';
-                log('File upload done. Took: '  + (end - start)/1000 + ' sec');
-                resolve();
-            }
-        })
-        .catch(error => {
-            reject(error);
-        });
-    });
-}
-
-function readFile(data) {
-    return new Promise(function(resolve, reject) {
-        var offset = new Uint32Array(1);
-        let ctrl_chrc = null;
+        let pak = Number(document.getElementById("pakSelect").value);
         document.getElementById('progress_bar').className = 'loading';
         document.getElementById("divBtConn").style.display = 'none';
         document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFileSelect").style.display = 'none';
         document.getElementById("divFileTransfer").style.display = 'block';
-        brService.getCharacteristic(brUuid[10])
-        .then(chrc => {
-            ctrl_chrc = chrc;
-            offset[0] = Number(document.getElementById("pakSelect").value) * pak_size;
-            return ctrl_chrc.writeValue(offset)
-        })
-        .then(_ => {
-            return brService.getCharacteristic(brUuid[11])
-        })
-        .then(chrc => {
-            start = performance.now();
-            return readRecursive(chrc, data, 0);
-        })
-        .then(_ => {
-            offset[0] = 0;
-            return ctrl_chrc.writeValue(offset)
-        })
-        .then(_ => {
+        n64ReadFile(brService, pak, setProgress, cancel)
+        .then(data => {
             resolve(data);
         })
         .catch(error => {
@@ -332,30 +153,13 @@ function readFile(data) {
 }
 
 function writeFile(data) {
-    var offset = new Uint32Array(1);
-    let ctrl_chrc = null;
+    let pak = Number(document.getElementById("pakSelect").value);
     document.getElementById('progress_bar').className = 'loading';
     document.getElementById("divBtConn").style.display = 'none';
     document.getElementById("divInfo").style.display = 'block';
     document.getElementById("divFileSelect").style.display = 'none';
     document.getElementById("divFileTransfer").style.display = 'block';
-    brService.getCharacteristic(brUuid[10])
-    .then(chrc => {
-        ctrl_chrc = chrc;
-        offset[0] = Number(document.getElementById("pakSelect").value) * pak_size;
-        return ctrl_chrc.writeValue(offset)
-    })
-    .then(_ => {
-        return brService.getCharacteristic(brUuid[11])
-    })
-    .then(chrc => {
-        start = performance.now();
-        return writeRecursive(chrc, data, 0);
-    })
-    .then(_ => {
-        offset[0] = 0;
-        return ctrl_chrc.writeValue(offset)
-    })
+    n64WriteFile(brService, data, pak, setProgress, cancel)
     .then(_ => {
         document.getElementById("divBtConn").style.display = 'none';
         document.getElementById("divInfo").style.display = 'block';
@@ -381,7 +185,7 @@ function onDisconnected() {
     document.getElementById("divFileTransfer").style.display = 'none';
 }
 
-function btConn() {
+export function btConn() {
     log('Requesting Bluetooth Device...');
     navigator.bluetooth.requestDevice(
         {filters: [{namePrefix: 'BlueRetro'}],
@@ -399,15 +203,18 @@ function btConn() {
     })
     .then(service => {
         brService = service;
-        return getBdAddr();
+        return getBdAddr(brService);
     })
-    .then(_ => {
+    .then(value => {
+        bdaddr = value;
         return getLatestRelease();
     })
-    .then(_ => {
-        return getAppVersion();
+    .then(value => {
+        latest_ver = value
+        return getAppVersion(brService);
     })
-    .then(_ => {
+    .then(value => {
+        app_ver = value;
         document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
         if (app_ver.indexOf(latest_ver) == -1) {
             document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';

@@ -1,4 +1,4 @@
-import { mtu, block } from "../utils/constants";
+import { mtu, block } from "../utils/constants.js";
 
 export const n64WriteRecursive = (chrc, data, offset, transferProgressHook, cancelRef) => {
     return new Promise(function (resolve, reject) {

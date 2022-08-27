@@ -1,9 +1,9 @@
-import { brUuid, pakSize } from "../utils/constants";
-import n64ReadFileRecursive from "./n64ReadFileRecursive";
+import { brUuid, pakSize } from "../utils/constants.js";
+import n64ReadFileRecursive from "./n64ReadFileRecursive.js";
 
 export const n64ReadFile = (brService, pak, setProgress, cancel) => {
     var data = new Uint8Array(pakSize);
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       var offset = new Uint32Array(1);
       let ctrl_chrc = null;
       brService

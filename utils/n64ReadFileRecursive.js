@@ -1,4 +1,4 @@
-import { pakSize } from "../utils/constants";
+import { pakSize } from "../utils/constants.js";
 
 export const n64ReadFileRecursive = (chrc, data, offset, setProgress, cancel) => {
     return new Promise(function (resolve, reject) {

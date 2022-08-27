@@ -34,9 +34,9 @@ index: index.html
 
 {% include output_helper.html %}
 
-<script src="n64_ctrlpak.js" type="text/javascript"></script>
+<script type="module">
+  import { btConn, pakRead, pakWrite, pakFormat, abortFileTransfer } from './n64_ctrlpak.js';
 
-<script>
   document.getElementById("btnPakRead").addEventListener('click', pakRead);
   document.getElementById("btnPakWrite").addEventListener('click', pakWrite);
   document.getElementById("btnPakFormat").addEventListener('click', pakFormat);
