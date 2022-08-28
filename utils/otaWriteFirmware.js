@@ -1,5 +1,5 @@
-import { brUuid, ota_abort, ota_end, ota_start } from "../utils/constants";
-import otaWriteFwRecursive from "../utils/otaWriteFwRecursive";
+import { brUuid, ota_abort, ota_end, ota_start } from "../utils/constants.js";
+import otaWriteFwRecursive from "../utils/otaWriteFwRecursive.js";
 
 export const otaWriteFirmware = (brService, data, setProgress, cancel) => {
   var cmd = new Uint8Array(1);

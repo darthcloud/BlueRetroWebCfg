@@ -1,4 +1,4 @@
-import { mtu } from "../utils/constants";
+import { mtu } from "../utils/constants.js";
 
 const otaWriteFwRecursive = (chrc, data, offset, setProgress, cancel) => {
     return new Promise(function (resolve, reject) {

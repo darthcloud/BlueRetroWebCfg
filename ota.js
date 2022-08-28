@@ -4,6 +4,7 @@ import { brUuid, mtu, ota_start, ota_abort, ota_end } from './utils/constants.js
 import { getLatestRelease } from './utils/getLatestRelease.js';
 import { getAppVersion } from './utils/getAppVersion.js';
 import { getBdAddr } from './utils/getBdAddr.js';
+import { otaWriteFirmware } from './utils/otaWriteFirmware.js';
 
 var bluetoothDevice;
 let brService = null;
@@ -20,6 +21,11 @@ var cur_fw_hw2 = 0;
 
 export function abortFwUpdate() {
     cancel = 1;
+}
+
+function setProgress(percent) {
+    progress.style.width = percent + '%';
+    progress.textContent = percent + '%';
 }
 
 function errorHandler(evt) {
@@ -77,71 +83,19 @@ export function firmwareUpdate(evt) {
     reader.readAsArrayBuffer(document.getElementById("fwFile").files[0]);
 }
 
-function writeFwRecursive(chrc, data, offset) {
-    return new Promise(function(resolve, reject) {
-        if (cancel == 1) {
-            throw 'Cancelled';
-        }
-        updateProgress(data.byteLength, offset);
-        var tmpViewSize = data.byteLength - offset;
-        if (tmpViewSize > mtu) {
-            tmpViewSize = mtu;
-        }
-        var tmpView = new DataView(data, offset, tmpViewSize);
-        chrc.writeValue(tmpView)
-        .then(_ => {
-            offset += Number(mtu);
-            if (offset < data.byteLength) {
-                resolve(writeFwRecursive(chrc, data, offset));
-            }
-            else {
-                end = performance.now();
-                progress.style.width = '100%';
-                progress.textContent = '100%';
-                log('FW upload done. Took: '  + (end - start)/1000 + ' sec');
-                resolve();
-            }
-        })
-        .catch(error => {
-            reject(error);
-        });
-    });
-}
-
 function writeFirmware(data) {
-    var cmd = new Uint8Array(1);
-    let ctrl_chrc = null;
     document.getElementById('progress_bar').className = 'loading';
     document.getElementById("divBtConn").style.display = 'none';
-        document.getElementById("divInfo").style.display = 'block';
+    document.getElementById("divInfo").style.display = 'block';
     document.getElementById("divFwSelect").style.display = 'none';
     document.getElementById("divFwUpdate").style.display = 'block';
-    brService.getCharacteristic(brUuid[7])
-    .then(chrc => {
-        ctrl_chrc = chrc;
-        cmd[0] = ota_start;
-        return ctrl_chrc.writeValue(cmd)
-    })
-    .then(_ => {
-        return brService.getCharacteristic(brUuid[8])
-    })
-    .then(chrc => {
-        start = performance.now();
-        return writeFwRecursive(chrc, data, 0);
-    })
-    .then(_ => {
-        cmd[0] = ota_end;
-        return ctrl_chrc.writeValue(cmd)
-    })
+    otaWriteFirmware(brService, data, setProgress, cancel)
     .catch(error => {
         log('Argh! ' + error);
         document.getElementById("divBtConn").style.display = 'none';
         document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divFwSelect").style.display = 'block';
         document.getElementById("divFwUpdate").style.display = 'none';
-        cancel = 0;
-        cmd[0] = ota_abort;
-        return ctrl_chrc.writeValue(cmd)
     });
 }
 
