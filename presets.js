@@ -2,7 +2,7 @@ import { brUuid, btn, maxMainInput, maxSubInput, maxOutput, maxMax, maxThres, ur
 import { getLatestRelease } from './utils/getLatestRelease.js';
 import { getAppVersion } from './utils/getAppVersion.js';
 import { getBdAddr } from './utils/getBdAddr.js';
-import { writeInputCfg } from './utils/writeInputCfg.js';
+import { savePresetInput } from './utils/savePresetInput.js';
 
 var presets = new Array();
 var bluetoothDevice;
@@ -152,45 +152,14 @@ function initBlueRetroCfg() {
 }
 
 function saveInput() {
-    //get consoleName and preset name
-    var preset = Number(document.getElementById("presetsName").value);
-    var consoleName = Number(document.getElementById("consoleName").value);
+    //get preset index
+    var preset_idx = Number(document.getElementById("presetsName").value);
     //make sure preset is not placeholder before we do anything
-    if (preset != -1) {
-
-        document.getElementById("inputSaveText").style.display = 'none';
-        var nbMapping = presets[preset].map.length;
-        var cfgSize = nbMapping*8 + 3;
-        var cfg = new Uint8Array(cfgSize);
+    if (preset_idx != -1) {
+        var preset = presets[preset_idx];
         var cfgId = Number(document.getElementById("inputSelect").value);
-        var j = 0;
-        cfg[j++] = 0;
-        cfg[j++] = 0;
-        cfg[j++] = nbMapping;
-
-        log('Input: '+ cfgId + "\n" + 'Preset: ' + preset);
-        for (var i = 0; i < nbMapping; i++) {
-            cfg[j++] = btn[presets[preset].map[i][0]];
-            cfg[j++] = btn[presets[preset].map[i][1]];
-            cfg[j++] = presets[preset].map[i][2] + cfgId;
-            cfg[j++] = presets[preset].map[i][3];
-            cfg[j++] = presets[preset].map[i][4];
-            cfg[j++] = presets[preset].map[i][5];
-            cfg[j++] = presets[preset].map[i][6];
-            cfg[j++] = Number(presets[preset].map[i][7]) | (Number(presets[preset].map[i][8]) << 4);
-        }
-
-        return new Promise(function(resolve, reject) {
-            writeInputCfg(cfgId, cfg, brService)
-            .then(_ => {
-                document.getElementById("inputSaveText").style.display = 'block';
-                log('Input ' + cfgId + ' Config saved');
-                resolve();
-            })
-            .catch(error => {
-                reject(error);
-            });
-        });
+        document.getElementById("inputSaveText").style.display = 'none';
+        savePresetInput(preset, brService, cfgId);
     }
 }
 

@@ -1,13 +1,12 @@
-import ChromeSamples from "../utils/ChromeSamples";
-import writeInputCfg from "./writeInputCfg";
-import {btn} from "../utils/constants";
+import ChromeSamples from "../utils/ChromeSamples.js";
+import writeInputCfg from "./writeInputCfg.js";
+import {btn} from "../utils/constants.js";
 
 export function savePresetInput(preset, brService, input) {
-    //make sure preset is not placeholder before we do anything
       var nbMapping = preset.map.length;
       var cfgSize = nbMapping * 8 + 3;
       var cfg = new Uint8Array(cfgSize);
-      var cfgId = input - 1;
+      var cfgId = input;
       var j = 0;
       cfg[j++] = 0;
       cfg[j++] = 0;
@@ -24,7 +23,7 @@ export function savePresetInput(preset, brService, input) {
           Number(preset.map[i][7]) |
           (Number(preset.map[i][8]) << 4);
       }
-  
+
       return new Promise(function (resolve, reject) {
         writeInputCfg(cfgId, cfg, brService)
           .then((_) => {
@@ -35,7 +34,6 @@ export function savePresetInput(preset, brService, input) {
             reject(error);
           });
       });
-    
   }
 
   export default savePresetInput;
