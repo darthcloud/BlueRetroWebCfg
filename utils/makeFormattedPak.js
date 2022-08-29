@@ -1,3 +1,5 @@
+// Init function taken from MPKEdit by bryc:
+// https://github.com/bryc/mempak/blob/dbd78db6ac55575838c6e107e5ea1e568981edc4/js/state.js#L8
 export function makeFormattedPak() {
   function writeAt(ofs) {
     for (let i = 0; i < 32; i++) {

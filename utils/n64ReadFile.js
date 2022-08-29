@@ -9,9 +9,8 @@ export const n64ReadFile = (brService, pak, setProgress, cancel) => {
       brService
         .getCharacteristic(brUuid[10])
         .then((chrc) => {
-          console.log(chrc);
           ctrl_chrc = chrc;
-          offset[0] = Number(pak - 1) * pakSize;
+          offset[0] = Number(pak) * pakSize;
           return ctrl_chrc.writeValue(offset);
         })
         .then((_) => {
