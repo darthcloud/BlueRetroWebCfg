@@ -1,5 +1,5 @@
-import ChromeSamples from "./ChromeSamples";
-import { brUuid } from "../utils/constants";
+import ChromeSamples from "./ChromeSamples.js";
+import { brUuid } from "../utils/constants.js";
 
 export const getGlobalCfg = (service, apiver) => {
   return new Promise((resolve, reject) => {

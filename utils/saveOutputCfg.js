@@ -1,7 +1,8 @@
-import { brUuid } from '../utils//constants';
-import ChromeSamples from "../utils/ChromeSamples"
-function saveOutputCfg(brService, data, cfgId) {
-    return new Promise(function (resolve, reject) {
+import { brUuid } from '../utils//constants.js';
+import ChromeSamples from "../utils/ChromeSamples.js"
+
+export const saveOutputCfg = (brService, data, cfgId) => {
+    return new Promise((resolve, reject) => {
       ChromeSamples.log("Get Output " + cfgId + " CTRL CHRC...");
       brService
         .getCharacteristic(brUuid[2])
@@ -20,18 +21,9 @@ function saveOutputCfg(brService, data, cfgId) {
           return chrc.writeValue(data);
         })
         .then((_) => {
-          //document.getElementById("outputSaveText").style.display = "block";
-          
-          ChromeSamples.log("Output " + cfgId + " Config saved");
-          if (data[0] === 3) {
-            ChromeSamples.log("Mouse mode require setting <Default Mouse> preset.");
-          }
-          ChromeSamples.log("Please power cycle your BlueRetro device");
-          //setInUse(false);
           resolve();
         })
         .catch((error) => {
-          //setInUse(false);
           reject(error);
         });
     });

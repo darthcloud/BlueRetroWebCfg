@@ -1,306 +1,12 @@
-var brUuid = [
-    '56830f56-5180-fab0-314b-2fa176799a00',
-    '56830f56-5180-fab0-314b-2fa176799a01',
-    '56830f56-5180-fab0-314b-2fa176799a02',
-    '56830f56-5180-fab0-314b-2fa176799a03',
-    '56830f56-5180-fab0-314b-2fa176799a04',
-    '56830f56-5180-fab0-314b-2fa176799a05',
-    '56830f56-5180-fab0-314b-2fa176799a06',
-    '56830f56-5180-fab0-314b-2fa176799a07',
-    '56830f56-5180-fab0-314b-2fa176799a08',
-    '56830f56-5180-fab0-314b-2fa176799a09',
-    '56830f56-5180-fab0-314b-2fa176799a0a',
-    '56830f56-5180-fab0-314b-2fa176799a0b',
-    '56830f56-5180-fab0-314b-2fa176799a0c',
-];
-
-var labelName = [
-    'Default',
-    'Keyboard',
-    'Mouse',
-    'PS3',
-    'PS4 / PS5',
-    'Wiimote',
-    'Wiimote + Classic',
-    'Wiimote + Nunchuck',
-    'WiiU / Switch Pro',
-    'Switch NES',
-    'Switch SNES',
-    'Switch MD / Genesis',
-    'Switch N64',
-    'Switch Joycon',
-    'Xbox One S / X|S',
-    'Steam',
-    'NeoGeo (Paraller 1P)',
-    'PCE',
-    'PCE 6 btns',
-    'NES',
-    'SNES',
-    'CD-i',
-    'JVS',
-    '3DO',
-    'Jaguar',
-    'Jaguar 6D',
-    'PC-FX',
-    'Virtual Boy',
-    'N64',
-    'GameCube',
-    'Atari / SMS',
-    'MD / Genesis',
-    'Saturn',
-    'Dreamcast',
-    'PSX / PS2',
-];
-
-var btnList = [
-/*    Default                      Keyboard             Mouse                PS3                  PS4 / PS5            Wiimote              Wiimote + Classic    Wiimote + Nunchuck   WiiU / Switch Pro    Switch NES           Switch SNES          Switch MD / Genesis  Switch N64           Switch Joycon        Xbox One S / X|S     Steam                NeoGeo (Parallel 1P) PCE                  PCE 6 btns           NES                  SNES                 CD-i                 JVS                  3DO                  Jaguar         Jaguar 6D             PC-FX                VB                          N64                         GameCube             Atari / SMS          MD / Genesis         Saturn               Dreamcast            PSX / PS2           */
-    ['GP: LX Left;  KB: A',       'KB: A',             '',                  'Left stick left',   'Left stick left',   '',                '[C] Left stick left',  '[N] Stick left',   'Left stick left',   '',                  '',                  '',                  'Stick left',        'Stick left (H)',    'Left stick left',   'Left pad left',     '',                  '',                  '',                  '',                  '',                  'Stick left',        'Stick left',        '*Stick left',       '8 (Y)',   'Left stick left (X)',    '',                  '',                         'Stick left',               'Left stick left',   '',                  '',                  '*Stick left',       'Left stick left',   'Left stick left',  ],
-    ['GP: LX Right; KB: D',       'KB: D',             '',                  'Left stick right',  'Left stick right',  '',                '[C] Left stick right', '[N] Stick right',  'Left stick right',  '',                  '',                  '',                  'Stick right',       'Stick right (H)',   'Left stick right',  'Left pad right',    '',                  '',                  '',                  '',                  '',                  'Stick right',       'Stick right',       '*Stick right',      '6',       'Left stick right (X)',   '',                  '',                         'Stick right',              'Left stick right',  '',                  '',                  '*Stick right',      'Left stick right',  'Left stick right', ],
-    ['GP: LY Down;  KB: S',       'KB: S',             '',                  'Left stick down',   'Left stick down',   '',                '[C] Left stick down',  '[N] Stick down',   'Left stick down',   '',                  '',                  '',                  'Stick down',        'Stick down (H)',    'Left stick down',   'Left pad down',     '',                  '',                  '',                  '',                  '',                  'Stick down',        'Stick down',        '*Stick down',       '7 (Z)',   'Left stick down (Y)',    '',                  '',                         'Stick down',               'Left stick down',   '',                  '',                  '*Stick down',       'Left stick down',   'Left stick down',  ],
-    ['GP: LY Up;    KB: W',       'KB: W',             '',                  'Left stick up',     'Left stick up',     '',                '[C] Left stick up',    '[N] Stick up',     'Left stick up',     '',                  '',                  '',                  'Stick up',          'Stick up (H)',      'Left stick up',     'Left pad up',       '',                  '',                  '',                  '',                  '',                  'Stick up',          'Stick up',          '*Stick up',         '5',       'Left stick up (Y)',      '',                  '',                         'Stick up',                 'Left stick up',     '',                  '',                  '*Stick up',         'Left stick up',     'Left stick up',    ],
-    ['GP: RX Left;  M: X Left',   '',                  'M: X Left',         'Right stick left',  'Right stick left',  '',                '[C] Right stick left', '',                 'Right stick left',  '',                  '',                  '',                  'C-Left',            '',                  'Right stick left',  'Right pad left',    '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '4',       'Right stick left (TX)',  '',                  'Right D-pad left',         'C-Left',                   'Right stick left',  '',                  '',                  '',                  '*Right stick left', 'Right stick left', ],
-    ['GP: RX Right; M: X Right',  '',                  'M: X Right',        'Right stick right', 'Right stick right', '',                '[C] Right stick right','',                 'Right stick right', '',                  '',                  '',                  'C-Right',           '',                  'Right stick right', 'Right pad right',   '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '2',       'Right stick right (TX)', '',                  'Right D-pad right',        'C-Right',                  'Right stick right', '',                  '',                  '',                  '*Right stick right','Right stick right',],
-    ['GP: RY Down;  M: Y Down',   '',                  'M: Y Down',         'Right stick down',  'Right stick down',  '',                '[C] Right stick down', '',                 'Right stick down',  '',                  '',                  '',                  'C-Down',            '',                  'Right stick down',  'Right pad down',    '',                  '',                  '',                  '',                  '',                  '',                  '',                  '*Throttle down',    '3',       'Right stick down (TY)',  '',                  'Right D-pad down',         'C-Down',                   'Right stick down',  '',                  '',                  '',                  '*Right stick down', 'Right stick down', ],
-    ['GP: RY Up;    M: Y Up',     '',                  'M: Y Up',           'Right stick up',    'Right stick up',    '',                '[C] Right stick up',   '',                 'Right stick up',    '',                  '',                  '',                  'C-Up',              '',                  'Right stick up',    'Right pad up',      '',                  '',                  '',                  '',                  '',                  '',                  '',                  '*Throttle up',      '1',       'Right stick up (TY)',    '',                  'Right D-pad up',           'C-Up',                     'Right stick up',    '',                  '',                  '',                  '*Right stick up',   'Right stick up',   ],
-    ['GP: LD Left;  KB: Left',    'KB: Left',          '',                  'D-pad left',        'D-pad left',        'D-pad left (H)',  '[C] D-pad left',     '[W] D-pad left (V)', 'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        '',                  'D-pad left',        'Stick left',        'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        '',                  'D-pad left',        'D-pad left',        'D-pad left',  'D-pad left',         'D-pad left',        'Left D-pad left',          'D-pad left',               'D-pad left',        'D-pad left',        'D-pad left',        'D-pad left',        'Left D-pad left',   'D-pad left',       ],
-    ['GP: LD Right; KB: Right',   'KB: Right',         '',                  'D-pad right',       'D-pad right',       'D-pad right (H)', '[C] D-pad right',    '[W] D-pad right (V)','D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       '',                  'D-pad right',       'Stick right',       'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       '',                  'D-pad right',       'D-pad right',       'D-pad right', 'D-pad right',        'D-pad right',       'Left D-pad right',         'D-pad right',              'D-pad right',       'D-pad right',       'D-pad right',       'D-pad right',       'Left D-pad right',  'D-pad right',      ],
-    ['GP: LD Down;  KB: Down',    'KB: Down',          '',                  'D-pad down',        'D-pad down',        'D-pad down (H)',  '[C] D-pad down',     '[W] D-pad down (V)', 'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        '',                  'D-pad down',        'Stick down',        'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        '',                  'D-pad down',        'D-pad down',        'D-pad down',  'D-pad down',         'D-pad down',        'Left D-pad down',          'D-pad down',               'D-pad down',        'D-pad down',        'D-pad down',        'D-pad down',        'Left D-pad down',   'D-pad down',       ],
-    ['GP: LD Up;    KB: Up',      'KB: Up',            '',                  'D-pad up',          'D-pad up',          'D-pad up (H)',    '[C] D-pad up',       '[W] D-pad up (V)',   'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          '',                  'D-pad up',          'Stick up',          'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          '',                  'D-pad up',          'D-pad up',          'D-pad up',    'D-pad up',           'D-pad up',          'Left D-pad up',            'D-pad up',                 'D-pad up',          'D-pad up',          'D-pad up',          'D-pad up',          'Left D-pad up',     'D-pad up',         ],
-    ['GP: RD Left;  M: WX Left',  '',                  'M: WX Left',        '',                  'Mute',              '',                '[W] D-pad left (H)',  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  'L pad click',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '*',                  '',                  '',                         '',                         '',                  '',                  '',                  '',                  '*Right D-pad left', '',                 ],
-    ['GP: RD Right; M: WX Right', '',                  'M: WX Right',       '',                  '',                  '',                '[W] D-pad right (H)', '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  'R pad click',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '0',                  '',                  '',                         '',                         '',                  '',                  '',                  '',                  '*Right D-pad right','',                 ],
-    ['GP: RD Down;  M: WY Down',  '',                  'M: WY Down',        '',                  '',                  '',                '[W] D-pad down (H)',  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '#',                  '',                  '',                         '',                         '',                  '',                  '',                  '',                  '*Right D-pad down', '',                 ],
-    ['GP: RD Up;    M: WY Up',    '',                  'M: WY Up',          '',                  '',                  '',                '[W] D-pad up (H)',    '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '*Right D-pad up',   '',                 ],
-    ['GP: RB Left;  KB: Q; M: 4', 'KB: Q',             'M: 4',              'Square',            'Square',            '1',                 '[C] Y',             '[W] 1',             'Y',                 'B',                 'Y',                 'A',                 'B',                 'B | D-pad up',      'X',                 'X',                 'A',                 'II',                'III',               'B',                 'Y',                 '1',                 '3',                 'A',                 'C',           'C',                  'III',               'B',                        'B',                        'B',                 '1',                 'A',                 'A',                 'X',                 'Square',           ],
-    ['GP: RB Right; KB: R; M: 5', 'KB: R',             'M: 5',              'Circle',            'Circle',            'B',                 '[C] A',             '[W] 2',             'A',                 '',                  'A',                 'C',                 '',                  'X | D-pad down',    'B',                 'B',                 'D',                 '',                  'I',                 '',                  'A',                 '',                  '2',                 'C',                 'A',           'A',                  'I',                 '',                         'C-Down',                   'X',                 '',                  'C',                 'C',                 'B',                 'Circle',           ],
-    ['GP: RB Down;  KB: E; M: 6', 'KB: E',             'M: 6',              'X',                 'X',                 '2',                 '[C] B',             '[W] A',             'B',                 'A',                 'B',                 'B',                 'A',                 'A | D-pad left',    'A',                 'A',                 'B',                 'I',                 'II',                'A',                 'B',                 '2',                 '1',                 'B',                 'B',           'B',                  'II',                'A',                        'A',                        'A',                 '2',                 'B',                 'B',                 'A',                 'X',                ],
-    ['GP: RB Up;    KB: F; M: 7', 'KB: F',             'M: 7',              'Triangle',          'Triangle',          'A',                 '[C] X',             '',                  'X',                 '',                  'X',                 'Y',                 '',                  'Y | D-pad right',   'Y',                 'Y',                 'C',                 '',                  'V',                 '',                  'X',                 '',                  '4',                 '*Trigger',          '8 (Y)',       '8 (Y)',              'V',                 '',                         'C-Left',                   'Y',                 '',                  '*Y',                'Y',                 'Y',                 'Triangle',         ],
-    ['GP: MM; KB: Esc',           'KB: Esc',           '',                  'Start',             'OPTIONS',           '+',                 '[C] +',             '',                  '+',                 'Start',             'Start',             'Start',             'Start',             '+ | Capture',       'Menu',              'Start',             'Start',             'Run',               'Run',               'Start',             'Start',             '',                  'Start',             'P',                 'Option',      'Option',             'Run',               'Start',                    'Start',                    'Start',             '',                  'Start',             'Start',             'Start',             'Start',            ],
-    ['GP: MS; KB: Enter',         'KB: Enter',         '',                  'Select',            'SHARE',             '-',                 '[C] -',             '',                  '-',                 'Select',            'Select',            'Mode',              '',                  '- | Home',          'View',              'Back',              'Select',            'Select',            'Select',            'Select',            'Select',            '',                  'Coin',              'X',                 'Pause',       'Pause',              'Select',            'Select',                   '',                         '',                  '',                  '*Mode',             '',                  '*D',                'Select',           ],
-    ['GP: MT; KB: L Win',         'KB: L Win',         '',                  'PS',                'PS',                'Home',              '[C] Home',          '',                  'Home',              '',                  '',                  'Home',              'Home',              '',                  'Xbox',              'Steam',             'Extra',             '',                  '',                  '',                  '',                  '',                  'Service',           '',                  '0',           '2',                  '',                  'Start',                    '**Toggle Ctrl/Rumble pak', '',                  '',                  '',                  '',                  '',                  'Analog',           ],
-    ['GP: MQ; KB: Hash',          'KB: Hash',          '',                  '',                  'TouchPad',          '',                  '[W] B',             '',                  'Capture',           '',                  '',                  'Capture',           'Capture',           '',                  'Share',             'Stick click',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '5',                  '',                  'Select',                   '**Rotate memory bank',     '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['GP: LM; M: Right',          '',                  'M: Right',          'L2',                'L2',                '',                  '[C] Analog L',      '[N] Z',             'ZL',                'L',                 'L',                 '',                  'Z',                 'SL',                'LT',                'Analog LT',         '6',                 '',                  'IV',                '',                  'L',                 '',                  '5',                 'L',                 '4 (L)',       'Z Axis',             'IV',                'L',                        'Z',                        'Analog L',          '',                  '*X',                'L',                 'L',                 'L2',               ],
-    ['GP: LS; KB: Z',             'KB: Z',             '',                  'L1',                'L1',                '',                  '[C] ZL',            '[N] C',             'L',                 '',                  'ZL',                'X',                 'L',                 'L | R',             'LB',                'LB',                '6',                 '',                  'IV',                '',                  'L',                 '',                  '7',                 'L',                 '7 (Z)',       '4 (L)',              'IV',                'L',                        'L',                        'Z',                 '',                  '*X',                'X',                 '*Z',                'L1',               ],
-    ['GP: LT; KB: L CTRL',        'KB: L CTRL',        '',                  '',                  '',                  '',                  '[C] Digital L',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  'Digital LT',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '1',                  '',                  '',                         '',                         'Digital L',         '',                  '',                  '',                  '',                  '',                 ],
-    ['GP: LJ; M: Middle',         '',                  'M: Middle',         'L3',                'L3',                '',                  '[W] 1',             '',                  'L Stick',           '',                  '',                  '',                  '',                  'Stick click',       'L Stick',           'L grip',            '',                  '',                  '',                  '',                  '',                  '',                  '9',                 '',                  '*',           '7 (Z)',              'Mode 1',            '**VTAP PALETTE',           '',                         '',                  '',                  '',                  '',                  '',                  'L3',               ],
-    ['GP: RM; M: Left',           '',                  'M: Left',           'R2',                'R2',                '',                  '[C] Analog R',      '[W] B',             'ZR',                'R',                 'R',                 '',                  'ZR',                'SR',                'RT',                'Analog RT',         'Credit',            '',                  'VI',                '',                  'R',                 '',                  '6',                 'R',                 '6 (R)',       'TZ Axis',            'VI',                'R',                        'Z',                        'Analog R',          '',                  '*Z',                'R',                 'R',                 'R2',               ],
-    ['GP: RS; KB: X; M: 8',       'KB: X',             '',                  'R1',                'R1',                '',                  '[C] ZR',            '',                  'R',                 '',                  'ZR',                'Z',                 'R',                 'ZL | ZR',           'RB',                'RB',                'Credit',            '',                  'VI',                '',                  'R',                 '',                  '8',                 'R',                 '9 (X)',       '6 (R)',              'VI',                'R',                        'R',                        'Z',                 '',                  '*Z',                'Z',                 '*C',                'R1',               ],
-    ['GP: RT; KB: L Shift',       'KB: L Shift',       '',                  '',                  '',                  '',                  '[C] Digital R',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  'Digital RT',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '3',                  '',                  '',                         '',                         'Digital R',         '',                  '',                  '',                  '',                  '',                 ],
-    ['GP: RJ; KB: Space',         'KB: Space',         '',                  'R3',                'R3',                '',                  '[W] 2',             '',                  'R Stick',           '',                  '',                  '',                  '',                  '',                  'R Stick',           'R grip',            '',                  '',                  '',                  '',                  '',                  '',                  '10',                '',                  '#',           '9 (X)',              'Mode 2',            '**VTAP MODE',              '',                         '',                  '',                  '',                  '',                  '',                  'R3',               ],
-    ['KB: B',                     'KB: B',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: C',                     'KB: C',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: G',                     'KB: G',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: H',                     'KB: H',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: I',                     'KB: I',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: J',                     'KB: J',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: K',                     'KB: K',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: L',                     'KB: L',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: M',                     'KB: M',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: N',                     'KB: N',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: O',                     'KB: O',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: P',                     'KB: P',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: T',                     'KB: T',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: U',                     'KB: U',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: V',                     'KB: V',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Y',                     'KB: Y',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 1',                     'KB: 1',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 2',                     'KB: 2',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 3',                     'KB: 3',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 4',                     'KB: 4',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 5',                     'KB: 5',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 6',                     'KB: 6',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 7',                     'KB: 7',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 8',                     'KB: 8',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 9',                     'KB: 9',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: 0',                     'KB: 0',             '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Backspace',             'KB: Backspace',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Tab',                   'KB: Tab',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Minus',                 'KB: Minus',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Equal',                 'KB: Equal',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: L Brace',               'KB: L Brace',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: R Brace',               'KB: R Brace',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Backslash',             'KB: Backslash',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Semicolon',             'KB: Semicolon',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Apostrophe',            'KB: Apostrophe',    '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Grave',                 'KB: Grave',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Comma',                 'KB: Comma',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Dot',                   'KB: Dot',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Slash',                 'KB: Slash',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Capslock',              'KB: Capslock',      '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F1',                    'KB: F1',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F2',                    'KB: F2',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F3',                    'KB: F3',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F4',                    'KB: F4',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F5',                    'KB: F5',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F6',                    'KB: F6',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F7',                    'KB: F7',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F8',                    'KB: F8',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F9',                    'KB: F9',            '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F10',                   'KB: F10',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F11',                   'KB: F11',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: F12',                   'KB: F12',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Print Screen',          'KB: Print Screen',  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Scroll',                'KB: Scroll',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Pause',                 'KB: Pause',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Insert',                'KB: Insert',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Home',                  'KB: Home',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Page Up',               'KB: Page Up',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Delete',                'KB: Delete',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: End',                   'KB: End',           '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Page Down',             'KB: Page Down',     '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: Numlock',               'KB: Numlock',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP Div',                'KB: KP Div',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP Multi',              'KB: KP Multi',      '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP Minus',              'KB: KP Minus',      '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP Plus',               'KB: KP Plus',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP Enter',              'KB: KP Enter',      '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 1',                  'KB: KP 1',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 2',                  'KB: KP 2',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 3',                  'KB: KP 3',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 4',                  'KB: KP 4',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 5',                  'KB: KP 5',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 6',                  'KB: KP 6',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 7',                  'KB: KP 7',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 8',                  'KB: KP 8',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 9',                  'KB: KP 9',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP 0',                  'KB: KP 0',          '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: KP Dot',                'KB: KP Dot',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: L Alt',                 'KB: L Alt',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: R Ctrl',                'KB: R Ctrl',        '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: R Shift',               'KB: R Shift',       '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: R Alt',                 'KB: R Alt',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-    ['KB: R Win',                 'KB: R Win',         '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',                  '',            '',                   '',                  '',                         '',                         '',                  '',                  '',                  '',                  '',                  '',                 ],
-];
-
-var systemCfg = [
-    'Auto',
-    'Parallel_1P_PP',
-    'Parallel_2P_PP',
-    'NES',
-    'PCE',
-    'MD-Genesis',
-    'SNES',
-    'CD-i',
-    'CD32',
-    '3DO',
-    'Jaguar',
-    'PSX',
-    'Saturn',
-    'PC-FX',
-    'JVS',
-    'N64',
-    'DC',
-    'PS2',
-    'GC',
-    'Wii-Ext',
-    "VB",
-    "Parallel_1P_OD",
-    "Parallel_2P_OD",
-    "SEA Board",
-];
-
-var multitapCfg = [
-    'None',
-    'Slot 1',
-    'Slot 2',
-    'Dual',
-    'Alt',
-];
-
-var inquiryMode = [
-    'Auto',
-    'Manual',
-];
-
-var devCfg = [
-    'GamePad',
-    'GamePadAlt',
-    'Keyboard',
-    'Mouse',
-];
-
-var accCfg = [
-    'None',
-    'Memory',
-    'Rumble',
-    'Both',
-];
-
-var turboMask = {
-    'Disable': 0,
-    '1/2 frames': (1 << 1) | 0,
-    '1/4 frames': (3 << 1) | 0,
-    '2/4 frames': (2 << 1) | 0,
-    '3/4 frames': (3 << 1) | 1,
-    '1/8 frames': (7 << 1) | 0,
-    '2/8 frames': (6 << 1) | 0,
-    '4/8 frames': (4 << 1) | 0,
-    '6/8 frames': (6 << 1) | 1,
-    '7/8 frames': (7 << 1) | 1,
-    '1/16 frames': (15 << 1) | 0,
-    '2/16 frames': (14 << 1) | 0,
-    '4/16 frames': (12 << 1) | 0,
-    '8/16 frames': (8 << 1) | 0,
-    '12/16 frames': (12 << 1) | 1,
-    '14/16 frames': (14 << 1) | 1,
-    '15/16 frames': (15 << 1) | 1,
-    '1/32 frames': (31 << 1) | 0,
-    '2/32 frames': (30 << 1) | 0,
-    '4/32 frames': (28 << 1) | 0,
-    '8/32 frames': (24 << 1) | 0,
-    '16/32 frames': (16 << 1) | 0,
-    '24/32 frames': (24 << 1) | 1,
-    '28/32 frames': (28 << 1) | 1,
-    '30/32 frames': (30 << 1) | 1,
-    '31/32 frames': (31 << 1) | 1,
-    '1/64 frames': (63 << 1) | 0,
-    '2/64 frames': (62 << 1) | 0,
-    '4/64 frames': (60 << 1) | 0,
-    '8/64 frames': (56 << 1) | 0,
-    '16/64 frames': (48 << 1) | 0,
-    '32/64 frames': (32 << 1) | 0,
-    '48/64 frames': (48 << 1) | 1,
-    '56/64 frames': (56 << 1) | 1,
-    '60/64 frames': (60 << 1) | 1,
-    '62/64 frames': (62 << 1) | 1,
-    '63/64 frames': (63 << 1) | 1,
-    '1/128 frames': (127 << 1) | 0,
-    '2/128 frames': (126 << 1) | 0,
-    '4/128 frames': (124 << 1) | 0,
-    '8/128 frames': (120 << 1) | 0,
-    '16/128 frames': (112 << 1) | 0,
-    '32/128 frames': (96 << 1) | 0,
-    '64/128 frames': (64 << 1) | 0,
-    '96/128 frames': (96 << 1) | 1,
-    '112/128 frames': (112 << 1) | 1,
-    '120/128 frames': (120 << 1) | 1,
-    '124/128 frames': (124 << 1) | 1,
-    '126/128 frames': (126 << 1) | 1,
-    '127/128 frames': (127 << 1) | 1,
-};
-
-var scaling = [
-    'Linear',
-    'Aggressive',
-    'Relaxed',
-    'Wide',
-    'S-Curve',
-    'Passthrough',
-];
-
-var diagScaling = [
-    'Passthrough',
-    'Circular->Square',
-    'Circular->N64 Hexagone',
-    'Square->Circular',
-    'Square->N64 Hexagone'
-];
-
-const maxMainInput = 12;
-const maxSubInput = 4;
-const maxOutput = 12;
-const maxMax = 255;
-const maxThres = 100;
-const urlLatestRelease = 'https://api.github.com/repos/darthcloud/BlueRetro/releases/latest'
+import { brUuid, labelName, btnList, systemCfg,
+    multitapCfg, inquiryMode, devCfg, accCfg, turboMask,
+    scaling, diagScaling, maxMainInput, maxOutput,
+    maxMax, maxThres }
+    from './utils/constants.js';
+import { getLatestRelease } from './utils/getLatestRelease.js';
+import { getAppVersion } from './utils/getAppVersion.js';
+import { getBdAddr } from './utils/getBdAddr.js';
+import { getApiVersion } from './utils/getApiVersion.js';
 
 var apiVersion = 0;
 var bluetoothDevice;
@@ -308,7 +14,6 @@ var maxMapping = 255;
 var nbMapping = 1;
 let brService = null;
 var mappingElement = null;
-let inputChrc = null;
 var pageInit = 0;
 var srcLabel = 0;
 var destLabel = 0;
@@ -316,66 +21,6 @@ var bdaddr;
 var app_ver;
 var latest_ver;
 var name;
-
-function getLatestRelease() {
-    return new Promise(function(resolve, reject) {
-        fetch(urlLatestRelease)
-        .then(rsp => {
-            return rsp.json();
-        })
-        .then(data => {
-            latest_ver = data['tag_name'];
-            resolve();
-        })
-        .catch(error => {
-            resolve();
-        });
-    });
-}
-
-function getAppVersion() {
-    return new Promise(function(resolve, reject) {
-        log('Get Api version CHRC...');
-        brService.getCharacteristic(brUuid[9])
-        .then(chrc => {
-            log('Reading App version...');
-            return chrc.readValue();
-        })
-        .then(value => {
-            var enc = new TextDecoder("utf-8");
-            app_ver = enc.decode(value);
-            log('App version: ' + app_ver);
-            resolve();
-        })
-        .catch(error => {
-            resolve();
-        });
-    });
-}
-
-function getBdAddr() {
-    return new Promise(function(resolve, reject) {
-        log('Get BD_ADDR CHRC...');
-        brService.getCharacteristic(brUuid[12])
-        .then(chrc => {
-            log('Reading BD_ADDR...');
-            return chrc.readValue();
-        })
-        .then(value => {
-            bdaddr = value.getUint8(5).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(4).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(3).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(2).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(1).toString(16).padStart(2, '0') + ':'
-                    + value.getUint8(0).toString(16).padStart(2, '0');
-            log('BD_ADDR: ' + bdaddr);
-            resolve();
-        })
-        .catch(error => {
-            resolve();
-        });
-    });
-}
 
 function initGlobalCfg() {
     var div = document.createElement("div");
@@ -654,42 +299,6 @@ function initLabelSelect() {
     div.appendChild(label);
     div.appendChild(main);
 
-    divInputCfg.appendChild(div);
-}
-
-function initInputAssign() {
-    var div = document.createElement("div");
-
-    /* Main dev */
-    var main = document.createElement("select");
-    main.setAttribute("style", "max-width:40%;");
-    for (var i = 0; i < maxMainInput; i++) {
-        var option  = document.createElement("option");
-        option.value = i;
-        option.text = "Input " + (i + 1);
-        main.add(option);
-    }
-    main.id = "mainInput";
-    div.appendChild(main);
-
-    /* Sub dev */
-    var sub = document.createElement("select");
-    sub.setAttribute("style", "max-width:40%;");
-    for (var i = 0; i <= maxSubInput; i++) {
-        var option  = document.createElement("option");
-        option.value = i;
-        if (i) {
-            option.text = "Sub Input " + i;
-        }
-        else {
-            option.text = "Sub Input Merged";
-        }
-        sub.add(option);
-    }
-    sub.id = "subInput";
-    div.appendChild(sub);
-
-    var divInputCfg = document.getElementById("divInputCfg");
     divInputCfg.appendChild(div);
 }
 
@@ -1034,30 +643,9 @@ function initBlueRetroCfg() {
     initOutputMode();
     initInputSelect();
     initLabelSelect();
-    //initInputAssign();
     initFirstOutputMapping();
     initOutputMapping();
     pageInit = 1;
-}
-
-function getApiVersion() {
-    return new Promise(function(resolve, reject) {
-        log('Get Api version CHRC...');
-        brService.getCharacteristic(brUuid[6])
-        .then(chrc => {
-            log('Reading Api version...');
-            return chrc.readValue();
-        })
-        .then(value => {
-            log('Api version size: ' + value.byteLength);
-            apiVersion = value.getUint8(0);
-            log('Api version: ' + apiVersion);
-            resolve();
-        })
-        .catch(error => {
-            reject(error);
-        });
-    });
 }
 
 function loadGlobalCfg() {
@@ -1245,12 +833,7 @@ function saveGlobal() {
         data[3] = document.getElementById("banksel").value;
     }
     return new Promise(function(resolve, reject) {
-        log('Get Global Config CHRC...');
-        brService.getCharacteristic(brUuid[1])
-        .then(chrc => {
-            log('Writing Global Config...');
-            return chrc.writeValue(data);
-        })
+        saveGlobalCfg(brService, data)
         .then(_ => {
             document.getElementById("globalSaveText").style.display = 'block';
             log('Global Config saved');
@@ -1270,22 +853,7 @@ function saveOutput() {
     data[1] = document.getElementById("outputAcc").value;
     cfgId = document.getElementById("outputSelect").value;
     return new Promise(function(resolve, reject) {
-        log('Get Output ' + cfgId + ' CTRL CHRC...');
-        brService.getCharacteristic(brUuid[2])
-        .then(chrc => {
-            log('Set Output ' + cfgId + ' on CTRL chrc...');
-            var outputCtrl = new Uint16Array(1);
-            outputCtrl[0] = Number(cfgId);
-            return chrc.writeValue(outputCtrl);
-        })
-        .then(_ => {
-            log('Get Output ' + cfgId + ' DATA CHRC...');
-            return brService.getCharacteristic(brUuid[3]);
-        })
-        .then(chrc => {
-            log('Writing Output ' + cfgId + ' Config...');
-            return chrc.writeValue(data);
-        })
+        saveOutputCfg(brService, data, cfgID)
         .then(_ => {
             document.getElementById("outputSaveText").style.display = 'block';
             if (data[0] == 3) {
@@ -1409,7 +977,7 @@ function onDisconnected() {
     document.getElementById("divInputCfg").style.display = 'none';
 }
 
-function btConn() {
+export function btConn() {
     log('Requesting Bluetooth Device...');
     navigator.bluetooth.requestDevice(
         {filters: [{namePrefix: 'BlueRetro'}],
@@ -1427,24 +995,28 @@ function btConn() {
     })
     .then(service => {
         brService = service;
-        return getBdAddr();
+        return getBdAddr(brService);
     })
-    .then(_ => {
+    .then(value => {
+        bdaddr = value;
         return getLatestRelease();
     })
-    .then(_ => {
-        return getAppVersion();
+    .then(value => {
+        latest_ver = value;
+        return getAppVersion(brService);
     })
-    .then(_ => {
-        return getApiVersion();
+    .then(value => {
+        app_ver = value;
+        return getApiVersion(brService);
     })
     .catch(error => {
         if (error.name == 'NotFoundError') {
-            return;
+            return 0;
         }
         throw error;
     })
-    .then(() => {
+    .then(value => {
+        apiVersion = value;
         if (!pageInit) {
             log('Init Cfg DOM...');
             initBlueRetroCfg();
@@ -1472,19 +1044,6 @@ function btConn() {
     .catch(error => {
         log('Argh! ' + error);
     });
-}
-
-function btDisconn() {
-    if (!bluetoothDevice) {
-        return;
-    }
-    log('Disconnecting from Bluetooth Device...');
-    if (bluetoothDevice.gatt.connected) {
-        bluetoothDevice.gatt.disconnect();
-    } else {
-        log('> Bluetooth Device is already disconnected');
-    }
-    onDisconnected();
 }
 
 function addInput() {

@@ -463,7 +463,6 @@ export const diagScaling = [
 ];
 
 export const maxMainInput = 12;
-export const maxSubInput = 4;
 export const maxOutput = 12;
 export const maxMax = 255;
 export const maxThres = 100;

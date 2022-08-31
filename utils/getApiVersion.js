@@ -1,5 +1,5 @@
-import ChromeSamples from "./ChromeSamples"
-import { brUuid } from "../utils/constants";
+import ChromeSamples from "./ChromeSamples.js"
+import { brUuid } from "../utils/constants.js";
 
 export const getApiVersion = (service) => {
     return new Promise((resolve, reject) => {
@@ -10,12 +10,11 @@ export const getApiVersion = (service) => {
           return chrc.readValue();
         })
         .then((value) => {
-          resolve(value);
+          resolve(value.getUint8(0));
         })
         .catch((error) => {
           reject(error);
         });
-      
     });
   };
   export default getApiVersion;

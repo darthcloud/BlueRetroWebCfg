@@ -1,17 +1,13 @@
-import { brUuid } from "../utils/constants";
-import ChromeSamples from "./ChromeSamples"
+import { brUuid } from "../utils/constants.js";
 
-export function saveGlobalCfg(brService, globalCfg) {
-    return new Promise(function (resolve, reject) {
-      ChromeSamples.log("Get Global Config CHRC...");
+export const saveGlobalCfg = (brService, globalCfg) => {
+    return new Promise((resolve, reject) => {
       brService
         .getCharacteristic(brUuid[1])
         .then((chrc) => {
-          ChromeSamples.log("Writing Global Config...");
           return chrc.writeValue(globalCfg);
         })
         .then((_) => {
-          ChromeSamples.log("Global Config saved");
           resolve();
         })
         .catch((error) => {
