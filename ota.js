@@ -34,6 +34,7 @@ var bdaddr;
 var app_ver;
 var latest_ver;
 var name;
+var cur_fw_hw2 = 0;
 
 function getLatestRelease() {
     return new Promise(function(resolve, reject) {
@@ -135,7 +136,20 @@ function firmwareUpdate(evt) {
         log('File read cancelled');
     };
     reader.onload = function(e) {
-        writeFirmware(reader.result, 0);
+        var decoder = new TextDecoder("utf-8");
+        var header = decoder.decode(reader.result.slice(0, 256));
+        var new_fw_hw2 = 1;
+
+        if (header.indexOf('hw2') == -1) {
+            new_fw_hw2 = 0
+        }
+
+        if (cur_fw_hw2 == new_fw_hw2) {
+            writeFirmware(reader.result, 0);
+        }
+        else {
+            log("Hardware and firmware mismatch!");
+        }
     }
 
     // Read in the image file as a binary string.
@@ -264,6 +278,9 @@ function btConn() {
         document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
         if (app_ver.indexOf(latest_ver) == -1) {
             document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
+        }
+        if (app_ver.indexOf('hw2') != -1) {
+            cur_fw_hw2 = 1;
         }
         log('Init Cfg DOM...');
         document.getElementById("divBtConn").style.display = 'none';
