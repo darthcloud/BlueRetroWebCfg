@@ -489,7 +489,7 @@ function initFirstOutputMapping() {
     addButton.addEventListener("click", addInput);
 
     /* Save */
-    divSave = document.createElement("div");
+    var divSave = document.createElement("div");
 
     var btn = document.createElement("button");
     btn.id = "inputSave";
