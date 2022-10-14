@@ -1,4 +1,4 @@
-import { brUuid, ota_abort, ota_end, ota_start } from "../utils/constants.js";
+import { brUuid, cfg_cmd_ota_abort, cfg_cmd_ota_end, cfg_cmd_ota_start } from "../utils/constants.js";
 import otaWriteFwRecursive from "../utils/otaWriteFwRecursive.js";
 
 export const otaWriteFirmware = (brService, data, setProgress, cancel) => {
@@ -9,7 +9,7 @@ export const otaWriteFirmware = (brService, data, setProgress, cancel) => {
       .getCharacteristic(brUuid[7])
       .then((chrc) => {
         ctrl_chrc = chrc;
-        cmd[0] = ota_start;
+        cmd[0] = cfg_cmd_ota_start;
         return ctrl_chrc.writeValue(cmd);
       })
       .then((_) => {
@@ -19,14 +19,14 @@ export const otaWriteFirmware = (brService, data, setProgress, cancel) => {
         return otaWriteFwRecursive(chrc, data, 0, setProgress, cancel);
       })
       .then((_) => {
-        cmd[0] = ota_end;
+        cmd[0] = cfg_cmd_ota_end;
         return ctrl_chrc.writeValue(cmd);
       })
       .then((_) => {
         resolve();
       })
       .catch((error) => {
-        cmd[0] = ota_abort;
+        cmd[0] = cfg_cmd_ota_abort;
         return ctrl_chrc.writeValue(cmd).then((_) => {
           reject(error);
         });

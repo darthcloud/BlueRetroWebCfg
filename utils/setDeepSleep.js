@@ -1,4 +1,4 @@
-import { brUuid, sys_deep_sleep } from "../utils/constants.js";
+import { brUuid, cfg_cmd_sys_deep_sleep } from "../utils/constants.js";
 import ChromeSamples from "../utils/ChromeSamples.js";
 
 export function setDeepSleep(brService) {
@@ -8,7 +8,7 @@ export function setDeepSleep(brService) {
       .getCharacteristic(brUuid[7])
       .then((chrc) => {
         ctrl_chrc = chrc;
-        cmd[0] = sys_deep_sleep;
+        cmd[0] = cfg_cmd_sys_deep_sleep;
         return ctrl_chrc.writeValue(cmd);
       })
       .catch((error) => {

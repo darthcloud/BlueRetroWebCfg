@@ -139,11 +139,18 @@ export const mtu = 244;
 
 export const urlLatestRelease = 'https://api.github.com/repos/darthcloud/BlueRetro/releases/latest'
 
-export const ota_start = 0xa5;
-export const ota_abort = 0xde;
-export const ota_end = 0x5a;
-export const sys_deep_sleep = 0x37;
-export const sys_reset = 0x38;
+export const cfg_cmd_get_abi_ver = 0x01;
+export const cfg_cmd_get_fw_ver = 0x02;
+export const cfg_cmd_get_bdaddr = 0x03;
+export const cfg_cmd_get_gameid = 0x04;
+export const cfg_cmd_set_default_cfg = 0x10;
+export const cfg_cmd_set_gameid_cfg = 0x11;
+export const cfg_cmd_sys_deep_sleep = 0x37;
+export const cfg_cmd_sys_reset = 0x38;
+export const cfg_cmd_sys_factory = 0x39;
+export const cfg_cmd_ota_end = 0x5A;
+export const cfg_cmd_ota_start = 0xA5;
+export const cfg_cmd_ota_abort = 0xDE;
 
 export const btn = {
     PAD_LX_LEFT: 0,
