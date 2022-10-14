@@ -7,6 +7,7 @@ import { getLatestRelease } from './utils/getLatestRelease.js';
 import { getAppVersion } from './utils/getAppVersion.js';
 import { getBdAddr } from './utils/getBdAddr.js';
 import { getApiVersion } from './utils/getApiVersion.js';
+import { getGameId } from './utils/getGameId.js';
 
 var apiVersion = 0;
 var bluetoothDevice;
@@ -21,6 +22,7 @@ var bdaddr;
 var app_ver;
 var latest_ver;
 var name;
+var gameid;
 
 function initGlobalCfg() {
     var div = document.createElement("div");
@@ -509,8 +511,8 @@ function initFirstOutputMapping() {
     divSave.appendChild(div);
 
     /* Append first cfg */
-    divMappingGrp = document.createElement("div");
-    divMapping = document.createElement("div");
+    var divMappingGrp = document.createElement("div");
+    var divMapping = document.createElement("div");
     divMapping.appendChild(mappingElement);
     divMapping.id = "divMapping";
     var divInputCfg = document.getElementById("divInputCfg");
@@ -1007,6 +1009,10 @@ export function btConn() {
     })
     .then(value => {
         app_ver = value;
+        return getGameId(brService);
+    })
+    .then(value => {
+        gameid = value;
         return getApiVersion(brService);
     })
     .catch(error => {
@@ -1030,7 +1036,7 @@ export function btConn() {
         return loadInputCfg(0);
     })
     .then(() => {
-        document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
+        document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']<br> GameID: ' + gameid;
         if (app_ver.indexOf(latest_ver) == -1) {
             document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
         }

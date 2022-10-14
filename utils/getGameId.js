@@ -1,11 +1,13 @@
-import { brUuid } from "../utils/constants.js";
+import { brUuid, cfg_cmd_get_gameid } from "../utils/constants.js";
 
 export const getGameId = (service) => {
   return new Promise((resolve, reject) => {
+    var cmd = new Uint8Array(1);
+    var cmd_chrc;
     service
       .getCharacteristic(brUuid[7])
       .then((chrc) => {
-        var cmd_chrc = chrc;
+        cmd_chrc = chrc;
         cmd[0] = cfg_cmd_get_gameid;
         return cmd_chrc.writeValue(cmd);
       })
