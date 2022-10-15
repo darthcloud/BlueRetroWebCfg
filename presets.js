@@ -1,4 +1,4 @@
-import { brUuid, btn, maxMainInput, maxSubInput, maxOutput, maxMax, maxThres, urlLatestRelease } from './utils/constants.js';
+import { brUuid, maxMainInput } from './utils/constants.js';
 import { getLatestRelease } from './utils/getLatestRelease.js';
 import { getAppVersion } from './utils/getAppVersion.js';
 import { getBdAddr } from './utils/getBdAddr.js';
@@ -6,11 +6,7 @@ import { savePresetInput } from './utils/savePresetInput.js';
 
 var presets = new Array();
 var bluetoothDevice;
-var maxMapping = 255;
-var nbMapping = 1;
 let brService = null;
-var mappingElement = null;
-let inputChrc = null;
 var pageInit = 0;
 var consoles = []
 var bdaddr;
