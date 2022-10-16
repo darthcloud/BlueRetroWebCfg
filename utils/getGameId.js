@@ -16,7 +16,7 @@ export const getGameId = (service) => {
       })
       .then((value) => {
         let enc = new TextDecoder("utf-8");
-        let gameid = enc.decode(value);
+        let gameid = enc.decode(value).replace(/[^0-9a-z_-]/gi, '');
         resolve(gameid);
       })
       .catch((error) => {
