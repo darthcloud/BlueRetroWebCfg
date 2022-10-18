@@ -143,6 +143,7 @@ export const cfg_cmd_get_abi_ver = 0x01;
 export const cfg_cmd_get_fw_ver = 0x02;
 export const cfg_cmd_get_bdaddr = 0x03;
 export const cfg_cmd_get_gameid = 0x04;
+export const cfg_cmd_get_cfg_src = 0x05;
 export const cfg_cmd_set_default_cfg = 0x10;
 export const cfg_cmd_set_gameid_cfg = 0x11;
 export const cfg_cmd_sys_deep_sleep = 0x37;

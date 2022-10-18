@@ -9,6 +9,9 @@ import { getBdAddr } from './utils/getBdAddr.js';
 import { getApiVersion } from './utils/getApiVersion.js';
 import { getGameId } from './utils/getGameId.js';
 import { getGameName } from './utils/getGameName.js';
+import { getCfgSrc } from './utils/getCfgSrc.js';
+import { setDefaultCfg } from './utils/setDefaultCfg.js';
+import { setGameIdCfg } from './utils/setGameIdCfg.js';
 
 var apiVersion = 0;
 var bluetoothDevice;
@@ -25,6 +28,7 @@ var latest_ver;
 var name;
 var gameid;
 var gamename;
+var current_cfg = 0;
 
 function initGlobalCfg() {
     var div = document.createElement("div");
@@ -855,7 +859,7 @@ function saveOutput() {
     var data = new Uint8Array(2);
     data[0] = document.getElementById("outputMode").value;
     data[1] = document.getElementById("outputAcc").value;
-    cfgId = document.getElementById("outputSelect").value;
+    var cfgId = document.getElementById("outputSelect").value;
     return new Promise(function(resolve, reject) {
         saveOutputCfg(brService, data, cfgID)
         .then(_ => {
@@ -930,7 +934,7 @@ function saveInput() {
     document.getElementById("inputSaveText").style.display = 'none';
     var cfgSize = nbMapping*8 + 3;
     var cfg = new Uint8Array(cfgSize);
-    cfgId = document.getElementById("inputSelect").value;
+    var cfgId = document.getElementById("inputSelect").value;
 
     var src = document.getElementsByClassName("src");
     var dest = document.getElementsByClassName("dest");
@@ -975,10 +979,43 @@ function onDisconnected() {
     log('> Bluetooth Device disconnected');
     document.getElementById("divBtConn").style.display = 'block';
     document.getElementById("divInfo").style.display = 'none';
+    document.getElementById("divCfgSel").style.display = 'none';
     document.getElementById("divBtDisconn").style.display = 'none';
     document.getElementById("divGlobalCfg").style.display = 'none';
     document.getElementById("divOutputCfg").style.display = 'none';
     document.getElementById("divInputCfg").style.display = 'none';
+}
+
+function swGameIdCfg() {
+    setGameIdCfg(brService);
+}
+
+function swDefaultCfg() {
+    setDefaultCfg(brService);
+}
+
+function initCfgSelection() {
+    let divCfgSel = document.getElementById("divCfgSel");
+    let cfgSw = document.createElement("div");
+    let cfgBtn = document.createElement("button");
+    cfgBtn.id = "cfgSw";
+
+    if (current_cfg == 0) {
+        cfgBtn.innerText += 'Switch to GameID';
+        cfgBtn.addEventListener("click", swGameIdCfg);
+        divCfgSel.innerHTML += 'Current config: Global';
+        if (gameid.length) {
+            cfgSw.appendChild(cfgBtn);
+        }
+    }
+    else {
+        cfgBtn.innerText = 'Switch to Global';
+        cfgBtn.addEventListener("click", swDefaultCfg);
+        divCfgSel.innerHTML += 'Current config: GameID';
+        cfgSw.appendChild(cfgBtn);
+    }
+    cfgSw.setAttribute("style", "margin-top:1em;");
+    divCfgSel.append(cfgSw);
 }
 
 export function btConn() {
@@ -1019,7 +1056,10 @@ export function btConn() {
     })
     .then(value => {
         gamename = value;
-        log(gamename);
+        return getCfgSrc(brService);
+    })
+    .then(value => {
+        current_cfg = value;
         return getApiVersion(brService);
     })
     .catch(error => {
@@ -1048,9 +1088,11 @@ export function btConn() {
         if (app_ver.indexOf(latest_ver) == -1) {
             document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
         }
+        initCfgSelection();
         document.getElementById("divBtConn").style.display = 'none';
         //document.getElementById("divBtDisconn").style.display = 'block';
         document.getElementById("divInfo").style.display = 'block';
+        document.getElementById("divCfgSel").style.display = 'block';
         document.getElementById("divGlobalCfg").style.display = 'block';
         document.getElementById("divOutputCfg").style.display = 'block';
         document.getElementById("divInputCfg").style.display = 'block';

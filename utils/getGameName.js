@@ -11,7 +11,12 @@ export const getGameName = (gameid) => {
           let db = new SQL.Database(new Uint8Array(data));
           let gamename = db.exec('SELECT name FROM \'games\' WHERE id="'
             + gameid + '" LIMIT 1');
-          resolve(gamename[0].values[0][0])
+          try {
+            resolve(gamename[0].values[0][0]);
+          }
+          catch (e) {
+            resolve();
+          }
         });
       })
       .catch((error) => {
