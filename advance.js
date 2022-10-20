@@ -31,6 +31,16 @@ var gamename;
 var current_cfg = 0;
 
 function initGlobalCfg() {
+    var divGlobalCfg = document.getElementById("divGlobalCfg");
+
+    divGlobalCfg.innerHTML = '';
+
+    let header = document.createElement("h2");
+    header.style.margin = 0;
+    header.innerText = 'Global Config';
+
+    divGlobalCfg.appendChild(header);
+
     var div = document.createElement("div");
 
     /* System */
@@ -49,7 +59,6 @@ function initGlobalCfg() {
     div.appendChild(label);
     div.appendChild(sel);
 
-    var divGlobalCfg = document.getElementById("divGlobalCfg");
     divGlobalCfg.appendChild(div);
 
     div = document.createElement("div");
@@ -139,6 +148,16 @@ function initGlobalCfg() {
 }
 
 function initOutputSelect() {
+    var divOutputCfg = document.getElementById("divOutputCfg");
+
+    divOutputCfg.innerHTML = '';
+
+    let header = document.createElement("h2");
+    header.style.margin = 0;
+    header.innerText = 'Output Config';
+
+    divOutputCfg.appendChild(header);
+
     var div = document.createElement("div");
 
     /* Output select */
@@ -158,7 +177,6 @@ function initOutputSelect() {
     div.appendChild(label);
     div.appendChild(main);
 
-    var divOutputCfg = document.getElementById("divOutputCfg");
     divOutputCfg.appendChild(div);
 }
 
@@ -242,6 +260,18 @@ function initOutputMode() {
 }
 
 function initInputSelect() {
+    var divInputCfg = document.getElementById("divInputCfg");
+
+    divInputCfg.innerHTML = '';
+
+    let header = document.createElement("h2");
+    header.style.margin = 0;
+    header.innerText = 'Mapping Config';
+
+    divInputCfg.appendChild(header);
+
+    divInputCfg.innerHTML += '<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT9rPK2__komCjELFpf0UYz0cMWwvhAXgAU7C9nnwtgEaivjsh0q0xeCEiZAMA-paMrneePV7IqdX48/pubhtml">BlueRetro v1.4+ mapping reference</a> (legacy &leq; <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRln_dhkahEIhq4FQY_p461r5qvLn-Hkl89ZtfyIOGAqdnPtQZ5Ihfsjvd94fRbaHX8wU3F-r2ODYbM/pubhtml">v1.3 map here</a>)'
+
     var div = document.createElement("div");
     div.setAttribute("style", "margin-bottom:1em;");
 
@@ -262,7 +292,6 @@ function initInputSelect() {
     div.appendChild(label);
     div.appendChild(main);
 
-    var divInputCfg = document.getElementById("divInputCfg");
     divInputCfg.appendChild(div);
 }
 
@@ -653,6 +682,7 @@ function initBlueRetroCfg() {
     initLabelSelect();
     initFirstOutputMapping();
     initOutputMapping();
+    initCfgSelection();
     pageInit = 1;
 }
 
@@ -998,6 +1028,15 @@ function initCfgSelection() {
     let divCfgSel = document.getElementById("divCfgSel");
     let cfgSw = document.createElement("div");
     let cfgBtn = document.createElement("button");
+
+    divCfgSel.innerHTML = '';
+
+    let header = document.createElement("h2");
+    header.style.margin = 0;
+    header.innerText = 'Config Selection';
+
+    divCfgSel.appendChild(header);
+
     cfgBtn.id = "cfgSw";
 
     if (current_cfg == 0) {
@@ -1088,7 +1127,6 @@ export function btConn() {
         if (app_ver.indexOf(latest_ver) == -1) {
             document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
         }
-        initCfgSelection();
         document.getElementById("divBtConn").style.display = 'none';
         //document.getElementById("divBtDisconn").style.display = 'block';
         document.getElementById("divInfo").style.display = 'block';
