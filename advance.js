@@ -683,6 +683,7 @@ function initBlueRetroCfg() {
     initFirstOutputMapping();
     initOutputMapping();
     initCfgSelection();
+    nbMapping = 1;
     pageInit = 1;
 }
 
@@ -832,7 +833,7 @@ function loadInputCfg(cfgId) {
             log('Loading Mapping Found: ' + src.length + ' nbMapping: ' + nbMapping + ' cfg: ' + value[2]);
 
             var j = 3;
-            for (var i = 0; i < src.length; i++) {
+            for (var i = 0; i < nbMapping; i++) {
                 src[i].value = value[j++];
                 dest[i].value = value[j++];
                 destId[i].value = value[j++];
@@ -1010,7 +1011,7 @@ function onDisconnected() {
     document.getElementById("divBtConn").style.display = 'block';
     document.getElementById("divInfo").style.display = 'none';
     document.getElementById("divCfgSel").style.display = 'none';
-    document.getElementById("divBtDisconn").style.display = 'none';
+    //document.getElementById("divBtDisconn").style.display = 'none';
     document.getElementById("divGlobalCfg").style.display = 'none';
     document.getElementById("divOutputCfg").style.display = 'none';
     document.getElementById("divInputCfg").style.display = 'none';
@@ -1019,11 +1020,11 @@ function onDisconnected() {
 function swGameIdCfg() {
     setGameIdCfg(brService)
     .then(_ => {
-        initBlueRetroCfg();
         return getCfgSrc(brService);
     })
     .then(value => {
         current_cfg = value;
+        initBlueRetroCfg();
         return loadGlobalCfg();
     })
     .then(() => {
@@ -1037,11 +1038,11 @@ function swGameIdCfg() {
 function swDefaultCfg() {
     setDefaultCfg(brService)
     .then(_ => {
-        initBlueRetroCfg();
         return getCfgSrc(brService);
     })
     .then(value => {
         current_cfg = value;
+        initBlueRetroCfg();
         return loadGlobalCfg();
     })
     .then(() => {
