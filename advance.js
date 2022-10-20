@@ -1017,11 +1017,39 @@ function onDisconnected() {
 }
 
 function swGameIdCfg() {
-    setGameIdCfg(brService);
+    setGameIdCfg(brService)
+    .then(_ => {
+        initBlueRetroCfg();
+        return getCfgSrc(brService);
+    })
+    .then(value => {
+        current_cfg = value;
+        return loadGlobalCfg();
+    })
+    .then(() => {
+        return loadOutputCfg(0);
+    })
+    .then(() => {
+        return loadInputCfg(0);
+    })
 }
 
 function swDefaultCfg() {
-    setDefaultCfg(brService);
+    setDefaultCfg(brService)
+    .then(_ => {
+        initBlueRetroCfg();
+        return getCfgSrc(brService);
+    })
+    .then(value => {
+        current_cfg = value;
+        return loadGlobalCfg();
+    })
+    .then(() => {
+        return loadOutputCfg(0);
+    })
+    .then(() => {
+        return loadInputCfg(0);
+    })
 }
 
 function initCfgSelection() {
