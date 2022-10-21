@@ -18,15 +18,19 @@ index: index.html
 <div id="divReset" style="display:none;margin-bottom:1em;">
     <button id="btnReset">Reset</button>
 </div>
+<div id="divFactory" style="display:none;margin-bottom:1em;">
+    <button id="btnFactory">Factory Reset</button>
+</div>
 
 
 {% include output_helper.html %}
 
 <script type="module">
-  import { btConn, setDeepSleepEvent, setResetEvent } from './system.js';
+  import { btConn, setDeepSleepEvent, setResetEvent, setFactoryResetEvent } from './system.js';
 
   document.getElementById("btnSleep").addEventListener('click', setDeepSleepEvent);
   document.getElementById("btnReset").addEventListener('click', setResetEvent);
+  document.getElementById("btnFactory").addEventListener('click', setFactoryResetEvent);
   document.getElementById("btConn").addEventListener('click', function() {
     if (isWebBluetoothEnabled()) {
       ChromeSamples.clearLog();

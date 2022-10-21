@@ -6,12 +6,13 @@ import { getAppVersion } from './utils/getAppVersion.js';
 import { getBdAddr } from './utils/getBdAddr.js';
 import { setDeepSleep } from './utils/setDeepSleep.js';
 import { setReset } from './utils/setReset.js';
+import { setFactoryReset } from './utils/setFactoryReset.js';
 
 var bluetoothDevice;
-var bdaddr;
-var app_ver;
-var latest_ver;
-var name;
+var bdaddr = '';
+var app_ver = '';
+var latest_ver = '';
+var name = '';
 let brService = null;
 
 function onDisconnected() {
@@ -20,6 +21,7 @@ function onDisconnected() {
     document.getElementById("divInfo").style.display = 'none';
     document.getElementById("divSleep").style.display = 'none';
     document.getElementById("divReset").style.display = 'none';
+    document.getElementById("divFactory").style.display = 'none';
 }
 
 export function setDeepSleepEvent() {
@@ -28,6 +30,10 @@ export function setDeepSleepEvent() {
 
 export function setResetEvent() {
     setReset(brService);
+}
+
+export function setFactoryResetEvent() {
+    setFactoryReset(brService);
 }
 
 export function btConn() {
@@ -61,6 +67,13 @@ export function btConn() {
         latest_ver = value;
         return getAppVersion(brService);
     })
+    .catch(error => {
+        if (error.name == 'NotFoundError'
+          || error.name == 'NotSupportedError') {
+            return '';
+        }
+        throw error;
+    })
     .then(value => {
         app_ver = value;
         document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
@@ -72,6 +85,7 @@ export function btConn() {
         document.getElementById("divInfo").style.display = 'block';
         document.getElementById("divSleep").style.display = 'block';
         document.getElementById("divReset").style.display = 'block';
+        document.getElementById("divFactory").style.display = 'block';
     })
     .catch(error => {
         log('Argh! ' + error);
