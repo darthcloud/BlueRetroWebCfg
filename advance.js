@@ -22,12 +22,12 @@ var mappingElement = null;
 var pageInit = 0;
 var srcLabel = 0;
 var destLabel = 0;
-var bdaddr;
-var app_ver;
-var latest_ver;
-var name;
-var gameid;
-var gamename;
+var bdaddr = '';
+var app_ver = '';
+var latest_ver = '';
+var name = '';
+var gameid = '';
+var gamename = '';
 var current_cfg = 0;
 
 function initGlobalCfg() {
@@ -1104,6 +1104,10 @@ export function btConn() {
     })
     .then(service => {
         brService = service;
+        return getApiVersion(brService);
+    })
+    .then(value => {
+        apiVersion = value;
         return getBdAddr(brService);
     })
     .then(value => {
@@ -1126,18 +1130,16 @@ export function btConn() {
         gamename = value;
         return getCfgSrc(brService);
     })
-    .then(value => {
-        current_cfg = value;
-        return getApiVersion(brService);
-    })
     .catch(error => {
-        if (error.name == 'NotFoundError') {
+        if (error.name == 'NotFoundError'
+          || error.name == 'NotSupportedError') {
             return 0;
         }
         throw error;
     })
     .then(value => {
-        apiVersion = value;
+        current_cfg = value;
+        log("ABI version: " + apiVersion);
         if (!pageInit) {
             log('Init Cfg DOM...');
             initBlueRetroCfg();
