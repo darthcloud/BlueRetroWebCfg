@@ -14,10 +14,10 @@ let brService = null;
 var reader;
 var progress = document.querySelector('.percent');
 var cancel = 0;
-var bdaddr;
-var app_ver;
-var latest_ver;
-var name;
+var bdaddr = '';
+var app_ver = '';
+var latest_ver = '';
+var name = '';
 
 export function abortFileTransfer() {
     cancel = 1;
@@ -167,6 +167,13 @@ export function btConn() {
     .then(value => {
         latest_ver = value
         return getAppVersion(brService);
+    })
+    .catch(error => {
+        if (error.name == 'NotFoundError'
+          || error.name == 'NotSupportedError') {
+            return '';
+        }
+        throw error;
     })
     .then(value => {
         app_ver = value;
