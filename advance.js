@@ -19,7 +19,6 @@ var maxMapping = 255;
 var nbMapping = 1;
 let brService = null;
 var mappingElement = null;
-var pageInit = 0;
 var srcLabel = 0;
 var destLabel = 0;
 var bdaddr = '';
@@ -684,7 +683,6 @@ function initBlueRetroCfg() {
     initOutputMapping();
     initCfgSelection();
     nbMapping = 1;
-    pageInit = 1;
 }
 
 function loadGlobalCfg() {
@@ -1140,10 +1138,8 @@ export function btConn() {
     .then(value => {
         current_cfg = value;
         log("ABI version: " + apiVersion);
-        if (!pageInit) {
-            log('Init Cfg DOM...');
-            initBlueRetroCfg();
-        }
+        log('Init Cfg DOM...');
+        initBlueRetroCfg();
         return loadGlobalCfg();
     })
     .then(() => {
