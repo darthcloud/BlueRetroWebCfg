@@ -1,6 +1,6 @@
 // Base on https://www.html5rocks.com/en/tutorials/file/dndfiles//
 
-import { brUuid, mtu, ota_start, ota_abort, ota_end } from './utils/constants.js';
+import { brUuid } from './utils/constants.js';
 import { getLatestRelease } from './utils/getLatestRelease.js';
 import { getAppVersion } from './utils/getAppVersion.js';
 import { getBdAddr } from './utils/getBdAddr.js';
@@ -10,13 +10,11 @@ var bluetoothDevice;
 let brService = null;
 var reader;
 var progress = document.querySelector('.percent');
-var start;
-var end;
 var cancel = 0;
-var bdaddr;
-var app_ver;
-var latest_ver;
-var name;
+var bdaddr = '';
+var app_ver = '';
+var latest_ver = '';
+var name = '';
 var cur_fw_hw2 = 0;
 
 export function abortFwUpdate() {
@@ -135,6 +133,13 @@ export function btConn() {
     .then(value => {
         latest_ver = value;
         return getAppVersion(brService);
+    })
+    .catch(error => {
+        if (error.name == 'NotFoundError'
+          || error.name == 'NotSupportedError') {
+            return '';
+        }
+        throw error;
     })
     .then(value => {
         app_ver = value;
