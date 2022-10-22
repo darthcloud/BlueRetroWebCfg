@@ -54,6 +54,10 @@ export function btConn() {
         log('Getting BlueRetro Service...');
         return server.getPrimaryService(brUuid[0]);
     })
+    .catch(error => {
+        log(error.name);
+        throw 'Couldn\'t connect to BlueRetro';
+    })
     .then(service => {
         log('getBdAddr ' + service);
         brService = service;
