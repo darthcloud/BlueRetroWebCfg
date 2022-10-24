@@ -3,6 +3,8 @@ import { brUuid, labelName, btnList, systemCfg,
     scaling, diagScaling, maxMainInput, maxOutput,
     maxMax, maxThres }
     from './utils/constants.js';
+import { saveGlobalCfg } from './utils/saveGlobalCfg.js'
+import { saveOutputCfg } from './utils/saveOutputCfg.js'
 import { getLatestRelease } from './utils/getLatestRelease.js';
 import { getAppVersion } from './utils/getAppVersion.js';
 import { getBdAddr } from './utils/getBdAddr.js';
