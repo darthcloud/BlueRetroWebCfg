@@ -1,0 +1,31 @@
+---
+feature_name: BlueRetro Files Manager
+icon_url: icon.png
+index: index.html
+---
+
+{% include_relative _includes/intro.html %}
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn">Connect BlueRetro</button><br>
+    <small><i>Disconnect all controllers from BlueRetro before connecting for update.</i></small>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divFile" style="display:none;margin-bottom:1em;"></div>
+
+
+{% include output_helper.html %}
+
+<script type="module">
+  import { btConn } from './files.js';
+
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+</script>
+
+{% include_relative _includes/utils.html %}
