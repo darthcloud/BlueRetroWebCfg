@@ -4,6 +4,7 @@ import { brUuid, cfg_cmd_get_file, cfg_cmd_open_dir, cfg_cmd_close_dir, cfg_cmd_
 import { getLatestRelease } from './utils/getLatestRelease.js';
 import { getAppVersion } from './utils/getAppVersion.js';
 import { getBdAddr } from './utils/getBdAddr.js';
+import { getGameName } from './utils/getGameName.js';
 
 var bluetoothDevice;
 var bdaddr = '';
@@ -12,6 +13,30 @@ var latest_ver = '';
 var name = '';
 let brService = null;
 let fileList = [];
+let gidList = [];
+
+function deleteFileCmd(filename) {
+    return new Promise((resolve, reject) => {
+        var cmd = new Uint8Array(1);
+        brService.getCharacteristic(brUuid[7])
+        .then((chrc) => {
+            cmd[0] = cfg_cmd_del_file;
+            let enc = new TextEncoder();
+            let file = enc.encode(filename);
+            let combined = new Uint8Array([
+                ...cmd,
+                ...file,
+            ]);
+            return chrc.writeValue(combined);
+        })
+        .then((_) => {
+            resolve();
+        })
+        .catch((error) => {
+            reject(error);
+        });
+    });
+}
 
 function readFileRecursive(chrc) {
     return new Promise(function (resolve, reject) {
@@ -21,7 +46,11 @@ function readFileRecursive(chrc) {
             let enc = new TextDecoder("utf-8");
             let filename = enc.decode(value);
             fileList.push(filename);
-            resolve(readFileRecursive(chrc));
+            getGameName(filename)
+              .then((gamename) => {
+                gidList.push(gamename);
+                resolve(readFileRecursive(chrc));
+              });
           }
           else {
             resolve();
@@ -31,7 +60,7 @@ function readFileRecursive(chrc) {
           reject(error);
         });
     });
-  };
+};
 
 function getFiles() {
     return new Promise((resolve, reject) => {
@@ -64,6 +93,7 @@ function getFiles() {
 }
 
 function deleteFile() {
+    deleteFileCmd(this.parentNode.innerText)
     this.parentNode.remove();
 }
 
@@ -86,6 +116,7 @@ function initFile() {
         button.addEventListener('click', deleteFile)
         div.append(button);
         div.append(' ' + fileList[i]);
+        div.title = gidList[i];
         divFile.append(div);
     }
 }
