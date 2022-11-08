@@ -93,8 +93,11 @@ function getFiles() {
 }
 
 function deleteFile() {
-    deleteFileCmd(this.parentNode.innerText)
-    this.parentNode.remove();
+    let div = this.parentNode;
+    this.remove();
+    let filename = div.innerText;
+    div.remove();
+    deleteFileCmd(filename);
 }
 
 function initFile() {
