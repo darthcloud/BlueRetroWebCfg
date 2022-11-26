@@ -892,7 +892,7 @@ function saveOutput() {
     data[1] = document.getElementById("outputAcc").value;
     var cfgId = document.getElementById("outputSelect").value;
     return new Promise(function(resolve, reject) {
-        saveOutputCfg(brService, data, cfgID)
+        saveOutputCfg(brService, data, cfgId)
         .then(_ => {
             document.getElementById("outputSaveText").style.display = 'block';
             if (data[0] == 3) {
