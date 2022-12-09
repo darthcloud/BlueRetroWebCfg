@@ -10,8 +10,8 @@ export const getLatestRelease = () => {
         let latest_ver = data['tag_name'];
         resolve(latest_ver);
       })
-      .catch((error) => {
-        reject(error);
+      .catch((_) => {
+        resolve()
       });
   });
 };

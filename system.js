@@ -81,8 +81,13 @@ export function btConn() {
     .then(value => {
         app_ver = value;
         document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
-        if (app_ver.indexOf(latest_ver) == -1) {
-            document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
+        try {
+            if (app_ver.indexOf(latest_ver) == -1) {
+                document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
+            }
+        }
+        catch (e) {
+            // Just move on
         }
         log('Init Cfg DOM...');
         document.getElementById("divBtConn").style.display = 'none';

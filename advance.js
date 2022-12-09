@@ -1157,8 +1157,13 @@ export function btConn() {
     .then(() => {
         document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver
             + ']<br> Current Game: ' + gamename + ' (' + gameid + ')';
-        if (app_ver.indexOf(latest_ver) == -1) {
-            document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
+        try {
+            if (app_ver.indexOf(latest_ver) == -1) {
+                document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
+            }
+        }
+        catch (e) {
+            // Just move on
         }
         document.getElementById("divBtConn").style.display = 'none';
         //document.getElementById("divBtDisconn").style.display = 'block';
