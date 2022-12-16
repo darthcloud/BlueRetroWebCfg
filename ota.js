@@ -77,8 +77,16 @@ export function firmwareUpdate(evt) {
         }
     }
 
-    // Read in the image file as a binary string.
-    reader.readAsArrayBuffer(document.getElementById("fwFile").files[0]);
+    let file = document.getElementById("fwFile").value;
+    let ext = file.match(/\.[0-9a-z]+$/i);
+
+    if (ext[0] == '.bin') {
+        // Read in the image file as a binary string.
+        reader.readAsArrayBuffer(document.getElementById("fwFile").files[0]);
+    }
+    else {
+        log("Invalid file format. Make sure to unzip the archive!");
+    }
 }
 
 function writeFirmware(data) {
