@@ -156,6 +156,7 @@ function initBlueRetroCfg() {
 }
 
 function saveInput() {
+    document.getElementById("inputSaveText").style.display = 'none';
     //get preset index
     var preset_idx = Number(document.getElementById("presetsName").value);
     //make sure preset is not placeholder before we do anything
@@ -163,7 +164,10 @@ function saveInput() {
         var preset = presets[preset_idx];
         var cfgId = Number(document.getElementById("inputSelect").value);
         document.getElementById("inputSaveText").style.display = 'none';
-        savePresetInput(preset, brService, cfgId);
+        savePresetInput(preset, brService, cfgId)
+        .then(_ => {
+            document.getElementById("inputSaveText").style.display = 'block';
+        });
     }
 }
 
