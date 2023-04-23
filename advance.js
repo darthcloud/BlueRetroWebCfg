@@ -271,7 +271,7 @@ function initInputSelect() {
 
     divInputCfg.appendChild(header);
 
-    divInputCfg.innerHTML += '<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT9rPK2__komCjELFpf0UYz0cMWwvhAXgAU7C9nnwtgEaivjsh0q0xeCEiZAMA-paMrneePV7IqdX48/pubhtml">BlueRetro v1.4+ mapping reference</a> (legacy &leq; <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRln_dhkahEIhq4FQY_p461r5qvLn-Hkl89ZtfyIOGAqdnPtQZ5Ihfsjvd94fRbaHX8wU3F-r2ODYbM/pubhtml">v1.3 map here</a>)'
+    divInputCfg.innerHTML += '<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT9rPK2__komCjELFpf0UYz0cMWwvhAXgAU7C9nnwtgEaivjsh0q0xeCEiZAMA-paMrneePV7IqdX48/pubhtml">BlueRetro v1.4+ mapping reference</a>'
 
     var div = document.createElement("div");
     div.setAttribute("style", "margin-bottom:1em;");
