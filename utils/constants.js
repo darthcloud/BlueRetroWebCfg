@@ -135,6 +135,7 @@ export const brUuid = [
 
 export const block = 4096;
 export const pakSize = 32 * 1024;
+export const vmuSize = 128 * 1024;
 export const mtu = 244;
 
 export const urlLatestRelease = 'https://api.github.com/repos/darthcloud/BlueRetro/releases/latest'

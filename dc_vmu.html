@@ -1,0 +1,45 @@
+---
+feature_name: BlueRetro DC VMU manager
+icon_url: icon.png
+index: index.html
+---
+
+{% include_relative _includes/intro.html %}
+
+Please consult the documentation found on the wiki:<br>
+<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#7---dc-vmu-manager-page" target=”_blank”>8 - DC VMU manager page</a><br><br>
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn">Connect BlueRetro</button><br>
+    <small><i>Disconnect all controllers from BlueRetro before connecting for VMU management.</i></small>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divFileSelect" style="display:none;margin-bottom:1em;">
+    <button id="btnPakRead">Read</button><br><br>
+    <button id="btnPakWrite">Write</button>
+    Select .BIN file to write:
+    <input type="file" id="pakFile"/><br><br>
+</div>
+<div id="divFileTransfer" style="display:none;margin-bottom:1em;">
+    <div id="progress_bar"><div class="percent"></div></div>
+    <button id="btnFileTransferCancel">Cancel</button>
+</div>
+
+{% include output_helper.html %}
+
+<script type="module">
+  import { btConn, pakRead, pakWrite, pakFormat, abortFileTransfer } from './dc_vmu.js';
+
+  document.getElementById("btnPakRead").addEventListener('click', pakRead);
+  document.getElementById("btnPakWrite").addEventListener('click', pakWrite);
+  document.getElementById("btnFileTransferCancel").addEventListener('click', abortFileTransfer);
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+</script>
+
+{% include_relative _includes/utils.html %}
