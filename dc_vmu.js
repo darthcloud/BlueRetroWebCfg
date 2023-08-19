@@ -50,6 +50,10 @@ export function pakRead(evt) {
 
     readFile()
     .then(value => {
+        let view = new DataView(value.buffer);
+        for (let i = 0; i < vmuSize; i += 4) {
+            view.setUint32(i, view.getUint32(i), true)
+        }
         downloadFile(new Blob([value.buffer], {type: "application/bin"}),
             'vmu.bin');
         document.getElementById("divBtConn").style.display = 'none';
@@ -78,7 +82,12 @@ export function pakWrite(evt) {
         log('File read cancelled');
     };
     reader.onload = function(e) {
-        writeFile(reader.result.slice(0, vmuSize));
+        let data = reader.result.slice(0, vmuSize);
+        let view = new DataView(data);
+        for (let i = 0; i < vmuSize; i += 4) {
+            view.setUint32(i, view.getUint32(i), true)
+        }
+        writeFile(data);
     }
 
     // Read in the image file as a binary string.
