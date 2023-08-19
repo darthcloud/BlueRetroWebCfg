@@ -42,6 +42,8 @@ function initGlobalCfg() {
 
     divGlobalCfg.appendChild(header);
 
+    divGlobalCfg.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#22---global-config" target=”_blank”>Wiki doc for Global config</a><br><br>'
+
     var div = document.createElement("div");
 
     /* System */
@@ -159,6 +161,8 @@ function initOutputSelect() {
 
     divOutputCfg.appendChild(header);
 
+    divOutputCfg.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#23---output-config" target=”_blank”>Wiki doc for Output config</a><br><br>'
+
     var div = document.createElement("div");
 
     /* Output select */
@@ -271,7 +275,7 @@ function initInputSelect() {
 
     divInputCfg.appendChild(header);
 
-    divInputCfg.innerHTML += '<a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT9rPK2__komCjELFpf0UYz0cMWwvhAXgAU7C9nnwtgEaivjsh0q0xeCEiZAMA-paMrneePV7IqdX48/pubhtml">BlueRetro v1.4+ mapping reference</a>'
+    divInputCfg.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#24---mapping-config" target=”_blank”>Wiki doc for Mapping config</a><br><br>'
 
     var div = document.createElement("div");
     div.setAttribute("style", "margin-bottom:1em;");
@@ -1066,6 +1070,8 @@ function initCfgSelection() {
 
     divCfgSel.appendChild(header);
 
+    divCfgSel.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#21---config-selection" target=”_blank”>Wiki doc for Config Selection</a><br><br>'
+
     cfgBtn.id = "cfgSw";
 
     if (current_cfg == 0) {
@@ -1159,7 +1165,7 @@ export function btConn() {
             + ']<br> Current Game: ' + gamename + ' (' + gameid + ')';
         try {
             if (app_ver.indexOf(latest_ver) == -1) {
-                document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\'>itch.io</a>';
+                document.getElementById("divInfo").innerHTML += '<br><br>Download latest FW ' + latest_ver + ' from <a href=\'https://darthcloud.itch.io/blueretro\' target=\'_blank\'>itch.io</a>';
             }
         }
         catch (e) {
