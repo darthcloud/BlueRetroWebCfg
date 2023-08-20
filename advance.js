@@ -42,7 +42,7 @@ function initGlobalCfg() {
 
     divGlobalCfg.appendChild(header);
 
-    divGlobalCfg.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#22---global-config" target=”_blank”>Wiki doc for Global config</a><br><br>'
+    divGlobalCfg.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#22---global-config" target="_blank">Wiki doc for Global config</a><br><br>'
 
     var div = document.createElement("div");
 
@@ -161,7 +161,7 @@ function initOutputSelect() {
 
     divOutputCfg.appendChild(header);
 
-    divOutputCfg.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#23---output-config" target=”_blank”>Wiki doc for Output config</a><br><br>'
+    divOutputCfg.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#23---output-config" target="_blank">Wiki doc for Output config</a><br><br>'
 
     var div = document.createElement("div");
 
@@ -275,7 +275,7 @@ function initInputSelect() {
 
     divInputCfg.appendChild(header);
 
-    divInputCfg.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#24---mapping-config" target=”_blank”>Wiki doc for Mapping config</a><br><br>'
+    divInputCfg.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#24---mapping-config" target="_blank">Wiki doc for Mapping config</a><br><br>'
 
     var div = document.createElement("div");
     div.setAttribute("style", "margin-bottom:1em;");
@@ -1070,7 +1070,7 @@ function initCfgSelection() {
 
     divCfgSel.appendChild(header);
 
-    divCfgSel.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#21---config-selection" target=”_blank”>Wiki doc for Config Selection</a><br><br>'
+    divCfgSel.innerHTML += '<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual#21---config-selection" target="_blank">Wiki doc for Config Selection</a><br><br>'
 
     cfgBtn.id = "cfgSw";
 

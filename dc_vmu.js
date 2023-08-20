@@ -7,7 +7,6 @@ import { getAppVersion } from './utils/getAppVersion.js';
 import { getBdAddr } from './utils/getBdAddr.js';
 import { dcWriteFile } from './utils/dcWriteFile.js';
 import { dcReadFile } from './utils/dcReadFile.js';
-import { makeFormattedPak } from './utils/makeFormattedPak.js'
 
 var bluetoothDevice;
 let brService = null;
@@ -92,10 +91,6 @@ export function pakWrite(evt) {
 
     // Read in the image file as a binary string.
     reader.readAsArrayBuffer(document.getElementById("pakFile").files[0]);
-}
-
-export function pakFormat(evt) {
-    writeFile(makeFormattedPak().buffer);
 }
 
 function readFile() {
