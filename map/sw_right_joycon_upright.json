@@ -24,6 +24,7 @@
         ["PAD_RB_RIGHT", "CB_BT_PAIR",   0, 100, 50, 135, 0, 0, 0],
         ["PAD_RB_DOWN",  "CB_SYS_PWOFF", 0, 100, 50, 135, 0, 0, 0],
         ["PAD_LD_UP",    "CB_FACT_RST",  0, 100, 50, 135, 0, 0, 0],
-        ["PAD_LD_DOWN",  "CB_DEEP_SLP",  0, 100, 50, 135, 0, 0, 0]
+        ["PAD_LD_DOWN",  "CB_DEEP_SLP",  0, 100, 50, 135, 0, 0, 0],
+        ["PAD_MS",       "CB_WIRED_RST",  0, 100, 50, 135, 0, 0, 0]
     ]
 }
