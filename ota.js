@@ -1,8 +1,8 @@
 // Base on https://www.html5rocks.com/en/tutorials/file/dndfiles//
 
-import { brUuid } from './utils/constants.js';
+import { brUuid, cfg_cmd_get_fw_name, cfg_cmd_get_fw_ver } from './utils/constants.js';
 import { getLatestRelease } from './utils/getLatestRelease.js';
-import { getAppVersion } from './utils/getAppVersion.js';
+import { getStringCmd } from './utils/getStringCmd.js';
 import { getBdAddr } from './utils/getBdAddr.js';
 import { otaWriteFirmware } from './utils/otaWriteFirmware.js';
 
@@ -13,9 +13,10 @@ var progress = document.querySelector('.percent');
 var cancel = 0;
 var bdaddr = '';
 var app_ver = '';
+var app_name = '';
 var latest_ver = '';
 var name = '';
-var cur_fw_hw2 = 0;
+let cur_fw_is_hw2 = 0;
 
 export function abortFwUpdate() {
     cancel = 1;
@@ -63,13 +64,11 @@ export function firmwareUpdate(evt) {
     reader.onload = function(e) {
         var decoder = new TextDecoder("utf-8");
         var header = decoder.decode(reader.result.slice(0, 256));
-        var new_fw_hw2 = 1;
+        let new_fw_is_hw2 = (header.indexOf('hw2') != -1);
 
-        if (header.indexOf('hw2') == -1) {
-            new_fw_hw2 = 0
-        }
+        log("new_fw_is_hw2: " + new_fw_is_hw2);
 
-        if (cur_fw_hw2 == new_fw_hw2) {
+        if (cur_fw_is_hw2 == new_fw_is_hw2) {
             writeFirmware(reader.result, 0);
         }
         else {
@@ -144,7 +143,11 @@ export function btConn() {
     })
     .then(value => {
         latest_ver = value;
-        return getAppVersion(brService);
+        return getStringCmd(brService, cfg_cmd_get_fw_ver);
+    })
+    .then(value => {
+        app_ver = value;
+        return getStringCmd(brService, cfg_cmd_get_fw_name);
     })
     .catch(error => {
         if (error.name == 'NotFoundError'
@@ -154,7 +157,7 @@ export function btConn() {
         throw error;
     })
     .then(value => {
-        app_ver = value;
+        app_name = value;
         document.getElementById("divInfo").innerHTML = 'Connected to: ' + name + ' (' + bdaddr + ') [' + app_ver + ']';
         try {
             if (app_ver.indexOf(latest_ver) == -1) {
@@ -164,8 +167,12 @@ export function btConn() {
         catch (e) {
             // Just move on
         }
-        if (app_ver.indexOf('hw2') != -1) {
-            cur_fw_hw2 = 1;
+        cur_fw_is_hw2 = 0;
+        let app_ver_is_hw2 = (app_ver.indexOf('hw2') != -1);
+        let app_name_is_hw2 = (app_name.indexOf('hw2') != -1);
+        log("app_ver_is_hw2: " + app_ver_is_hw2 + " app_name_is_hw2: " + app_name_is_hw2);
+        if (app_ver_is_hw2 || app_name_is_hw2) {
+            cur_fw_is_hw2 = 1;
         }
         log('Init Cfg DOM...');
         document.getElementById("divBtConn").style.display = 'none';

@@ -159,6 +159,7 @@ export const cfg_cmd_get_bdaddr = 0x03;
 export const cfg_cmd_get_gameid = 0x04;
 export const cfg_cmd_get_cfg_src = 0x05;
 export const cfg_cmd_get_file = 0x06;
+export const cfg_cmd_get_fw_name = 0x07;
 export const cfg_cmd_set_default_cfg = 0x10;
 export const cfg_cmd_set_gameid_cfg = 0x11;
 export const cfg_cmd_open_dir = 0x12;
