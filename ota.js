@@ -147,7 +147,13 @@ export function btConn() {
     })
     .then(value => {
         app_ver = value;
-        return getStringCmd(brService, cfg_cmd_get_fw_name);
+        let app_ver_is_18x = (app_ver.indexOf('v1.8') != -1);
+        if (app_ver_is_18x) {
+            return '';
+        }
+        else {
+            return getStringCmd(brService, cfg_cmd_get_fw_name);
+        }
     })
     .catch(error => {
         if (error.name == 'NotFoundError'
