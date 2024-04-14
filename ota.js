@@ -149,7 +149,8 @@ export function btConn() {
     .then(value => {
         app_ver = value;
         let app_ver_is_18x = (app_ver.indexOf('v1.8') != -1);
-        if (app_ver_is_18x) {
+        let app_ver_bogus = (app_ver.indexOf('v') == -1);
+        if (app_ver_is_18x || app_ver_bogus) {
             return '';
         }
         else {
