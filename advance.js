@@ -121,6 +121,10 @@ function initGlobalCfg() {
             option.text = 'Bank ' + eval(i + 1);
             sel.add(option);
         }
+        var option  = document.createElement("option");
+        option.value = 0xDB;
+        option.text = 'Debug mode';
+        sel.add(option);
         sel.id = "banksel";
         div.appendChild(label);
         div.appendChild(sel);
