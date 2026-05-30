@@ -1,6 +1,6 @@
 {
-    "name":"Doom FX3",
-    "desc":"Right joystick control mouse (turn) Dpad Forward/Back & strafe. Set 2nd controller type to Mouse in BR config.",
+    "name":"Doom FX3 Gamepad as CTRL + Mouse",
+    "desc":"Require dual port BR. Right joystick control mouse (turn) Dpad Forward/Back & strafe, A for action, L cycle weapons & R Shoot. Set 2nd controller type to Mouse in BR config.",
     "console":"SNES",
     "map":[
         ["PAD_LX_LEFT",  "PAD_LD_LEFT",  0, 100, 50, 135, 0, 0, 0],
@@ -24,8 +24,6 @@
         ["PAD_MT",       "PAD_MT",       0, 100, 50, 135, 0, 0, 0],
         ["PAD_LM",       "PAD_LM",       0, 100, 50, 135, 0, 0, 0],
         ["PAD_LS",       "PAD_LS",       0, 100, 50, 135, 0, 0, 0],
-        ["PAD_LT",       "PAD_LT",       0, 100, 50, 135, 0, 0, 0],
-        ["PAD_LJ",       "PAD_LJ",       0, 100, 50, 135, 0, 0, 0],
         ["PAD_RM",       "PAD_RM",       1, 100, 50, 135, 0, 0, 0],
         ["PAD_RS",       "PAD_RS",       0, 100, 50, 135, 0, 0, 0],
         ["PAD_LM",       "CB_BASE_1",    0, 100, 50, 135, 0, 0, 0],
