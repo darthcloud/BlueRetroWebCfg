@@ -1,25 +1,116 @@
 ---
 title: BlueRetro Web config
-icon_url: icon.png
+icon_url: assets/images/icon.png
 index: index.html
 ---
 
-<p align="center"><a href="https://blueretro.com/products/brx"><img src="brx_banner.png"/></a></p><br>
+<section id="appConnectionPanel" class="connection-panel" data-state="disconnected" aria-labelledby="connectionHeading">
+  <div class="connection-card-body">
+    <button id="appConnectionCollapsed" class="connection-collapsed-summary" type="button" disabled aria-expanded="true" aria-controls="appConnectionControls">
+      <span class="connection-indicator" aria-hidden="true"></span>
+      <span class="collapsed-connection-copy">
+        <small class="connection-label">Connection</small>
+        <strong id="connectionHeading" class="connection-title">BlueRetro adapter</strong>
+        <span id="appConnectionText" data-state="disconnected" role="status" aria-live="polite">Not connected</span>
+        <span id="appAdapterIdentity" class="adapter-identity" hidden>
+          <span>Bluetooth address: <strong id="appDeviceAddress"></strong></span>
+          <span id="appLatestFirmware" class="firmware-update-link" hidden></span>
+        </span>
+      </span>
+      <span class="collapsed-connection-action">Connection settings</span>
+    </button>
+    <div id="appConnectionControls">
+      <div id="appConnectionButtons" class="connection-buttons">
+        <button id="appBtConn" class="primary-action">Connect to BlueRetro</button>
+        <button id="appBtForget" class="secondary-action" hidden>Disconnect &amp; forget</button>
+      </div>
+      <label class="reconnect-option" for="appAutoReconnect">
+        <input type="checkbox" id="appAutoReconnect" role="switch">
+        <span><strong>Reconnect automatically</strong><small>Reconnect if the connection drops.</small></span>
+      </label>
+    </div>
+  </div>
+  <div id="appAdapterDetails" class="adapter-details" hidden>
+    <div class="adapter-badges">
+      <span><small>Firmware</small><strong id="appFirmwareVersion">Unknown</strong></span>
+      <span><small>Hardware</small><strong id="appHardwareVersion">Unknown</strong></span>
+      <span><small>Platform</small><strong id="appPlatform">Unknown</strong></span>
+    </div>
+  </div>
+</section>
 
-Please consult the documentation found on the wiki:<br>
-<a href="https://github.com/darthcloud/BlueRetro/wiki/BlueRetro-BLE-Web-Config-User-Manual" target="_blank">BlueRetro BLE Web Config User Manual</a><br><br>
+<button id="appLogToggle" class="connection-log-trigger" type="button" aria-expanded="false" aria-controls="appLogPanel">Connection log</button>
+<aside id="appLogPanel" class="app-log-panel" hidden aria-labelledby="appLogHeading">
+  <div class="app-log-header">
+    <div>
+      <h2 id="appLogHeading">Connection log</h2>
+      <p>Browser and adapter activity for this session.</p>
+    </div>
+    <button id="appLogClose" type="button" aria-label="Close connection log">Close</button>
+  </div>
+  <pre id="appConnectionLog" tabindex="0"></pre>
+  <button id="appLogClear" type="button">Clear log</button>
+</aside>
 
-<p><a href="advance.html">BlueRetro Advance config</a></p>
-<p><a href="presets.html">BlueRetro Presets config</a></p>
-<p><a href="system.html">BlueRetro System manager</a></p>
-<p><a href="ota.html">BlueRetro OTA FW update</a></p>
-<p><a href="files.html">BlueRetro Files Manager</a></p>
-<p><a href="n64_ctrlpak.html">BlueRetro N64 controller pak manager</a></p>
-<p><a href="dc_vmu.html">BlueRetro DC VMU manager</a></p>
-<p><a href="debug.html">BlueRetro Debug</a></p>
+<main id="homeContent">
+<p class="banner"><a href="https://blueretro.com/products/brx"><img src="assets/images/brx_banner.png" alt="BlueRetro products"/></a></p>
+
+<p class="lede">Choose what you want to do. For normal controller setup, start with a preset.</p>
+
+<div class="task-grid">
+  <a class="task-card" data-tool="presets" href="presets.html">
+    <strong>Set up a controller</strong>
+    <span>Apply a ready-made button layout without editing individual mappings.</span>
+  </a>
+  <a class="task-card" data-tool="controller-setup" href="advance.html">
+    <strong>Customize controls</strong>
+    <span>Change console ports, accessories, button mappings, deadzones, and turbo.</span>
+  </a>
+  <a class="task-card" data-tool="firmware" href="ota.html">
+    <strong>Update firmware</strong>
+    <span>Install a BlueRetro firmware file over Bluetooth.</span>
+  </a>
+  <a class="task-card" data-tool="system" href="system.html">
+    <strong>Manage the adapter</strong>
+    <span>View system information, restart, or restore adapter settings.</span>
+  </a>
+  <a class="task-card" data-tool="n64-saves" href="n64_ctrlpak.html">
+    <strong>Manage N64 Controller Pak</strong>
+    <span>Back up or restore N64 save data.</span>
+  </a>
+  <a class="task-card" data-tool="dreamcast-saves" href="dc_vmu.html">
+    <strong>Manage Dreamcast VMU</strong>
+    <span>Back up or restore Dreamcast VMU data.</span>
+  </a>
+</div>
+
+<details class="advanced-tools">
+  <summary>Advanced and troubleshooting tools</summary>
+  <div class="task-grid compact">
+    <a class="task-card" data-tool="files" href="files.html"><strong>Files</strong><span>Manage files stored on the adapter.</span></a>
+    <a class="task-card" data-tool="debug" href="debug.html"><strong>Device trace</strong><span>Download a firmware trace file requested by support.</span></a>
+  </div>
+</details>
+
+<p class="help-link">
+  Need help? Read the <a href="{{ site.gh_url_prefix }}/docs/README.md" target="_blank" rel="noopener">Web Config guide</a>.
+  If it does not cover what you need, check the <a href="https://github.com/darthcloud/BlueRetro/wiki" target="_blank" rel="noopener">original BlueRetro wiki</a>.
+</p>
+</main>
+
+<iframe id="toolFrame" class="tool-frame" title="BlueRetro configuration tool" hidden></iframe>
+
+<div id="appRestartBar" class="restart-bar" role="status" aria-live="polite" hidden>
+  <span id="appRestartText">Restart the adapter to apply your changes.</span>
+  <span class="restart-bar-actions">
+    <button id="appRestartLater" type="button">Later</button>
+    <button id="appRestartNow" type="button" class="primary-action">Restart adapter</button>
+  </span>
+</div>
 
 <script>
   if('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js');
   }
 </script>
+<script type="module" src="js/app.js"></script>

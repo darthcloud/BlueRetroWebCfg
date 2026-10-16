@@ -1,0 +1,53 @@
+---
+feature_name: Adapter controls
+icon_url: assets/images/icon.png
+index: index.html
+permalink: /system.html
+app_route: system
+---
+
+{% include intro.html %}
+
+<p class="lede">Restart, power down, or restore your BlueRetro adapter.</p>
+
+<div class="notice"><strong>Your saved settings are only erased by Factory reset.</strong> The adapter will disconnect from this page after any action.</div>
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn" class="primary-action">Connect to BlueRetro</button>
+    <p class="field-help">Disconnect controllers from BlueRetro first, then select the adapter in your browser.</p>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divReset" class="action-card" data-connection-required style="display:none;margin-bottom:1em;">
+    <div><strong>Restart adapter</strong><span>Reboots BlueRetro without changing saved settings.</span></div>
+    <button id="btnReset">Restart</button>
+</div>
+<div id="divSleep" class="action-card" data-connection-required style="display:none;margin-bottom:1em;">
+    <div><strong>Enter deep sleep</strong><span>Puts the adapter into its lowest-power state until it is powered again.</span></div>
+    <button id="btnSleep">Sleep</button>
+</div>
+<div id="divFactory" class="action-card danger-zone" data-connection-required style="display:none;margin-bottom:1em;">
+    <div><strong>Restore factory settings</strong><span>Erases the adapter configuration and returns it to its defaults.</span></div>
+    <button id="btnFactory" class="danger-action">Factory reset</button>
+</div>
+
+
+{% include output_helper.html %}
+
+<script type="module">
+  import { btConn, setDeepSleepEvent, setResetEvent, setFactoryResetEvent } from './js/tools/system.js';
+  import { connectFromAppShell } from './js/utils/blueRetroConnection.js';
+
+  document.getElementById("btnSleep").addEventListener('click', setDeepSleepEvent);
+  document.getElementById("btnReset").addEventListener('click', setResetEvent);
+  document.getElementById("btnFactory").addEventListener('click', setFactoryResetEvent);
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+  connectFromAppShell(btConn);
+</script>
+
+{% include utils.html %}

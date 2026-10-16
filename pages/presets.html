@@ -1,0 +1,43 @@
+---
+feature_name: Controller presets
+icon_url: assets/images/icon.png
+index: index.html
+permalink: /presets.html
+app_route: presets
+---
+
+{% include intro.html %}
+
+<p class="lede">Apply a ready-made button layout to one connected Bluetooth controller.</p>
+
+<div id="divBtConn">
+    <button id="btConn" class="primary-action">Connect to BlueRetro</button>
+    <p class="field-help">Your browser will ask which nearby BlueRetro adapter to use.</p>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divCfgSel" class="config-panel" data-connection-required style="display:none;margin-bottom:1em;">
+    <h2 style="margin:0;">Where this preset applies</h2>
+    <p data-preview-only class="section-help">Global and game-specific profile choices load from the connected adapter.</p>
+</div>
+<div id="divInputCfg" class="config-panel" data-connection-required style="display:none;margin-bottom:1em;">
+    <h2 style="margin:0;">Choose a preset</h2>
+    <p id="desc">Console and button-layout choices load after connection.</p>
+</div>
+
+{% include output_helper.html %}
+
+<script src='assets/lib/sql.js/sql-wasm.js'></script>
+<script type="module">
+  import { btConn } from './js/tools/presets.js';
+  import { connectFromAppShell } from './js/utils/blueRetroConnection.js';
+
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+  connectFromAppShell(btConn);
+</script>
+
+{% include utils.html %}

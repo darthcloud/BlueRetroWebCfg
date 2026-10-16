@@ -1,0 +1,69 @@
+---
+feature_name: N64 Controller Pak saves
+icon_url: assets/images/icon.png
+index: index.html
+permalink: /n64_ctrlpak.html
+app_route: n64-saves
+---
+
+{% include intro.html %}
+
+<p class="lede">Back up, restore, or erase the virtual N64 Controller Pak banks stored by BlueRetro.</p>
+
+<div class="notice"><strong>Direction matters:</strong> Back up downloads saves from BlueRetro. Restore uploads a local file and replaces the selected bank.</div>
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn" class="primary-action">Connect to BlueRetro</button>
+    <p class="field-help">Disconnect controllers from BlueRetro first, then select the adapter in your browser.</p>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divFileSelect" class="config-panel" data-connection-required style="display:none;margin-bottom:1em;">
+    <label for="pakSelect"><strong>Controller Pak bank</strong></label>
+    <select id="pakSelect">
+        <option value="0">Bank 1</option>
+        <option value="1">Bank 2</option>
+        <option value="2">Bank 3</option>
+        <option value="3">Bank 4</option>
+    </select>
+
+    <div class="action-card">
+      <div><strong>Back up this bank</strong><span>Downloads the selected bank to your PC as an <code>.mpk</code> file.</span></div>
+      <button id="btnPakRead">Download backup</button>
+    </div>
+    <div class="action-card">
+      <div><strong>Restore this bank</strong><span>Replaces the selected bank with an <code>.mpk</code> file from your PC.</span></div>
+      <div><input type="file" id="pakFile" accept=".mpk"/><button id="btnPakWrite">Restore file</button></div>
+    </div>
+    <div class="action-card danger-zone">
+      <div><strong>Erase this bank</strong><span>Formats the selected bank as an empty Controller Pak.</span></div>
+      <button id="btnPakFormat" class="danger-action">Erase bank</button>
+    </div>
+    <p class="field-help">You can inspect an <code>.mpk</code> backup with <a href="https://bryc.github.io/mempak" target="_blank">N64 Mempak Tool</a>.</p>
+</div>
+<div id="divFileTransfer" style="display:none;margin-bottom:1em;">
+    <strong>Transferring Controller Pak data…</strong>
+    <div id="progress_bar"><div class="percent"></div></div>
+    <button id="btnFileTransferCancel">Cancel transfer</button>
+</div>
+
+{% include output_helper.html %}
+
+<script type="module">
+  import { btConn, pakRead, pakWrite, pakFormat, abortFileTransfer } from './js/tools/n64_ctrlpak.js';
+  import { connectFromAppShell } from './js/utils/blueRetroConnection.js';
+
+  document.getElementById("btnPakRead").addEventListener('click', pakRead);
+  document.getElementById("btnPakWrite").addEventListener('click', pakWrite);
+  document.getElementById("btnPakFormat").addEventListener('click', pakFormat);
+  document.getElementById("btnFileTransferCancel").addEventListener('click', abortFileTransfer);
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+  connectFromAppShell(btConn);
+</script>
+
+{% include utils.html %}

@@ -1,0 +1,43 @@
+---
+feature_name: Stored configuration files
+icon_url: assets/images/icon.png
+index: index.html
+permalink: /files.html
+app_route: files
+---
+
+{% include intro.html %}
+
+<p class="lede">View or remove game-specific configuration files stored on the adapter.</p>
+
+<div class="warning"><strong>Advanced tool:</strong> Deleting a file removes that game's saved configuration. It does not remove firmware.</div>
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn" class="primary-action">Connect to BlueRetro</button>
+    <p class="field-help">Disconnect controllers from BlueRetro first, then select the adapter in your browser.</p>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divFile" class="config-panel" data-connection-required style="display:none;margin-bottom:1em;">
+    <h2 data-preview-only>Stored files</h2>
+    <p data-preview-only>Files stored on the adapter appear here after connection.</p>
+</div>
+
+
+{% include output_helper.html %}
+
+<script src='assets/lib/sql.js/sql-wasm.js'></script>
+<script type="module">
+  import { btConn } from './js/tools/files.js';
+  import { connectFromAppShell } from './js/utils/blueRetroConnection.js';
+
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+  connectFromAppShell(btConn);
+</script>
+
+{% include utils.html %}

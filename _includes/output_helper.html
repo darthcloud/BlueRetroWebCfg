@@ -6,6 +6,9 @@
       }).join(' ');
 
       document.querySelector('#log').textContent += line + '\n';
+      if (window.parent !== window) {
+        window.parent.postMessage({type: 'blueretro-log', message: line}, window.location.origin);
+      }
     },
 
     clearLog: function() {
@@ -14,6 +17,9 @@
 
     setStatus: function(status) {
       document.querySelector('#status').textContent = status;
+      if (window.parent !== window && status) {
+        window.parent.postMessage({type: 'blueretro-log', message: status}, window.location.origin);
+      }
     },
 
     setContent: function(newContent) {
@@ -26,12 +32,15 @@
   };
 </script>
 
-<h3>Live Output</h3>
-<div id="output" class="output">
-  <div id="content">{{ include.initial_output_content }}</div>
-  <div id="status"></div>
-  <pre id="log"></pre>
-</div>
+<details id="outputDetails" class="connection-log">
+  <summary>Tool log</summary>
+  <p class="field-help">Adapter commands and transfer messages from this tool.</p>
+  <div id="output" class="output">
+    <div id="content">{{ include.initial_output_content }}</div>
+    <div id="status"></div>
+    <pre id="log"></pre>
+  </div>
+</details>
 
 {% if page.check_min_version %}
 <script>

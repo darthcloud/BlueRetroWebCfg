@@ -1,0 +1,64 @@
+---
+feature_name: Controller setup
+icon_url: assets/images/icon.png
+index: index.html
+permalink: /advance.html
+app_route: controller-setup
+---
+
+{% include intro.html %}
+
+<div class="notice">
+  <strong>Looking for a quick setup?</strong>
+  Use <a href="index.html#presets" target="_top">Presets</a> unless you need to change individual buttons or advanced adapter options.
+</div>
+
+<p class="lede">Adjust console behavior, accessories, and individual controller mappings.</p>
+
+<div id="divBtConn">
+    <button id="btConn" class="primary-action">Connect to BlueRetro</button>
+    <p class="field-help">First disconnect any controllers currently paired to the adapter, then select the BlueRetro device in your browser.</p>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div class="config-tabs" role="tablist" aria-label="Controller setup sections">
+  <button type="button" role="tab" aria-selected="true" aria-controls="divCfgSel">Profile</button>
+  <button type="button" role="tab" aria-selected="false" aria-controls="divGlobalCfg">Adapter</button>
+  <button type="button" role="tab" aria-selected="false" aria-controls="divOutputCfg">Console ports</button>
+  <button type="button" role="tab" aria-selected="false" aria-controls="divInputCfg">Button mapping</button>
+</div>
+<div id="divCfgSel" class="config-panel tab-panel" role="tabpanel" data-connection-required style="display:none;margin-bottom:1em;">
+</div>
+<div id="divGlobalCfg" class="config-panel tab-panel" role="tabpanel" data-connection-required hidden style="display:none;margin-bottom:1em;">
+</div>
+<div id="divOutputCfg" class="config-panel tab-panel" role="tabpanel" data-connection-required hidden style="display:none;margin-bottom:1em;">
+</div>
+<div id="divInputCfg" class="config-panel tab-panel" role="tabpanel" data-connection-required hidden style="display:none;margin-bottom:1em;">
+</div>
+
+{% include output_helper.html %}
+
+<script src='assets/lib/sql.js/sql-wasm.js'></script>
+<script type="module">
+  import { btConn, initBlueRetroCfg } from './js/tools/advance.js';
+  import { connectFromAppShell } from './js/utils/blueRetroConnection.js';
+
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+  initBlueRetroCfg();
+  const tabs = Array.from(document.querySelectorAll('.config-tabs [role="tab"]'));
+  const selectTab = selected => {
+    tabs.forEach(tab => {
+      const active = tab === selected;
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+    });
+  };
+  tabs.forEach(tab => tab.addEventListener('click', () => selectTab(tab)));
+  connectFromAppShell(btConn);
+</script>
+
+{% include utils.html %}

@@ -1,0 +1,55 @@
+---
+feature_name: Dreamcast VMU saves
+icon_url: assets/images/icon.png
+index: index.html
+permalink: /dc_vmu.html
+app_route: dreamcast-saves
+---
+
+{% include intro.html %}
+
+<p class="lede">Back up or restore the virtual Dreamcast VMU stored by BlueRetro.</p>
+
+<div class="notice"><strong>Direction matters:</strong> Back up downloads the VMU from BlueRetro. Restore uploads a local file and replaces its current contents.</div>
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn" class="primary-action">Connect to BlueRetro</button>
+    <p class="field-help">Disconnect controllers from BlueRetro first, then select the adapter in your browser.</p>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divFileSelect" class="config-panel" data-connection-required style="display:none;margin-bottom:1em;">
+    <div class="action-card">
+      <div><strong>Back up the VMU</strong><span>Downloads the current VMU to your PC as a <code>.bin</code> file.</span></div>
+      <button id="btnPakRead">Download backup</button>
+    </div>
+    <div class="action-card">
+      <div><strong>Restore the VMU</strong><span>Replaces the current VMU with a <code>.bin</code> file from your PC.</span></div>
+      <div><input type="file" id="pakFile" accept=".bin"/><button id="btnPakWrite">Restore file</button></div>
+    </div>
+</div>
+<div id="divFileTransfer" style="display:none;margin-bottom:1em;">
+    <strong>Transferring VMU data…</strong>
+    <div id="progress_bar"><div class="percent"></div></div>
+    <button id="btnFileTransferCancel">Cancel transfer</button>
+</div>
+
+{% include output_helper.html %}
+
+<script type="module">
+  import { btConn, pakRead, pakWrite, abortFileTransfer } from './js/tools/dc_vmu.js';
+  import { connectFromAppShell } from './js/utils/blueRetroConnection.js';
+
+  document.getElementById("btnPakRead").addEventListener('click', pakRead);
+  document.getElementById("btnPakWrite").addEventListener('click', pakWrite);
+  document.getElementById("btnFileTransferCancel").addEventListener('click', abortFileTransfer);
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+  connectFromAppShell(btConn);
+</script>
+
+{% include utils.html %}

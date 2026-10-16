@@ -1,0 +1,31 @@
+services:
+  webcfg:
+    build: .
+    ports:
+      - "4000:4000"
+      - "35729:35729"
+    volumes:
+      - .:/site
+      - bundle:/usr/local/bundle
+    environment:
+      JEKYLL_ENV: development
+
+  # Browser test suite: docker compose run --rm tests
+  tests:
+    image: mcr.microsoft.com/playwright:v1.48.2-jammy
+    profiles: ["test"]
+    depends_on:
+      - webcfg
+    working_dir: /work/tests
+    volumes:
+      - .:/work
+      - test_node_modules:/work/tests/node_modules
+    environment:
+      BASE_URL: http://webcfg:4000/
+      CI: ${CI:-}
+    ipc: host
+    command: sh -c "npm install --no-audit --no-fund && npx playwright test"
+
+volumes:
+  bundle:
+  test_node_modules:

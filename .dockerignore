@@ -1,0 +1,5 @@
+_site
+.jekyll-cache
+.git
+vendor
+tests/node_modules

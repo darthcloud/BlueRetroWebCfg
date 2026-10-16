@@ -34,7 +34,7 @@ limitations under the License.
         }
       });
     </script>
-    {% assign sub_dirs = page.path | split: '/' | size | minus: 1 %}
+    {% assign sub_dirs = page.url | split: '/' | size | minus: 2 %}
     {% capture relative_path_to_root %}{% for i in (1..sub_dirs) %}../{% endfor %}{% endcapture %}
     {% if page.manifest_url %}
     <link rel="manifest" href="{{ page.manifest_url }}">
@@ -44,7 +44,7 @@ limitations under the License.
     {% else %}
     <link rel="icon" href="{{ relative_path_to_root }}images/favicon.ico">
     {% endif %}
-    <link rel="stylesheet" href="{{ relative_path_to_root }}styles/main.css">
+    <link rel="stylesheet" href="{{ relative_path_to_root }}assets/css/main.css">
     {% for local_css_file in page.local_css_files %}<link rel="stylesheet" href="{{ local_css_file }}">{% endfor %}
     {% if page.additional_head_content %}{{ page.additional_head_content }}{% endif %}
     {% if site.google_analytics and jekyll.environment == 'production' %}
@@ -53,12 +53,26 @@ limitations under the License.
   </head>
 
   <body>
+    <script>
+      const embeddedTool = new URLSearchParams(window.location.search).has('embedded');
+      if (embeddedTool) {
+        document.documentElement.classList.add('embedded-tool');
+      }
+      {% if page.app_route %}
+      else if (window.top === window) {
+        window.location.replace('index.html#{{ page.app_route }}');
+      }
+      {% endif %}
+    </script>
     {% if page.icon_url %}<img class="pageIcon" src="{{ page.icon_url }}">{% endif %}
     <h1>{% if page.title %}{{ page.title }}{% else %}{{ page.feature_name }}{% endif %}</h1>
-    <p class="availability">
-      <a {% if page.index == null %}target="_blank"{% endif %} href="{% if page.index %}{{ page.index }}{% else %}https://darthcloud.github.io/BlueRetroWebCfg/index.html{% endif %}">Index</a> |
-      <a target="_blank" href="https://github.com/darthcloud/BlueRetro">View on GitHub</a>
-    </p>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a data-home href="{% if page.index %}{{ page.index }}{% else %}{{ site.gh_pages_url_prefix }}/index.html{% endif %}">Home</a>
+      <a data-tool="presets" href="presets.html">Presets</a>
+      <a data-tool="controller-setup" href="advance.html">Controller setup</a>
+      <a data-tool="firmware" href="ota.html">Firmware update</a>
+      <a target="_blank" rel="noopener" href="{{ site.gh_url_prefix }}/docs/README.md">Help</a>
+    </nav>
     {{ content }}
     {% for local_js_file in page.local_js_files %}<script src="{{ local_js_file }}"></script>{% endfor %}
   </body>

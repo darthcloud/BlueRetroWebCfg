@@ -1,0 +1,28 @@
+export const getGameName = (gameid) => {
+  var db = null;
+  return new Promise((resolve, reject) => {
+    fetch("assets/data/gameid.db")
+      .then(rsp => {
+        return rsp.arrayBuffer();
+      })
+      .then(data => {
+        db = data;
+        initSqlJs({ locateFile: file => `assets/lib/sql.js/${file}` }).then(function(SQL){
+          let db = new SQL.Database(new Uint8Array(data));
+          let gamename = db.exec('SELECT name FROM \'games\' WHERE id="'
+            + gameid + '" LIMIT 1');
+          try {
+            resolve(gamename[0].values[0][0]);
+          }
+          catch (e) {
+            resolve();
+          }
+        });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export default getGameName;

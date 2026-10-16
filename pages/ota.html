@@ -1,0 +1,61 @@
+---
+feature_name: Firmware update
+icon_url: assets/images/icon.png
+index: index.html
+permalink: /ota.html
+app_route: firmware
+---
+
+{% include intro.html %}
+
+<div class="warning"><strong>Before you begin:</strong> Use firmware made for your adapter hardware. Keep the adapter powered and this browser tab open until the transfer finishes.</div>
+
+<ol class="workflow-steps">
+  <li><a href="https://github.com/darthcloud/BlueRetro/releases" target="_blank">Download and unzip a firmware release</a>.</li>
+  <li>Select the correct <code>.bin</code> file and install it.</li>
+</ol>
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn" class="primary-action">Connect to BlueRetro</button>
+    <p class="field-help">Your browser will ask which nearby BlueRetro adapter to update.</p>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divFwSelect" class="config-panel" data-connection-required style="display:none;margin-bottom:1em;">
+    <h2>Select firmware</h2>
+    <label for="fwFile">Firmware file (<code>.bin</code>)</label>
+    <input type="file" id="fwFile" name="fw.bin" accept=".bin"/>
+    <p class="field-help">The updater checks whether the file is for HW1 or HW2 before transferring it.</p>
+    <label class="check-option" for="otaDebugMode">
+        <input type="checkbox" id="otaDebugMode">
+        <span><strong>Turn on Debug mode after updating (testing)</strong>
+        <small>After the new version is verified, sets the memory card bank to Debug mode, restarts the adapter, then reconnects to confirm. The adapter stays connected.</small></span>
+    </label>
+    <button id="btnFwUpdate" class="primary-action">Install selected firmware</button>
+</div>
+<div id="divFwUpdate" style="display:none;margin-bottom:1em;">
+    <strong>Installing firmware…</strong>
+    <p class="field-help">Do not close this tab or remove power.</p>
+    <div id="progress_bar"><div class="percent"></div></div>
+    <button id="btnFwUpdateCancel">Cancel transfer</button>
+</div>
+<div id="divFwResult" hidden role="status" aria-live="polite"></div>
+
+{% include output_helper.html %}
+
+<script type="module">
+  import { btConn, firmwareUpdate, abortFwUpdate } from './js/tools/ota.js';
+  import { connectFromAppShell } from './js/utils/blueRetroConnection.js';
+
+  document.getElementById("btnFwUpdate").addEventListener('click', firmwareUpdate);
+  document.getElementById("btnFwUpdateCancel").addEventListener('click', abortFwUpdate);
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+  connectFromAppShell(btConn);
+</script>
+
+{% include utils.html %}

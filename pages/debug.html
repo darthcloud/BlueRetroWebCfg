@@ -1,0 +1,49 @@
+---
+feature_name: Diagnostic log
+icon_url: assets/images/icon.png
+index: index.html
+permalink: /debug.html
+app_route: debug
+---
+
+{% include intro.html %}
+
+<p class="lede">Download a trace file that can help diagnose controller and adapter problems.</p>
+
+<div class="notice">Use this when a developer or support person asks for a debug trace. It does not change adapter settings.</div>
+
+<!-- Base on https://www.html5rocks.com/en/tutorials/file/dndfiles// -->
+<div id="divBtConn">
+    <button id="btConn" class="primary-action">Connect to BlueRetro</button>
+    <p class="field-help">Disconnect controllers from BlueRetro first, then select the adapter in your browser.</p>
+</div>
+<div id="divInfo" style="display:none;margin-bottom:1em;"></div>
+<div id="divFileSelect" class="config-panel" data-connection-required style="display:none;margin-bottom:1em;">
+    <h2>Collect the log</h2>
+    <p>Reproduce the problem before connecting here, then download the trace and attach the resulting <code>.bin</code> file to your report.</p>
+    <button id="btnPakRead" class="primary-action">Download diagnostic log</button>
+</div>
+<div id="divFileTransfer" style="display:none;margin-bottom:1em;">
+    <strong>Downloading diagnostic log…</strong>
+    <div id="progress_bar"><div class="percent"></div></div>
+    <button id="btnFileTransferCancel">Cancel transfer</button>
+</div>
+
+{% include output_helper.html %}
+
+<script type="module">
+  import { btConn, pakRead, abortFileTransfer } from './js/tools/debug.js';
+  import { connectFromAppShell } from './js/utils/blueRetroConnection.js';
+
+  document.getElementById("btnPakRead").addEventListener('click', pakRead);
+  document.getElementById("btnFileTransferCancel").addEventListener('click', abortFileTransfer);
+  document.getElementById("btConn").addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) {
+      ChromeSamples.clearLog();
+      btConn();
+    }
+  });
+  connectFromAppShell(btConn);
+</script>
+
+{% include utils.html %}
